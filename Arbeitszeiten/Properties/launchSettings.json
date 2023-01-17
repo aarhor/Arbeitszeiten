@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Arbeitszeiten": {
+      "commandName": "Project",
+      "commandLineArgs": "Abmelden"
+    }
+  }
+}
