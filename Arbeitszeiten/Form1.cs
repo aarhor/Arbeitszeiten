@@ -11,12 +11,25 @@ namespace Arbeitszeiten
             InitializeComponent();
         }
 
+        //string firstArgument = CommandLineArguments.Args[0];
+
+        private void btn_Speichern_Click(object sender, EventArgs e)
+        {
+            DateTime dateTime_Start = Convert.ToDateTime(txtBox_Start.Text);
+            DateTime dateTime_Ende = Convert.ToDateTime(txtBox_Ende.Text);
+            TimeSpan timeSpan = dateTime_Ende - dateTime_Start;
+
+            lbl_Differenz.Text = Convert.ToDecimal(timeSpan.TotalHours).ToString("#.00");
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
-            string firstArgument = CommandLineArguments.Args[0];
+            txtBox_Start.Text = DateTime.Now.ToString();
+        }
 
-
-            label1.Text = firstArgument;
+        private void button2_Click(object sender, EventArgs e)
+        {
+            txtBox_Ende.Text = DateTime.Now.AddHours(+8.5).ToString();
         }
     }
 }
