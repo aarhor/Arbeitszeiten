@@ -1,6 +1,5 @@
-//using Arbeitszeiten;
-
-using static Arbeitszeiten.Program;
+using Microsoft.Data.Sqlite;
+using System.Data;
 
 namespace Arbeitszeiten
 {
@@ -20,16 +19,24 @@ namespace Arbeitszeiten
             TimeSpan timeSpan = dateTime_Ende - dateTime_Start;
 
             lbl_Differenz.Text = Convert.ToDecimal(timeSpan.TotalHours).ToString("#.00");
+
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            txtBox_Start.Text = DateTime.Now.ToString();
+            DateTime dateTime =DateTime.Now;
+            txtBox_Start.Text = dateTime.ToString("yyyy-MM-dd");
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            txtBox_Ende.Text = DateTime.Now.AddHours(+8.5).ToString();
+            txtBox_Ende.Text = DateTime.Now.ToString();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Einstellungen Form_Einstellungen = new Einstellungen();
+            Form_Einstellungen.ShowDialog();
         }
     }
 }

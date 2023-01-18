@@ -1,0 +1,84 @@
+﻿namespace Arbeitszeiten
+{
+    partial class Einstellungen
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.btn_Speichern = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtBox_Pfad = new System.Windows.Forms.TextBox();
+            this.SuspendLayout();
+            // 
+            // btn_Speichern
+            // 
+            this.btn_Speichern.Location = new System.Drawing.Point(123, 41);
+            this.btn_Speichern.Name = "btn_Speichern";
+            this.btn_Speichern.Size = new System.Drawing.Size(75, 23);
+            this.btn_Speichern.TabIndex = 0;
+            this.btn_Speichern.Text = "Speichern";
+            this.btn_Speichern.UseVisualStyleBackColor = true;
+            this.btn_Speichern.Click += new System.EventHandler(this.btn_Speichern_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(61, 15);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Dateipfad:";
+            // 
+            // txtBox_Pfad
+            // 
+            this.txtBox_Pfad.Location = new System.Drawing.Point(79, 12);
+            this.txtBox_Pfad.Name = "txtBox_Pfad";
+            this.txtBox_Pfad.Size = new System.Drawing.Size(182, 23);
+            this.txtBox_Pfad.TabIndex = 2;
+            // 
+            // Einstellungen
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(273, 77);
+            this.Controls.Add(this.txtBox_Pfad);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.btn_Speichern);
+            this.Name = "Einstellungen";
+            this.Text = "Einstellungen";
+            this.Load += new System.EventHandler(this.Einstellungen_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private Button btn_Speichern;
+        private Label label1;
+        private TextBox txtBox_Pfad;
+    }
+}

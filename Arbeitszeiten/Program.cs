@@ -39,7 +39,12 @@ namespace Arbeitszeiten
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+
+            bool vorhanden = Klassen.Registry.RegistryKeyExists(@"software\" + Application.CompanyName + @"\" + Application.ProductName);
+            if (!vorhanden)
+                Application.Run(new Einstellungen());
+            else
+                Application.Run(new Form1());
         }
     }
 }
