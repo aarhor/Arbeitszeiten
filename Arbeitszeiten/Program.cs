@@ -14,7 +14,7 @@ namespace Arbeitszeiten
 
         public static string[] CheckCMDArgs(string[] Argumente)
         {
-            string[] allowedArguments = new string[] { "Anmelden", "Abmelden"};
+            string[] allowedArguments = new string[] { "/Dienstbeginn", "/Dienstende" };
 
             List<string> validArguments = new List<string>();
             foreach (string arg in Argumente)
