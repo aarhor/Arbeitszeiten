@@ -15,4 +15,12 @@
     <PackageReference Include="SQLitePCLRaw.core" Version="2.1.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="E:\Dokumente\Programmieren\repos\Arbeitszeiten\Arbeitszeiten\Klassen\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="E:\Dokumente\Programmieren\repos\Arbeitszeiten\Arbeitszeiten\.editorconfig" />
+  </ItemGroup>
+
 </Project>

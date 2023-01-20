@@ -13,11 +13,6 @@ namespace Arbeitszeiten
 
         //string firstArgument = CommandLineArguments.Args[0];
 
-        private void btn_Speichern_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             DateTime dateTime = DateTime.Now;

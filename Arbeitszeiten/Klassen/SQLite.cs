@@ -53,7 +53,7 @@ namespace Arbeitszeiten.Klassen
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = "UPDATE Zeiten SET ENDE = @Ende, Differenz = @Differenz, Ueberzeit = @Ueberzeit where Datum = \"" + Heute + "\"";
+                    command.CommandText = "UPDATE Zeiten SET Ende = @Ende, Differenz = @Differenz, Ueberzeit = @Ueberzeit where Datum = \"" + Heute + "\" and Ende IS NULL";
                     command.Parameters.AddWithValue("@Ende", Ende);
                     command.Parameters.AddWithValue("@Differenz", Differenz);
                     command.Parameters.AddWithValue("@Ueberzeit", Überzeit);
@@ -74,13 +74,32 @@ namespace Arbeitszeiten.Klassen
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = "SELECT Start from Zeiten where Datum = \"" + Heute + "\"";
+                    command.CommandText = "SELECT Start from Zeiten where Datum = \"" + Heute + "\" and Ende IS NULL";
                     dateTime = Convert.ToDateTime(command.ExecuteScalar());
                     Uhrzeit = dateTime.TimeOfDay.ToString();
                 }
                 connection.Close();
 
                 return Uhrzeit;
+            }
+        }
+
+        public static int count_table(string Heute)
+        {
+            string Pfad = Registry.GetValue("Dateipfad");
+            int Anzahl;
+
+            using (var connection = new SqliteConnection(@"DataSource=" + Pfad))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "SELECT count(Datum) from Zeiten where Datum = \"" + Heute + "\"";
+                    Anzahl = Convert.ToInt32(command.ExecuteScalar());
+                }
+                connection.Close();
+
+                return Anzahl;
             }
         }
     }

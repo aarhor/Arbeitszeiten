@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btn_Speichern = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtBox_Start = new System.Windows.Forms.TextBox();
@@ -39,16 +38,6 @@
             this.lbl_Differenz = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
-            // 
-            // btn_Speichern
-            // 
-            this.btn_Speichern.Location = new System.Drawing.Point(70, 87);
-            this.btn_Speichern.Name = "btn_Speichern";
-            this.btn_Speichern.Size = new System.Drawing.Size(75, 23);
-            this.btn_Speichern.TabIndex = 0;
-            this.btn_Speichern.Text = "Speichern";
-            this.btn_Speichern.UseVisualStyleBackColor = true;
-            this.btn_Speichern.Click += new System.EventHandler(this.btn_Speichern_Click);
             // 
             // label1
             // 
@@ -88,7 +77,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 5;
-            this.button1.Text = "Manuell";
+            this.button1.Text = "Speichern";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -98,7 +87,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 6;
-            this.button2.Text = "Manuell";
+            this.button2.Text = "Speichern";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -122,7 +111,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(185, 91);
+            this.linkLabel1.Location = new System.Drawing.Point(183, 61);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(78, 15);
             this.linkLabel1.TabIndex = 9;
@@ -134,7 +123,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(275, 115);
+            this.ClientSize = new System.Drawing.Size(275, 87);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.lbl_Differenz);
             this.Controls.Add(this.label3);
@@ -144,7 +133,6 @@
             this.Controls.Add(this.txtBox_Start);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.btn_Speichern);
             this.Name = "Form1";
             this.Text = "Arbeitszeiterfassung";
             this.ResumeLayout(false);
@@ -153,8 +141,6 @@
         }
 
         #endregion
-
-        private Button btn_Speichern;
         private Label label1;
         private Label label2;
         private TextBox txtBox_Start;
