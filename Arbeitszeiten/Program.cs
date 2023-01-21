@@ -1,3 +1,5 @@
+using Arbeitszeiten.Klassen;
+
 namespace Arbeitszeiten
 {
     internal static class Program
@@ -14,6 +16,7 @@ namespace Arbeitszeiten
 
         public static string[] CheckCMDArgs(string[] Argumente)
         {
+            //string Pfad = Application.ExecutablePath;
             string[] allowedArguments = new string[] { "/Dienstbeginn", "/Dienstende" };
 
             List<string> validArguments = new List<string>();
@@ -40,11 +43,33 @@ namespace Arbeitszeiten
             Application.SetCompatibleTextRenderingDefault(false);
             ApplicationConfiguration.Initialize();
 
-            bool vorhanden = Klassen.Registry.RegistryKeyExists(@"software\" + Application.CompanyName + @"\" + Application.ProductName);
+            bool vorhanden = Registry.RegistryKeyExists(@"software\" + Application.CompanyName + @"\" + Application.ProductName);
             if (!vorhanden)
                 Application.Run(new Einstellungen());
             else
-                Application.Run(new Form1());
+            {
+                string firstArgument = "";
+                if (CommandLineArguments.Args.Length > 0)
+                {
+                    firstArgument = CommandLineArguments.Args[0];
+                    if (firstArgument == "/Dienstbeginn")
+                    {
+                        Kommandozeile.Anmelden();
+                        MessageBox.Show("Der Beginn wurde erfolgreich eingetragen.\nDas Programm wird nun direkt wieder geschlossen.");
+                        Application.Exit();
+                    }
+                    else if (firstArgument == "/Dienstende")
+                    {
+                        Kommandozeile.Abmelden();
+                        MessageBox.Show("Der Ende wurde erfolgreich eingetragen.\nDas Programm wird nun direkt wieder geschlossen.");
+                        Application.Exit();
+                    }
+                }
+                else
+                {
+                    Application.Run(new Form1());
+                }
+            }
         }
     }
 }

@@ -143,12 +143,12 @@
         #endregion
         private Label label1;
         private Label label2;
-        private TextBox txtBox_Start;
-        private TextBox txtBox_Ende;
         private Button button1;
         private Button button2;
+        private LinkLabel linkLabel1;
+        private TextBox txtBox_Start;
+        private TextBox txtBox_Ende;
         private Label label3;
         private Label lbl_Differenz;
-        private LinkLabel linkLabel1;
     }
 }
