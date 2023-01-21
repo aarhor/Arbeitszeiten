@@ -1,25 +1,26 @@
-﻿using Microsoft.Data.Sqlite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using System.Data.SQLite;
 
 namespace Arbeitszeiten.Klassen
 {
     internal class SQLite
     {
-        public static void create_table()
+
+        static string Connectionstring()
         {
             string Pfad = Registry.GetValue("Dateipfad");
+            string Connectionstring = "DataSource=" + Pfad;
 
-            using (var connection = new SqliteConnection(@"DataSource=" + Pfad))
+            return Connectionstring;
+        }
+
+        public static void create_table()
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(Connectionstring()))
             {
                 connection.Open();
-                using (var command = connection.CreateCommand())
+                using (SQLiteCommand command = new SQLiteCommand(connection))
                 {
-                    command.CommandText = "CREATE TABLE Zeiten (ID_Erfassung INTEGER PRIMARY KEY, Datum DATE, Start DATETIME, Ende DATETTIME, Differenz DOUBLE, Ueberzeit DOUBLE)";
+                    command.CommandText = "CREATE TABLE Zeiten (ID_Erfassung INTEGER PRIMARY KEY, Datum DATE, Start DATETIME, Ende DATETTIME, Differenz DOUBLE, MehrMinder_Stunden DOUBLE)";
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
@@ -30,10 +31,10 @@ namespace Arbeitszeiten.Klassen
         {
             string Pfad = Registry.GetValue("Dateipfad");
 
-            using (var connection = new SqliteConnection(@"DataSource=" + Pfad))
+            using (SQLiteConnection connection = new SQLiteConnection(Connectionstring()))
             {
                 connection.Open();
-                using (var command = connection.CreateCommand())
+                using (SQLiteCommand command = new SQLiteCommand(connection))
                 {
                     command.CommandText = "INSERT INTO Zeiten (Datum, Start) VALUES (@Datum, @Start)";
                     command.Parameters.AddWithValue("@Datum", Datum);
@@ -44,19 +45,19 @@ namespace Arbeitszeiten.Klassen
             }
         }
 
-        public static void update_table(string Heute, string Ende, decimal Differenz, decimal Überzeit)
+        public static void update_table(string Heute, string Ende, decimal Differenz, decimal MehrMinder_Stunden)
         {
             string Pfad = Registry.GetValue("Dateipfad");
 
-            using (var connection = new SqliteConnection(@"DataSource=" + Pfad))
+            using (SQLiteConnection connection = new SQLiteConnection(Connectionstring()))
             {
                 connection.Open();
-                using (var command = connection.CreateCommand())
+                using (SQLiteCommand command = new SQLiteCommand(connection))
                 {
-                    command.CommandText = "UPDATE Zeiten SET Ende = @Ende, Differenz = @Differenz, Ueberzeit = @Ueberzeit where Datum = \"" + Heute + "\" and Ende IS NULL";
+                    command.CommandText = "UPDATE Zeiten SET Ende = @Ende, Differenz = @Differenz, MehrMinder_Stunden = @MehrMinder_Stunden where Datum = \"" + Heute + "\" and Ende IS NULL order by Start DESC LIMIT 1";
                     command.Parameters.AddWithValue("@Ende", Ende);
                     command.Parameters.AddWithValue("@Differenz", Differenz);
-                    command.Parameters.AddWithValue("@Ueberzeit", Überzeit);
+                    command.Parameters.AddWithValue("@MehrMinder_Stunden", MehrMinder_Stunden);
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
@@ -69,10 +70,10 @@ namespace Arbeitszeiten.Klassen
             DateTime dateTime;
             string Uhrzeit;
 
-            using (var connection = new SqliteConnection(@"DataSource=" + Pfad))
+            using (SQLiteConnection connection = new SQLiteConnection(Connectionstring()))
             {
                 connection.Open();
-                using (var command = connection.CreateCommand())
+                using (SQLiteCommand command = new SQLiteCommand(connection))
                 {
                     command.CommandText = "SELECT Start from Zeiten where Datum = \"" + Heute + "\" and Ende IS NULL";
                     dateTime = Convert.ToDateTime(command.ExecuteScalar());
@@ -89,13 +90,14 @@ namespace Arbeitszeiten.Klassen
             string Pfad = Registry.GetValue("Dateipfad");
             int Anzahl;
 
-            using (var connection = new SqliteConnection(@"DataSource=" + Pfad))
+            using (SQLiteConnection connection = new SQLiteConnection(Connectionstring()))
             {
                 connection.Open();
-                using (var command = connection.CreateCommand())
+                using (SQLiteCommand command = new SQLiteCommand(connection))
                 {
                     command.CommandText = "SELECT count(Datum) from Zeiten where Datum = \"" + Heute + "\"";
                     Anzahl = Convert.ToInt32(command.ExecuteScalar());
+                    command.ExecuteNonQuery();
                 }
                 connection.Close();
 

@@ -1,6 +1,4 @@
 using Arbeitszeiten.Klassen;
-using Microsoft.Data.Sqlite;
-using System.Data;
 
 namespace Arbeitszeiten
 {
