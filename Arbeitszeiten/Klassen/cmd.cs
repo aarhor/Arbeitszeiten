@@ -1,22 +1,26 @@
-﻿namespace Arbeitszeiten.Klassen
+﻿using System;
+
+namespace Arbeitszeiten.Klassen
 {
     internal class Kommandozeile
     {
-        public static void Anmelden()
+        public static void Anmelden(DateTime dateTime)
         {
-            DateTime dateTime = DateTime.Now;
+            if (dateTime == DateTime.MinValue) { dateTime = DateTime.Now; }
+
             string heute = dateTime.ToString("yyyy-MM-dd");
             string Startzeit = dateTime.ToString("HH:mm:ss");
 
             SQLite.insert_table(heute, Startzeit);
         }
 
-        public static decimal Abmelden()
+        public static decimal Abmelden(DateTime dateTime)
         {
-            DateTime dateTime = DateTime.Now;
+            if (dateTime == DateTime.MinValue) { dateTime = DateTime.Now; }
+
             string heute = dateTime.ToString("yyyy-MM-dd");
 
-            DateTime Startzeit = Convert.ToDateTime(SQLite.select_table(heute));
+            DateTime Startzeit = Convert.ToDateTime(heute + " " + SQLite.select_table(heute));
             TimeSpan Differenz = dateTime - Startzeit;
 
             decimal Differenz_dezimal = Convert.ToDecimal(Math.Round(Differenz.TotalHours, 2));

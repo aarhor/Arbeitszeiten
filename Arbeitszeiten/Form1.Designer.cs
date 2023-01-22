@@ -37,6 +37,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lbl_Differenz = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // label1
@@ -51,7 +53,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 38);
+            this.label2.Location = new System.Drawing.Point(12, 38);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(48, 15);
             this.label2.TabIndex = 2;
@@ -61,6 +63,7 @@
             // 
             this.txtBox_Start.Location = new System.Drawing.Point(70, 6);
             this.txtBox_Start.Name = "txtBox_Start";
+            this.txtBox_Start.ReadOnly = true;
             this.txtBox_Start.Size = new System.Drawing.Size(110, 23);
             this.txtBox_Start.TabIndex = 3;
             // 
@@ -68,6 +71,7 @@
             // 
             this.txtBox_Ende.Location = new System.Drawing.Point(70, 35);
             this.txtBox_Ende.Name = "txtBox_Ende";
+            this.txtBox_Ende.ReadOnly = true;
             this.txtBox_Ende.Size = new System.Drawing.Size(110, 23);
             this.txtBox_Ende.TabIndex = 4;
             // 
@@ -94,7 +98,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 61);
+            this.label3.Location = new System.Drawing.Point(12, 61);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(57, 15);
             this.label3.TabIndex = 7;
@@ -103,7 +107,7 @@
             // lbl_Differenz
             // 
             this.lbl_Differenz.AutoSize = true;
-            this.lbl_Differenz.Location = new System.Drawing.Point(70, 61);
+            this.lbl_Differenz.Location = new System.Drawing.Point(75, 61);
             this.lbl_Differenz.Name = "lbl_Differenz";
             this.lbl_Differenz.Size = new System.Drawing.Size(0, 15);
             this.lbl_Differenz.TabIndex = 8;
@@ -111,7 +115,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(183, 61);
+            this.linkLabel1.Location = new System.Drawing.Point(183, 83);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(78, 15);
             this.linkLabel1.TabIndex = 9;
@@ -119,11 +123,35 @@
             this.linkLabel1.Text = "Einstellungen";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(12, 79);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(69, 19);
+            this.checkBox1.TabIndex = 10;
+            this.checkBox1.Text = "Manuell";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.Location = new System.Drawing.Point(116, 83);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(61, 15);
+            this.linkLabel2.TabIndex = 11;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "Statistiken";
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(275, 87);
+            this.ClientSize = new System.Drawing.Size(275, 107);
+            this.Controls.Add(this.linkLabel2);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.lbl_Differenz);
             this.Controls.Add(this.label3);
@@ -150,5 +178,7 @@
         private TextBox txtBox_Ende;
         private Label label3;
         private Label lbl_Differenz;
+        private CheckBox checkBox1;
+        private LinkLabel linkLabel2;
     }
 }

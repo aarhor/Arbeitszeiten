@@ -54,13 +54,13 @@ namespace Arbeitszeiten
                     firstArgument = CommandLineArguments.Args[0];
                     if (firstArgument == "/Dienstbeginn")
                     {
-                        Kommandozeile.Anmelden();
+                        Kommandozeile.Anmelden(Convert.ToDateTime(null));
                         MessageBox.Show("Der Beginn wurde erfolgreich eingetragen.\nDas Programm wird nun direkt wieder geschlossen.");
                         Application.Exit();
                     }
                     else if (firstArgument == "/Dienstende")
                     {
-                        Kommandozeile.Abmelden();
+                        Kommandozeile.Abmelden(Convert.ToDateTime(null));
                         MessageBox.Show("Der Ende wurde erfolgreich eingetragen.\nDas Programm wird nun direkt wieder geschlossen.");
                         Application.Exit();
                     }
