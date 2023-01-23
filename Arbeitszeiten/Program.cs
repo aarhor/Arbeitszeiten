@@ -17,7 +17,7 @@ namespace Arbeitszeiten
         public static string[] CheckCMDArgs(string[] Argumente)
         {
             //string Pfad = Application.ExecutablePath;
-            string[] allowedArguments = new string[] { "/Dienstbeginn", "/Dienstende" };
+            string[] allowedArguments = new string[] { "/Dienstbeginn", "/Dienstende", "/Auﬂerhalb" };
 
             List<string> validArguments = new List<string>();
             foreach (string arg in Argumente)
@@ -49,18 +49,38 @@ namespace Arbeitszeiten
             else
             {
                 string firstArgument = "";
-                if (CommandLineArguments.Args.Length > 0)
+                string secondArgument = "";
+                if (CommandLineArguments.Args.Length == 1)
                 {
                     firstArgument = CommandLineArguments.Args[0];
+
                     if (firstArgument == "/Dienstbeginn")
                     {
                         Kommandozeile.Anmelden(Convert.ToDateTime(null));
                         MessageBox.Show("Der Beginn wurde erfolgreich eingetragen.\nDas Programm wird nun direkt wieder geschlossen.");
                         Application.Exit();
                     }
+                    else if (firstArgument == "/Dienstende" && secondArgument == "/Auﬂerhalb")
+                    {
+                        Kommandozeile.Abmelden(Convert.ToDateTime(null), true);
+                        MessageBox.Show("Der Ende wurde erfolgreich eingetragen.\nDas Programm wird nun direkt wieder geschlossen.");
+                        Application.Exit();
+                    }
                     else if (firstArgument == "/Dienstende")
                     {
-                        Kommandozeile.Abmelden(Convert.ToDateTime(null));
+                        Kommandozeile.Abmelden(Convert.ToDateTime(null), false);
+                        MessageBox.Show("Der Ende wurde erfolgreich eingetragen.\nDas Programm wird nun direkt wieder geschlossen.");
+                        Application.Exit();
+                    }
+                }
+                else if (CommandLineArguments.Args.Length == 2)
+                {
+                    firstArgument = CommandLineArguments.Args[0];
+                    secondArgument = CommandLineArguments.Args[1];
+
+                    if (firstArgument == "/Dienstende" && secondArgument == "/Auﬂerhalb")
+                    {
+                        Kommandozeile.Abmelden(Convert.ToDateTime(null), true);
                         MessageBox.Show("Der Ende wurde erfolgreich eingetragen.\nDas Programm wird nun direkt wieder geschlossen.");
                         Application.Exit();
                     }

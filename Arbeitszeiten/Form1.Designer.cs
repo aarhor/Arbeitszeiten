@@ -39,6 +39,9 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -126,7 +129,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(12, 79);
+            this.checkBox1.Location = new System.Drawing.Point(6, 22);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(69, 19);
             this.checkBox1.TabIndex = 10;
@@ -145,13 +148,34 @@
             this.linkLabel2.Text = "Statistiken";
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.checkBox2);
+            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Location = new System.Drawing.Point(267, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(161, 83);
+            this.groupBox1.TabIndex = 12;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Optionen";
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(6, 47);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(152, 19);
+            this.checkBox2.TabIndex = 11;
+            this.checkBox2.Text = "Außerhalb Arbeitszeiten";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(275, 107);
+            this.ClientSize = new System.Drawing.Size(440, 107);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.linkLabel2);
-            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.lbl_Differenz);
             this.Controls.Add(this.label3);
@@ -163,6 +187,8 @@
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Arbeitszeiterfassung";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -180,5 +206,7 @@
         private Label lbl_Differenz;
         private CheckBox checkBox1;
         private LinkLabel linkLabel2;
+        private GroupBox groupBox1;
+        private CheckBox checkBox2;
     }
 }

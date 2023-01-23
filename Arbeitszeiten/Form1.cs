@@ -23,14 +23,27 @@ namespace Arbeitszeiten
         private void button2_Click(object sender, EventArgs e)
         {
             decimal Differenz_dezimal;
+            if (checkBox2.Checked)
+            {
+                if (checkBox1.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), true); }
+                else
+                {
+                    DateTime dateTime = DateTime.Now;
+                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), true);
 
-            if (checkBox1.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text)); }
+                    txtBox_Ende.Text = dateTime.ToString();
+                }
+            }
             else
             {
-                DateTime dateTime = DateTime.Now;
-                Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue));
+                if (checkBox1.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), false); }
+                else
+                {
+                    DateTime dateTime = DateTime.Now;
+                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), false);
 
-                txtBox_Ende.Text = dateTime.ToString();
+                    txtBox_Ende.Text = dateTime.ToString();
+                }
             }
 
             if (Differenz_dezimal > 0) { lbl_Differenz.Text = Differenz_dezimal.ToString("#0.00") + " Mehrstunden"; }
