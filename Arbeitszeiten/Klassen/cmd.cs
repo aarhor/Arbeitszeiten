@@ -54,7 +54,7 @@ namespace Arbeitszeiten.Klassen
 
             SQLite.update_table(heute, Ende_Gelände, Differenz_dezimal, Ueberzeit);
 
-            return Differenz_dezimal;
+            return Ueberzeit;
         }
     }
 }
