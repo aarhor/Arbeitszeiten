@@ -52,16 +52,6 @@ namespace Arbeitszeiten.Klassen
                     transaction.Rollback();
                 }
             }
-
-            //using SQLiteConnection connection = new(Connectionstring());
-            //connection.Open();
-            //using (SQLiteCommand command = new(connection))
-            //{
-            //    command.CommandText = "INSERT INTO Zeiten (Datum, Start) VALUES (@Datum, @Start)";
-            //    command.Parameters.AddWithValue("@Datum", Datum);
-            //    command.Parameters.AddWithValue("@Start", Start);
-            //    command.ExecuteNonQuery();
-            //}
             connection.Close();
         }
 
