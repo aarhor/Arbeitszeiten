@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.SQLite;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Arbeitszeiten.Klassen
 {
@@ -31,13 +32,36 @@ namespace Arbeitszeiten.Klassen
         {
             using SQLiteConnection connection = new(Connectionstring());
             connection.Open();
-            using (SQLiteCommand command = new(connection))
+            using (var transaction = connection.BeginTransaction())
             {
-                command.CommandText = "INSERT INTO Zeiten (Datum, Start) VALUES (@Datum, @Start)";
-                command.Parameters.AddWithValue("@Datum", Datum);
-                command.Parameters.AddWithValue("@Start", Start);
-                command.ExecuteNonQuery();
+                try
+                {
+                    using (SQLiteCommand command = new(connection))
+                    {
+                        command.CommandText = "INSERT INTO Zeiten (Datum, Start) VALUES (@Datum, @Start)";
+                        command.Parameters.AddWithValue("@Datum", Datum);
+                        command.Parameters.AddWithValue("@Start", Start);
+                        command.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    transaction.Rollback();
+                }
             }
+
+            //using SQLiteConnection connection = new(Connectionstring());
+            //connection.Open();
+            //using (SQLiteCommand command = new(connection))
+            //{
+            //    command.CommandText = "INSERT INTO Zeiten (Datum, Start) VALUES (@Datum, @Start)";
+            //    command.Parameters.AddWithValue("@Datum", Datum);
+            //    command.Parameters.AddWithValue("@Start", Start);
+            //    command.ExecuteNonQuery();
+            //}
             connection.Close();
         }
 
@@ -45,13 +69,26 @@ namespace Arbeitszeiten.Klassen
         {
             using SQLiteConnection connection = new(Connectionstring());
             connection.Open();
-            using (SQLiteCommand command = new(connection))
+            using (var transaction = connection.BeginTransaction())
             {
-                command.CommandText = "UPDATE Zeiten SET Ende = @Ende, Differenz = @Differenz, MehrMinder_Stunden = @MehrMinder_Stunden where Datum = \"" + Heute + "\" and Ende IS NULL order by Start DESC LIMIT 1";
-                command.Parameters.AddWithValue("@Ende", Ende);
-                command.Parameters.AddWithValue("@Differenz", Differenz);
-                command.Parameters.AddWithValue("@MehrMinder_Stunden", MehrMinder_Stunden);
-                command.ExecuteNonQuery();
+                try
+                {
+                    using (SQLiteCommand command = new(connection))
+                    {
+                        command.CommandText = "UPDATE Zeiten SET Ende = @Ende, Differenz = @Differenz, MehrMinder_Stunden = @MehrMinder_Stunden where Datum = \"" + Heute + "\" and Ende IS NULL order by Start DESC LIMIT 1";
+                        command.Parameters.AddWithValue("@Ende", Ende);
+                        command.Parameters.AddWithValue("@Differenz", Differenz);
+                        command.Parameters.AddWithValue("@MehrMinder_Stunden", MehrMinder_Stunden);
+                        command.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    transaction.Rollback();
+                }
             }
             connection.Close();
         }
