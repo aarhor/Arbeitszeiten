@@ -60,12 +60,6 @@ namespace Arbeitszeiten
                         MessageBox.Show("Der Beginn wurde erfolgreich eingetragen.\nDas Programm wird nun direkt wieder geschlossen.");
                         Application.Exit();
                     }
-                    else if (firstArgument == "/Dienstende" && secondArgument == "/Auﬂerhalb")
-                    {
-                        Kommandozeile.Abmelden(Convert.ToDateTime(null), true);
-                        MessageBox.Show("Der Ende wurde erfolgreich eingetragen.\nDas Programm wird nun direkt wieder geschlossen.");
-                        Application.Exit();
-                    }
                     else if (firstArgument == "/Dienstende")
                     {
                         Kommandozeile.Abmelden(Convert.ToDateTime(null), false);

@@ -101,7 +101,7 @@ namespace Arbeitszeiten.Klassen
             return Uhrzeit;
         }
 
-        public static List<string> select_Tage_stats()
+        public static List<string> select_Tage_stats(string Monatszahl, string Jahreszahl)
         {
             List<string> list = new();
 
@@ -109,7 +109,7 @@ namespace Arbeitszeiten.Klassen
             connection.Open();
             using (SQLiteCommand command = new(connection))
             {
-                command.CommandText = "select Datum from Zeiten group by Datum";
+                command.CommandText = "select Datum from Zeiten where Datum like '" + Jahreszahl + "-" + Monatszahl + "-%' group by Datum";
                 IDataReader reader = command.ExecuteReader();
 
                 while (reader.Read() != false)

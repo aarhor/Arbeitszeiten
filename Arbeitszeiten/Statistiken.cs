@@ -18,21 +18,30 @@ namespace Arbeitszeiten
             InitializeComponent();
         }
 
-        private void Statistiken_Load(object sender, EventArgs e)
+        string[] Monate = { "Januar", "01", "Februar", "02", "März", "03", "April", "04", "Mai", "05", "Juni", "06", "Juli", "07", "August", "08", "September", "09", "Oktober", "10", "November", "11", "Dezember", "12" };
+
+        public void Tage_abfragen()
         {
-            List<string> list = new();
-            list = SQLite.select_Tage_stats();
+            dataGridView1.Rows.Clear();
+            string Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown1.Text) + 1].ToString();
+            List<string> list = SQLite.select_Tage_stats(Monatszahl, "2023");
 
             foreach (string s in list)
             {
-                DateTime dateTime= Convert.ToDateTime(s);
+                DateTime dateTime = Convert.ToDateTime(s);
                 dataGridView1.Rows.Add(dateTime.ToString("dd.MM.yyyy"));
             }
         }
 
+        private void Statistiken_Load(object sender, EventArgs e)
+        {
+            domainUpDown1.SelectedIndex = 0;
+            Tage_abfragen();
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
-
+            Tage_abfragen();
         }
     }
 }
