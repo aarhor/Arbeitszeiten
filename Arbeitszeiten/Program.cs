@@ -17,7 +17,7 @@ namespace Arbeitszeiten
         public static string[] CheckCMDArgs(string[] Argumente)
         {
             //string Pfad = Application.ExecutablePath;
-            string[] allowedArguments = new string[] { "/Dienstbeginn", "/Dienstende", "/Auﬂerhalb" };
+            string[] allowedArguments = new string[] { "/Dienstbeginn", "/Dienstende", "/Auﬂerhalb", "/Rechnerisch" };
 
             List<string> validArguments = new List<string>();
             foreach (string arg in Argumente)

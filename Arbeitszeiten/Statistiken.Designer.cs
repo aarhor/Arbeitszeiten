@@ -53,6 +53,7 @@
             this.dataGridView1.RowTemplate.Height = 25;
             this.dataGridView1.Size = new System.Drawing.Size(131, 255);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Col_Datum
             // 
@@ -60,6 +61,8 @@
             this.Col_Datum.HeaderText = "Datum";
             this.Col_Datum.Name = "Col_Datum";
             this.Col_Datum.ReadOnly = true;
+            this.Col_Datum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Col_Datum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // button1
             // 
@@ -102,7 +105,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(214, 97);
+            this.label2.Location = new System.Drawing.Point(213, 120);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(45, 15);
             this.label2.TabIndex = 4;
@@ -130,10 +133,10 @@
         #endregion
 
         private DataGridView dataGridView1;
-        private DataGridViewTextBoxColumn Col_Datum;
         private Button button1;
         private DomainUpDown domainUpDown1;
         private Label label1;
+        private DataGridViewTextBoxColumn Col_Datum;
         private Label label2;
     }
 }

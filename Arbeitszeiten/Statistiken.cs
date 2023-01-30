@@ -23,14 +23,24 @@ namespace Arbeitszeiten
         public void Tage_abfragen()
         {
             dataGridView1.Rows.Clear();
+            dataGridView1.Rows.Add("Alle Tage");
+
             string Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown1.Text) + 1].ToString();
             List<string> list = SQLite.select_Tage_stats(Monatszahl, "2023");
 
-            foreach (string s in list)
+            foreach (DateTime dateTime in from string s in list
+                                          let dateTime = Convert.ToDateTime(s)
+                                          select dateTime)
             {
-                DateTime dateTime = Convert.ToDateTime(s);
                 dataGridView1.Rows.Add(dateTime.ToString("dd.MM.yyyy"));
             }
+        }
+
+        public void Tag_auswählen(DateTime Tag)
+        {
+            string Tag_conv = Tag.ToString("yyyy-MM-dd");
+            label2.Text = Tag_conv;
+            string SQL_Befehl = "select * from Zeiten where Datum = '" + Tag_conv + "'";
         }
 
         private void Statistiken_Load(object sender, EventArgs e)
@@ -42,6 +52,15 @@ namespace Arbeitszeiten
         private void button1_Click(object sender, EventArgs e)
         {
             Tage_abfragen();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+            {
+                string Tag = dataGridView1.Rows[index: dataGridView1.CurrentCell.RowIndex].Cells[0].Value.ToString();
+                Tag_auswählen(Convert.ToDateTime(Tag));
+            }
         }
     }
 }
