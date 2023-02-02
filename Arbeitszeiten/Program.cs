@@ -17,7 +17,7 @@ namespace Arbeitszeiten
         public static string[] CheckCMDArgs(string[] Argumente)
         {
             //string Pfad = Application.ExecutablePath;
-            string[] allowedArguments = new string[] { "/Dienstbeginn", "/Dienstende", "/Auﬂerhalb", "/Rechnerisch" };
+            string[] allowedArguments = new string[] { "/Dienstbeginn", "/Dienstende", "/Auﬂerhalb", "/Rechnerisch", "/?" };
 
             List<string> validArguments = new List<string>();
             foreach (string arg in Argumente)
@@ -62,7 +62,7 @@ namespace Arbeitszeiten
                     }
                     else if (firstArgument == "/Dienstende")
                     {
-                        Kommandozeile.Abmelden(Convert.ToDateTime(null), false);
+                        Kommandozeile.Abmelden(Convert.ToDateTime(null), false, false);
                         MessageBox.Show("Der Ende wurde erfolgreich eingetragen.\nDas Programm wird nun direkt wieder geschlossen.");
                         Application.Exit();
                     }
@@ -74,7 +74,7 @@ namespace Arbeitszeiten
 
                     if (firstArgument == "/Dienstende" && secondArgument == "/Auﬂerhalb")
                     {
-                        Kommandozeile.Abmelden(Convert.ToDateTime(null), true);
+                        Kommandozeile.Abmelden(Convert.ToDateTime(null), true, false);
                         MessageBox.Show("Der Ende wurde erfolgreich eingetragen.\nDas Programm wird nun direkt wieder geschlossen.");
                         Application.Exit();
                     }

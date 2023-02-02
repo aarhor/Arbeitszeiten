@@ -14,7 +14,7 @@ namespace Arbeitszeiten.Klassen
             SQLite.insert_table(heute, Startzeit);
         }
 
-        public static decimal Abmelden(DateTime dateTime, bool Außerhalb)
+        public static decimal Abmelden(DateTime dateTime, bool Außerhalb, bool Rechnerisch)
         {
             if (dateTime == DateTime.MinValue) { dateTime = DateTime.Now; }
 
@@ -52,7 +52,8 @@ namespace Arbeitszeiten.Klassen
             else
                 Ueberzeit = Differenz_dezimal - 0;
 
-            SQLite.update_table(heute, Ende_Gelände, Differenz_dezimal, Ueberzeit);
+            if (!Rechnerisch)
+                SQLite.update_table(heute, Ende_Gelände, Differenz_dezimal, Ueberzeit);
 
             return Ueberzeit;
         }

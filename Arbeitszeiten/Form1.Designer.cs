@@ -37,10 +37,12 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lbl_Differenz = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.chkBox_Manuell = new System.Windows.Forms.CheckBox();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.chkBox_Rechnerisch = new System.Windows.Forms.CheckBox();
+            this.chkBox_Außerhalb = new System.Windows.Forms.CheckBox();
+            this.lbl_Meldung = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -118,7 +120,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(183, 83);
+            this.linkLabel1.Location = new System.Drawing.Point(183, 103);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(78, 15);
             this.linkLabel1.TabIndex = 9;
@@ -126,21 +128,21 @@
             this.linkLabel1.Text = "Einstellungen";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
-            // checkBox1
+            // chkBox_Manuell
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 22);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(69, 19);
-            this.checkBox1.TabIndex = 10;
-            this.checkBox1.Text = "Manuell";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.chkBox_Manuell.AutoSize = true;
+            this.chkBox_Manuell.Location = new System.Drawing.Point(6, 22);
+            this.chkBox_Manuell.Name = "chkBox_Manuell";
+            this.chkBox_Manuell.Size = new System.Drawing.Size(69, 19);
+            this.chkBox_Manuell.TabIndex = 10;
+            this.chkBox_Manuell.Text = "Manuell";
+            this.chkBox_Manuell.UseVisualStyleBackColor = true;
+            this.chkBox_Manuell.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(116, 83);
+            this.linkLabel2.Location = new System.Drawing.Point(116, 103);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(61, 15);
             this.linkLabel2.TabIndex = 11;
@@ -150,30 +152,52 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.checkBox2);
-            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Controls.Add(this.chkBox_Rechnerisch);
+            this.groupBox1.Controls.Add(this.chkBox_Außerhalb);
+            this.groupBox1.Controls.Add(this.chkBox_Manuell);
             this.groupBox1.Location = new System.Drawing.Point(267, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(161, 83);
+            this.groupBox1.Size = new System.Drawing.Size(174, 106);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Optionen";
             // 
-            // checkBox2
+            // chkBox_Rechnerisch
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(6, 47);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(152, 19);
-            this.checkBox2.TabIndex = 11;
-            this.checkBox2.Text = "Außerhalb Arbeitszeiten";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.chkBox_Rechnerisch.AutoSize = true;
+            this.chkBox_Rechnerisch.Location = new System.Drawing.Point(6, 72);
+            this.chkBox_Rechnerisch.Name = "chkBox_Rechnerisch";
+            this.chkBox_Rechnerisch.Size = new System.Drawing.Size(154, 19);
+            this.chkBox_Rechnerisch.TabIndex = 12;
+            this.chkBox_Rechnerisch.Text = "Rechnerische Arbeitszeit";
+            this.chkBox_Rechnerisch.UseVisualStyleBackColor = true;
+            this.chkBox_Rechnerisch.CheckedChanged += new System.EventHandler(this.chkBox_Rechnerisch_CheckedChanged);
+            // 
+            // chkBox_Außerhalb
+            // 
+            this.chkBox_Außerhalb.AutoSize = true;
+            this.chkBox_Außerhalb.Location = new System.Drawing.Point(6, 47);
+            this.chkBox_Außerhalb.Name = "chkBox_Außerhalb";
+            this.chkBox_Außerhalb.Size = new System.Drawing.Size(152, 19);
+            this.chkBox_Außerhalb.TabIndex = 11;
+            this.chkBox_Außerhalb.Text = "Außerhalb Arbeitszeiten";
+            this.chkBox_Außerhalb.UseVisualStyleBackColor = true;
+            // 
+            // lbl_Meldung
+            // 
+            this.lbl_Meldung.AutoSize = true;
+            this.lbl_Meldung.Location = new System.Drawing.Point(12, 83);
+            this.lbl_Meldung.Name = "lbl_Meldung";
+            this.lbl_Meldung.Size = new System.Drawing.Size(250, 15);
+            this.lbl_Meldung.TabIndex = 13;
+            this.lbl_Meldung.Text = "Es wird NICHTS in die Datenbank geschrieben!";
+            this.lbl_Meldung.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(440, 107);
+            this.ClientSize = new System.Drawing.Size(453, 130);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.linkLabel1);
@@ -185,6 +209,7 @@
             this.Controls.Add(this.txtBox_Start);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.lbl_Meldung);
             this.Name = "Form1";
             this.Text = "Arbeitszeiterfassung";
             this.groupBox1.ResumeLayout(false);
@@ -204,9 +229,11 @@
         private TextBox txtBox_Ende;
         private Label label3;
         private Label lbl_Differenz;
-        private CheckBox checkBox1;
+        private CheckBox chkBox_Manuell;
         private LinkLabel linkLabel2;
         private GroupBox groupBox1;
-        private CheckBox checkBox2;
+        private CheckBox chkBox_Außerhalb;
+        private CheckBox chkBox_Rechnerisch;
+        private Label lbl_Meldung;
     }
 }

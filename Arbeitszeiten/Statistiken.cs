@@ -26,7 +26,8 @@ namespace Arbeitszeiten
             dataGridView1.Rows.Add("Alle Tage");
 
             string Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown1.Text) + 1].ToString();
-            List<string> list = SQLite.select_Tage_stats(Monatszahl, "2023");
+            string Jahr = domainUpDown2.Text;
+            List<string> list = SQLite.select_Tage_stats(Monatszahl, Jahr);
 
             foreach (DateTime dateTime in from string s in list
                                           let dateTime = Convert.ToDateTime(s)

@@ -11,7 +11,7 @@ namespace Arbeitszeiten
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (checkBox1.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(txtBox_Start.Text)); }
+            if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(txtBox_Start.Text)); }
             else
             {
                 DateTime dateTime = DateTime.Now;
@@ -23,24 +23,26 @@ namespace Arbeitszeiten
         private void button2_Click(object sender, EventArgs e)
         {
             decimal Differenz_dezimal;
-            if (checkBox2.Checked)
+            bool Rechnerisch = chkBox_Rechnerisch.Checked;
+
+            if (chkBox_Auﬂerhalb.Checked)
             {
-                if (checkBox1.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), true); }
+                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), true, Rechnerisch); }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
-                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), true);
+                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), true, Rechnerisch);
 
                     txtBox_Ende.Text = dateTime.ToString();
                 }
             }
             else
             {
-                if (checkBox1.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), false); }
+                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), false, Rechnerisch); }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
-                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), false);
+                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), false, Rechnerisch);
 
                     txtBox_Ende.Text = dateTime.ToString();
                 }
@@ -59,7 +61,7 @@ namespace Arbeitszeiten
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox1.Checked)
+            if (chkBox_Manuell.Checked)
             {
                 txtBox_Start.ReadOnly = false;
                 txtBox_Start.PlaceholderText = "05.11.1998 00:00:01";
@@ -82,6 +84,14 @@ namespace Arbeitszeiten
         {
             Statistiken Form_statistiken = new Statistiken();
             Form_statistiken.ShowDialog();
+        }
+
+        private void chkBox_Rechnerisch_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkBox_Rechnerisch.Checked)
+                lbl_Meldung.Visible = true;
+            else
+                lbl_Meldung.Visible = false;
         }
     }
 }

@@ -34,6 +34,7 @@
             this.domainUpDown1 = new System.Windows.Forms.DomainUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.domainUpDown2 = new System.Windows.Forms.DomainUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,7 +67,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(329, 5);
+            this.button1.Location = new System.Drawing.Point(329, 34);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -105,17 +106,30 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(213, 120);
+            this.label2.Location = new System.Drawing.Point(151, 38);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 15);
+            this.label2.Size = new System.Drawing.Size(31, 15);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Monat:";
+            this.label2.Text = "Jahr:";
+            // 
+            // domainUpDown2
+            // 
+            this.domainUpDown2.Items.Add("2022");
+            this.domainUpDown2.Items.Add("2023");
+            this.domainUpDown2.Items.Add("2024");
+            this.domainUpDown2.Items.Add("2025");
+            this.domainUpDown2.Items.Add("2026");
+            this.domainUpDown2.Location = new System.Drawing.Point(188, 36);
+            this.domainUpDown2.Name = "domainUpDown2";
+            this.domainUpDown2.Size = new System.Drawing.Size(135, 23);
+            this.domainUpDown2.TabIndex = 5;
             // 
             // Statistiken
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(471, 255);
+            this.Controls.Add(this.domainUpDown2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.domainUpDown1);
@@ -138,5 +152,6 @@
         private Label label1;
         private DataGridViewTextBoxColumn Col_Datum;
         private Label label2;
+        private DomainUpDown domainUpDown2;
     }
 }
