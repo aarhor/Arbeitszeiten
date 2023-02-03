@@ -24,33 +24,34 @@ namespace Arbeitszeiten
         {
             decimal Differenz_dezimal;
             bool Rechnerisch = chkBox_Rechnerisch.Checked;
+            string Bemerkung = "null";
 
             if (chkBox_Außerhalb.Checked)
             {
-                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), true, Rechnerisch); }
+                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), true, Rechnerisch,Bemerkung); }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
-                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), true, Rechnerisch);
+                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), true, Rechnerisch,Bemerkung);
 
                     txtBox_Ende.Text = dateTime.ToString();
                 }
             }
             else
             {
-                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), false, Rechnerisch); }
+                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), false, Rechnerisch, Bemerkung); }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
-                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), false, Rechnerisch);
+                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), false, Rechnerisch, Bemerkung);
 
                     txtBox_Ende.Text = dateTime.ToString();
                 }
             }
 
-            if (Differenz_dezimal > 0) { lbl_Differenz.Text = Differenz_dezimal.ToString("#0.00") + " Mehrstunden"; }
-            else if (Differenz_dezimal < 0) { lbl_Differenz.Text = Differenz_dezimal.ToString("#0.00") + " Minderstunden"; }
-            else if (Differenz_dezimal == 0) { lbl_Differenz.Text = "Punktlandung!"; }
+            if (Differenz_dezimal > 0) { lbl_Differenz.Text = "Differenz:  " + Differenz_dezimal.ToString("#0.00") + " Mehrstunden"; }
+            else if (Differenz_dezimal < 0) { lbl_Differenz.Text = "Differenz:  " + Differenz_dezimal.ToString("#0.00") + " Minderstunden"; }
+            else if (Differenz_dezimal == 0) { lbl_Differenz.Text = "Differenz:  Punktlandung!"; }
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -92,6 +93,11 @@ namespace Arbeitszeiten
                 lbl_Meldung.Visible = true;
             else
                 lbl_Meldung.Visible = false;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

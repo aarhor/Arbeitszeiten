@@ -1,8 +1,7 @@
 {
   "profiles": {
     "Arbeitszeiten": {
-      "commandName": "Project",
-      "commandLineArgs": "/?"
+      "commandName": "Project"
     }
   }
 }

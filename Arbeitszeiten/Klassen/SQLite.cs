@@ -22,7 +22,7 @@ namespace Arbeitszeiten.Klassen
             connection.Open();
             using (SQLiteCommand command = new(connection))
             {
-                command.CommandText = "CREATE TABLE Zeiten (ID_Erfassung INTEGER PRIMARY KEY, Datum DATE, Start DATETIME, Ende DATETIME, Differenz DOUBLE, MehrMinder_Stunden DOUBLE)";
+                command.CommandText = "CREATE TABLE Zeiten (ID_Erfassung INTEGER PRIMARY KEY AUTOINCREMENT, Datum DATE, Start DATETIME, Ende DATETIME, Differenz DOUBLE, MehrMinder_Stunden DOUBLE, Bemerkung TEXT)";
                 command.ExecuteNonQuery();
             }
             connection.Close();
@@ -55,7 +55,7 @@ namespace Arbeitszeiten.Klassen
             connection.Close();
         }
 
-        public static void update_table(string Heute, string Ende, decimal Differenz, decimal MehrMinder_Stunden)
+        public static void update_table(string Heute, string Ende, decimal Differenz, decimal MehrMinder_Stunden,string Bemerkung)
         {
             using SQLiteConnection connection = new(Connectionstring());
             connection.Open();
@@ -65,10 +65,11 @@ namespace Arbeitszeiten.Klassen
                 {
                     using (SQLiteCommand command = new(connection))
                     {
-                        command.CommandText = "UPDATE Zeiten SET Ende = @Ende, Differenz = @Differenz, MehrMinder_Stunden = @MehrMinder_Stunden where Datum = \"" + Heute + "\" and Ende IS NULL order by Start DESC LIMIT 1";
+                        command.CommandText = "UPDATE Zeiten SET Ende = @Ende, Differenz = @Differenz, MehrMinder_Stunden = @MehrMinder_Stunden, Bemerkung = @Bemerkung where Datum = \"" + Heute + "\" and Ende IS NULL order by Start DESC LIMIT 1";
                         command.Parameters.AddWithValue("@Ende", Ende);
                         command.Parameters.AddWithValue("@Differenz", Differenz);
                         command.Parameters.AddWithValue("@MehrMinder_Stunden", MehrMinder_Stunden);
+                        command.Parameters.AddWithValue("@Bemerkung", Bemerkung);
                         command.ExecuteNonQuery();
                     }
 

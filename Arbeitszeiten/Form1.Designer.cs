@@ -34,7 +34,6 @@
             this.txtBox_Ende = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.lbl_Differenz = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.chkBox_Manuell = new System.Windows.Forms.CheckBox();
@@ -43,13 +42,15 @@
             this.chkBox_Rechnerisch = new System.Windows.Forms.CheckBox();
             this.chkBox_Außerhalb = new System.Windows.Forms.CheckBox();
             this.lbl_Meldung = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(31, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(52, 15);
             this.label1.TabIndex = 1;
@@ -58,7 +59,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 38);
+            this.label2.Location = new System.Drawing.Point(35, 38);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(48, 15);
             this.label2.TabIndex = 2;
@@ -66,7 +67,7 @@
             // 
             // txtBox_Start
             // 
-            this.txtBox_Start.Location = new System.Drawing.Point(70, 6);
+            this.txtBox_Start.Location = new System.Drawing.Point(89, 6);
             this.txtBox_Start.Name = "txtBox_Start";
             this.txtBox_Start.ReadOnly = true;
             this.txtBox_Start.Size = new System.Drawing.Size(110, 23);
@@ -74,7 +75,7 @@
             // 
             // txtBox_Ende
             // 
-            this.txtBox_Ende.Location = new System.Drawing.Point(70, 35);
+            this.txtBox_Ende.Location = new System.Drawing.Point(89, 35);
             this.txtBox_Ende.Name = "txtBox_Ende";
             this.txtBox_Ende.ReadOnly = true;
             this.txtBox_Ende.Size = new System.Drawing.Size(110, 23);
@@ -82,7 +83,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(186, 6);
+            this.button1.Location = new System.Drawing.Point(205, 6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 5;
@@ -92,7 +93,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(186, 35);
+            this.button2.Location = new System.Drawing.Point(205, 35);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 6;
@@ -100,27 +101,19 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 61);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 15);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Differenz:";
-            // 
             // lbl_Differenz
             // 
             this.lbl_Differenz.AutoSize = true;
-            this.lbl_Differenz.Location = new System.Drawing.Point(75, 61);
+            this.lbl_Differenz.Location = new System.Drawing.Point(26, 93);
             this.lbl_Differenz.Name = "lbl_Differenz";
-            this.lbl_Differenz.Size = new System.Drawing.Size(0, 15);
-            this.lbl_Differenz.TabIndex = 8;
+            this.lbl_Differenz.Size = new System.Drawing.Size(57, 15);
+            this.lbl_Differenz.TabIndex = 7;
+            this.lbl_Differenz.Text = "Differenz:";
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(183, 103);
+            this.linkLabel1.Location = new System.Drawing.Point(382, 121);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(78, 15);
             this.linkLabel1.TabIndex = 9;
@@ -142,7 +135,7 @@
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(116, 103);
+            this.linkLabel2.Location = new System.Drawing.Point(315, 121);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(61, 15);
             this.linkLabel2.TabIndex = 11;
@@ -155,7 +148,7 @@
             this.groupBox1.Controls.Add(this.chkBox_Rechnerisch);
             this.groupBox1.Controls.Add(this.chkBox_Außerhalb);
             this.groupBox1.Controls.Add(this.chkBox_Manuell);
-            this.groupBox1.Location = new System.Drawing.Point(267, 12);
+            this.groupBox1.Location = new System.Drawing.Point(286, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(174, 106);
             this.groupBox1.TabIndex = 12;
@@ -186,23 +179,40 @@
             // lbl_Meldung
             // 
             this.lbl_Meldung.AutoSize = true;
-            this.lbl_Meldung.Location = new System.Drawing.Point(12, 83);
+            this.lbl_Meldung.Location = new System.Drawing.Point(25, 121);
             this.lbl_Meldung.Name = "lbl_Meldung";
             this.lbl_Meldung.Size = new System.Drawing.Size(250, 15);
             this.lbl_Meldung.TabIndex = 13;
             this.lbl_Meldung.Text = "Es wird NICHTS in die Datenbank geschrieben!";
             this.lbl_Meldung.Visible = false;
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(89, 64);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(191, 23);
+            this.textBox1.TabIndex = 15;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 67);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(71, 15);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Bemerkung:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(453, 130);
+            this.ClientSize = new System.Drawing.Size(473, 143);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.lbl_Differenz);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.txtBox_Ende);
@@ -212,6 +222,7 @@
             this.Controls.Add(this.lbl_Meldung);
             this.Name = "Form1";
             this.Text = "Arbeitszeiterfassung";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -227,7 +238,6 @@
         private LinkLabel linkLabel1;
         private TextBox txtBox_Start;
         private TextBox txtBox_Ende;
-        private Label label3;
         private Label lbl_Differenz;
         private CheckBox chkBox_Manuell;
         private LinkLabel linkLabel2;
@@ -235,5 +245,7 @@
         private CheckBox chkBox_Außerhalb;
         private CheckBox chkBox_Rechnerisch;
         private Label lbl_Meldung;
+        private TextBox textBox1;
+        private Label label4;
     }
 }

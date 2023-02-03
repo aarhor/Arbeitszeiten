@@ -65,7 +65,7 @@ namespace Arbeitszeiten
                     }
                     else if (firstArgument == "/Dienstende")
                     {
-                        Kommandozeile.Abmelden(Convert.ToDateTime(null), false, false);
+                        Kommandozeile.Abmelden(Convert.ToDateTime(null), false, false, "null");
                         MessageBox.Show("Das Ende wurde erfolgreich eingetragen.");
                         Application.Exit();
                     }
@@ -94,7 +94,7 @@ namespace Arbeitszeiten
 
                     if (firstArgument == "/Dienstende" && secondArgument == "/Auﬂerhalb")
                     {
-                        Kommandozeile.Abmelden(Convert.ToDateTime(null), true, false);
+                        Kommandozeile.Abmelden(Convert.ToDateTime(null), true, false, "null");
                         MessageBox.Show("Das Ende wurde erfolgreich eingetragen.");
                         Application.Exit();
                     }
