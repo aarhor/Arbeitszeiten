@@ -61,7 +61,7 @@ namespace Arbeitszeiten.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Test ähnelt.
         /// </summary>
         internal static string Argumente {
             get {
