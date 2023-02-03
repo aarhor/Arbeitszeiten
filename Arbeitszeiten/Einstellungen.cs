@@ -26,14 +26,11 @@ namespace Arbeitszeiten
         private void Einstellungen_Load(object sender, EventArgs e)
         {
             bool vorhanden = Registry.RegistryKeyExists(@"software\" + Application.CompanyName + @"\" + Application.ProductName);
+
             if (vorhanden)
-            {
                 txtBox_Pfad.Text = Registry.GetValue("Dateipfad");
-            }
             else
-            {
                 MessageBox.Show("Es ist noch kein Pfad vorhanden!");
-            }
         }
 
         private void btn_Neustart_Click(object sender, EventArgs e)
@@ -44,6 +41,17 @@ namespace Arbeitszeiten
         private void label1_Click(object sender, EventArgs e)
         {
             MessageBox.Show("In dieses Feld kommt der KOMPLETTE Pfad zu der .db Datei (z.b. \"C:\\Temp\\Arbeitszeiten.db\"");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string Pfad = txtBox_Pfad.Text;
+            string Pfad_Sicherung = Path.GetDirectoryName(Pfad) + @"\Sicherungen\Arbeitszeiten_" + DateTime.Now.ToString("yyyyMMdd") + ".db.bak";
+
+            if (!Directory.Exists(Path.GetDirectoryName(Pfad) + @"\Sicherungen\"))
+                Directory.CreateDirectory(Path.GetDirectoryName(Pfad) + @"\Sicherungen\");
+
+            File.Copy(Pfad, Pfad_Sicherung, true);
         }
     }
 }

@@ -42,7 +42,7 @@
             this.chkBox_Rechnerisch = new System.Windows.Forms.CheckBox();
             this.chkBox_Außerhalb = new System.Windows.Forms.CheckBox();
             this.lbl_Meldung = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtBox_Bemerkung = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -186,12 +186,12 @@
             this.lbl_Meldung.Text = "Es wird NICHTS in die Datenbank geschrieben!";
             this.lbl_Meldung.Visible = false;
             // 
-            // textBox1
+            // txtBox_Bemerkung
             // 
-            this.textBox1.Location = new System.Drawing.Point(89, 64);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(191, 23);
-            this.textBox1.TabIndex = 15;
+            this.txtBox_Bemerkung.Location = new System.Drawing.Point(89, 64);
+            this.txtBox_Bemerkung.Name = "txtBox_Bemerkung";
+            this.txtBox_Bemerkung.Size = new System.Drawing.Size(191, 23);
+            this.txtBox_Bemerkung.TabIndex = 15;
             // 
             // label4
             // 
@@ -207,7 +207,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(473, 143);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtBox_Bemerkung);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.linkLabel2);
@@ -245,7 +245,7 @@
         private CheckBox chkBox_Außerhalb;
         private CheckBox chkBox_Rechnerisch;
         private Label lbl_Meldung;
-        private TextBox textBox1;
+        private TextBox txtBox_Bemerkung;
         private Label label4;
     }
 }

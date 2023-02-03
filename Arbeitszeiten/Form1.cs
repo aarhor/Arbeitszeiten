@@ -26,13 +26,16 @@ namespace Arbeitszeiten
             bool Rechnerisch = chkBox_Rechnerisch.Checked;
             string Bemerkung = "null";
 
+            if (txtBox_Bemerkung.TextLength >= 1)
+                Bemerkung = txtBox_Bemerkung.Text;
+
             if (chkBox_Auﬂerhalb.Checked)
             {
-                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), true, Rechnerisch,Bemerkung); }
+                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), true, Rechnerisch, Bemerkung); }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
-                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), true, Rechnerisch,Bemerkung);
+                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), true, Rechnerisch, Bemerkung);
 
                     txtBox_Ende.Text = dateTime.ToString();
                 }
