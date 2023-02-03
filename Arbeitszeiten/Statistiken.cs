@@ -47,6 +47,7 @@ namespace Arbeitszeiten
         private void Statistiken_Load(object sender, EventArgs e)
         {
             domainUpDown1.SelectedIndex = 0;
+            domainUpDown2.SelectedIndex = 0;
             Tage_abfragen();
         }
 
