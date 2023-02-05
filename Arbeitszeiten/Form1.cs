@@ -9,6 +9,8 @@ namespace Arbeitszeiten
             InitializeComponent();
         }
 
+        bool Pause = true;
+
         private void button1_Click(object sender, EventArgs e)
         {
             if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(txtBox_Start.Text)); }
@@ -31,22 +33,22 @@ namespace Arbeitszeiten
 
             if (chkBox_Auﬂerhalb.Checked)
             {
-                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), true, Rechnerisch, Bemerkung); }
+                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), true, Rechnerisch, Bemerkung, Pause); }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
-                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), true, Rechnerisch, Bemerkung);
+                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), true, Rechnerisch, Bemerkung, Pause);
 
                     txtBox_Ende.Text = dateTime.ToString();
                 }
             }
             else
             {
-                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), false, Rechnerisch, Bemerkung); }
+                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), false, Rechnerisch, Bemerkung, Pause); }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
-                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), false, Rechnerisch, Bemerkung);
+                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), false, Rechnerisch, Bemerkung, Pause);
 
                     txtBox_Ende.Text = dateTime.ToString();
                 }
@@ -100,7 +102,21 @@ namespace Arbeitszeiten
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            DateTime dateTime = DateTime.Now;
+            string Wochentag = dateTime.ToString("dddd");
 
+            if (Wochentag == "Freitag")
+                chkBox_Pause.Checked = false;
+            else
+                chkBox_Pause.Checked = true;
+        }
+
+        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (chkBox_Pause.Checked)
+                Pause = true;
+            else
+                Pause = false;
         }
     }
 }

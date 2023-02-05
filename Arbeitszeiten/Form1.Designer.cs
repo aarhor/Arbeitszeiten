@@ -39,6 +39,7 @@
             this.chkBox_Manuell = new System.Windows.Forms.CheckBox();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkBox_Pause = new System.Windows.Forms.CheckBox();
             this.chkBox_Rechnerisch = new System.Windows.Forms.CheckBox();
             this.chkBox_Außerhalb = new System.Windows.Forms.CheckBox();
             this.lbl_Meldung = new System.Windows.Forms.Label();
@@ -113,7 +114,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(382, 121);
+            this.linkLabel1.Location = new System.Drawing.Point(382, 141);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(78, 15);
             this.linkLabel1.TabIndex = 9;
@@ -135,7 +136,7 @@
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(315, 121);
+            this.linkLabel2.Location = new System.Drawing.Point(315, 141);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(61, 15);
             this.linkLabel2.TabIndex = 11;
@@ -145,15 +146,29 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chkBox_Pause);
             this.groupBox1.Controls.Add(this.chkBox_Rechnerisch);
             this.groupBox1.Controls.Add(this.chkBox_Außerhalb);
             this.groupBox1.Controls.Add(this.chkBox_Manuell);
             this.groupBox1.Location = new System.Drawing.Point(286, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(174, 106);
+            this.groupBox1.Size = new System.Drawing.Size(174, 126);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Optionen";
+            // 
+            // chkBox_Pause
+            // 
+            this.chkBox_Pause.AutoSize = true;
+            this.chkBox_Pause.Checked = true;
+            this.chkBox_Pause.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkBox_Pause.Location = new System.Drawing.Point(6, 97);
+            this.chkBox_Pause.Name = "chkBox_Pause";
+            this.chkBox_Pause.Size = new System.Drawing.Size(57, 19);
+            this.chkBox_Pause.TabIndex = 13;
+            this.chkBox_Pause.Text = "Pause";
+            this.chkBox_Pause.UseVisualStyleBackColor = true;
+            this.chkBox_Pause.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
             // 
             // chkBox_Rechnerisch
             // 
@@ -179,7 +194,7 @@
             // lbl_Meldung
             // 
             this.lbl_Meldung.AutoSize = true;
-            this.lbl_Meldung.Location = new System.Drawing.Point(25, 121);
+            this.lbl_Meldung.Location = new System.Drawing.Point(26, 123);
             this.lbl_Meldung.Name = "lbl_Meldung";
             this.lbl_Meldung.Size = new System.Drawing.Size(250, 15);
             this.lbl_Meldung.TabIndex = 13;
@@ -206,7 +221,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(473, 143);
+            this.ClientSize = new System.Drawing.Size(473, 167);
             this.Controls.Add(this.txtBox_Bemerkung);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox1);
@@ -247,5 +262,6 @@
         private Label lbl_Meldung;
         private TextBox txtBox_Bemerkung;
         private Label label4;
+        public CheckBox chkBox_Pause;
     }
 }

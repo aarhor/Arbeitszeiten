@@ -14,7 +14,7 @@ namespace Arbeitszeiten.Klassen
             SQLite.insert_table(heute, Startzeit);
         }
 
-        public static decimal Abmelden(DateTime dateTime, bool Außerhalb, bool Rechnerisch, string Bemerkung)
+        public static decimal Abmelden(DateTime dateTime, bool Außerhalb, bool Rechnerisch, string Bemerkung, bool Pause)
         {
             if (dateTime == DateTime.MinValue) { dateTime = DateTime.Now; }
 
@@ -27,27 +27,18 @@ namespace Arbeitszeiten.Klassen
             string Ende_Gelände = dateTime.ToString("HH:mm:ss");
             string Wochentag = dateTime.ToString("dddd");
             decimal Ueberzeit = 0;
+            decimal Pausenzeit = 0;
+
+            if (Pause) { Pausenzeit = Convert.ToDecimal(0.5); }
 
             if (!Außerhalb)
             {
-                if (Differenz_dezimal > Convert.ToDecimal(5.25))
-                {
-                    if (Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag")
-                        Ueberzeit = Differenz_dezimal - Convert.ToDecimal(8.5);
-                    else if (Wochentag == "Freitag")
-                        Ueberzeit = Differenz_dezimal - Convert.ToDecimal(5.5);
-                    else if (Wochentag == "Samstag" || Wochentag == "Sonntag")
-                        Ueberzeit = Differenz_dezimal - 0;
-                }
-                else
-                {
-                    if (Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag")
-                        Ueberzeit = Differenz_dezimal - Convert.ToDecimal(8);
-                    else if (Wochentag == "Freitag")
-                        Ueberzeit = Differenz_dezimal - Convert.ToDecimal(5);
-                    else if (Wochentag == "Samstag" || Wochentag == "Sonntag")
-                        Ueberzeit = Differenz_dezimal - 0;
-                }
+                if (Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag")
+                    Ueberzeit = Differenz_dezimal - Convert.ToDecimal(8 + Pausenzeit);
+                else if (Wochentag == "Freitag")
+                    Ueberzeit = Differenz_dezimal - Convert.ToDecimal(5 + Pausenzeit);
+                else if (Wochentag == "Samstag" || Wochentag == "Sonntag")
+                    Ueberzeit = Differenz_dezimal - Convert.ToDecimal(0 + Pausenzeit);
             }
             else
                 Ueberzeit = Differenz_dezimal - 0;

@@ -22,7 +22,7 @@ namespace Arbeitszeiten.Klassen
             connection.Open();
             using (SQLiteCommand command = new(connection))
             {
-                command.CommandText = "CREATE TABLE Zeiten (ID_Erfassung INTEGER PRIMARY KEY AUTOINCREMENT, Datum DATE, Start DATETIME, Ende DATETIME, Differenz DOUBLE, MehrMinder_Stunden DOUBLE, Bemerkung TEXT)";
+                command.CommandText = Properties.Resources.Erstellen;
                 command.ExecuteNonQuery();
             }
             connection.Close();
@@ -65,6 +65,9 @@ namespace Arbeitszeiten.Klassen
                 {
                     using (SQLiteCommand command = new(connection))
                     {
+                        if (Bemerkung == "null")
+                            Bemerkung = null;
+
                         command.CommandText = "UPDATE Zeiten SET Ende = @Ende, Differenz = @Differenz, MehrMinder_Stunden = @MehrMinder_Stunden, Bemerkung = @Bemerkung where Datum = \"" + Heute + "\" and Ende IS NULL order by Start DESC LIMIT 1";
                         command.Parameters.AddWithValue("@Ende", Ende);
                         command.Parameters.AddWithValue("@Differenz", Differenz);

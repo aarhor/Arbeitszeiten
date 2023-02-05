@@ -18,7 +18,7 @@ namespace Arbeitszeiten
         public static string[] CheckCMDArgs(string[] Argumente)
         {
             //string Pfad = Application.ExecutablePath;
-            string[] allowedArguments = new string[] { "/Dienstbeginn", "/Dienstende", "/Auﬂerhalb", "/Rechnerisch", "/?" };
+            string[] allowedArguments = new string[] { "/Dienstbeginn", "/Dienstende", "/Auﬂerhalb", "/Rechnerisch" };
 
             List<string> validArguments = new List<string>();
             foreach (string arg in Argumente)
@@ -51,7 +51,6 @@ namespace Arbeitszeiten
             {
                 string firstArgument = "";
                 string secondArgument = "";
-                string thirdargument = "";
 
                 if (CommandLineArguments.Args.Length == 1)
                 {
@@ -65,26 +64,9 @@ namespace Arbeitszeiten
                     }
                     else if (firstArgument == "/Dienstende")
                     {
-                        Kommandozeile.Abmelden(Convert.ToDateTime(null), false, false, "null");
+                        Kommandozeile.Abmelden(Convert.ToDateTime(null), false, false, "null", true);
                         MessageBox.Show("Das Ende wurde erfolgreich eingetragen.");
                         Application.Exit();
-                    }
-                    else if (firstArgument == "/?")
-                    {
-                        Console.WriteLine("Test");
-                        MessageBox.Show("Test");
-                        //string Pfad = Path.GetTempPath() + @"Aarhor\" + Application.ProductName + @"\Argumente.txt";
-
-                        //if (!Directory.Exists(Pfad.Replace(@"\Argumente.txt", string.Empty))) { Directory.CreateDirectory(Pfad.Replace(@"\Argumente.txt", string.Empty)); }
-
-                        //using (FileStream fileStream = new FileStream(Pfad, FileMode.Create, FileAccess.Write))
-                        //{
-                        //    using (BinaryWriter binaryWriter = new BinaryWriter(fileStream))
-                        //    {
-                        //        binaryWriter.Write(Properties.Resources.Argumente);
-                        //    }
-                        //}
-                        //Process.Start(Pfad);
                     }
                 }
                 else if (CommandLineArguments.Args.Length == 2)
@@ -94,17 +76,10 @@ namespace Arbeitszeiten
 
                     if (firstArgument == "/Dienstende" && secondArgument == "/Auﬂerhalb")
                     {
-                        Kommandozeile.Abmelden(Convert.ToDateTime(null), true, false, "null");
+                        Kommandozeile.Abmelden(Convert.ToDateTime(null), true, false, "null", true);
                         MessageBox.Show("Das Ende wurde erfolgreich eingetragen.");
                         Application.Exit();
                     }
-                }
-                else if (CommandLineArguments.Args.Length == 3)
-                {
-                    firstArgument = CommandLineArguments.Args[0];
-                    secondArgument = CommandLineArguments.Args[1];
-                    thirdargument = CommandLineArguments.Args[2];
-
                 }
                 else
                 {
