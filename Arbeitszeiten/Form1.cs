@@ -11,18 +11,7 @@ namespace Arbeitszeiten
 
         bool Pause = true;
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(txtBox_Start.Text)); }
-            else
-            {
-                DateTime dateTime = DateTime.Now;
-                Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue));
-                txtBox_Start.Text = dateTime.ToString();
-            }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
+        private void Berechnen()
         {
             decimal Differenz_dezimal;
             bool Rechnerisch = chkBox_Rechnerisch.Checked;
@@ -57,6 +46,22 @@ namespace Arbeitszeiten
             if (Differenz_dezimal > 0) { lbl_Differenz.Text = "Differenz:  " + Differenz_dezimal.ToString("#0.00") + " Mehrstunden"; }
             else if (Differenz_dezimal < 0) { lbl_Differenz.Text = "Differenz:  " + Differenz_dezimal.ToString("#0.00") + " Minderstunden"; }
             else if (Differenz_dezimal == 0) { lbl_Differenz.Text = "Differenz:  Punktlandung!"; }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(txtBox_Start.Text)); }
+            else
+            {
+                DateTime dateTime = DateTime.Now;
+                Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue));
+                txtBox_Start.Text = dateTime.ToString();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Berechnen();
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
