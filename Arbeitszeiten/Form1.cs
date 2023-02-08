@@ -114,6 +114,11 @@ namespace Arbeitszeiten
                 chkBox_Pause.Checked = false;
             else
                 chkBox_Pause.Checked = true;
+
+            string startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd")).ToString();
+
+            if (startzeit != "01.01.0001 00:00:00")
+                txtBox_Start.Text = startzeit;
         }
 
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
