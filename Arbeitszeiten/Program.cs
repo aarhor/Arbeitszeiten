@@ -56,9 +56,15 @@ namespace Arbeitszeiten
                 {
                     firstArgument = CommandLineArguments.Args[0];
 
+                    bool Zeit_abziehen = Convert.ToBoolean(Registry.GetValue("Zeit_abziehen"));
+                    double abzug = 0;
+
+                    if (Zeit_abziehen)
+                        abzug = (Convert.ToDouble(Registry.GetValue("Zeit_abziehen_Dauer")) * 60) * (-1);
+
                     if (firstArgument == "/Dienstbeginn")
                     {
-                        Kommandozeile.Anmelden(Convert.ToDateTime(null));
+                        Kommandozeile.Anmelden(Convert.ToDateTime(null), abzug);
                         MessageBox.Show("Der Beginn wurde erfolgreich eingetragen.");
                         Application.Exit();
                     }

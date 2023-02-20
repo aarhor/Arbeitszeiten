@@ -4,9 +4,9 @@ namespace Arbeitszeiten.Klassen
 {
     internal class Kommandozeile
     {
-        public static void Anmelden(DateTime dateTime)
+        public static void Anmelden(DateTime dateTime, double abzug_minuten)
         {
-            if (dateTime == DateTime.MinValue) { dateTime = DateTime.Now; }
+            if (dateTime == DateTime.MinValue) { dateTime = DateTime.Now.AddMinutes(abzug_minuten); }
 
             string heute = dateTime.ToString("yyyy-MM-dd");
             string Startzeit = dateTime.ToString("HH:mm:ss");
