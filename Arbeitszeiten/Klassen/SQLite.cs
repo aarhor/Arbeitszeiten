@@ -6,7 +6,6 @@ namespace Arbeitszeiten.Klassen
 {
     internal class SQLite
     {
-
         static string Connectionstring()
         {
             string Pfad = Registry.GetValue("Dateipfad");
@@ -55,7 +54,7 @@ namespace Arbeitszeiten.Klassen
             connection.Close();
         }
 
-        public static void update_table(string Heute, string Ende, decimal Differenz, decimal MehrMinder_Stunden,string Bemerkung)
+        public static void update_table(string Heute, string Ende, decimal Differenz, decimal MehrMinder_Stunden, string Bemerkung)
         {
             using SQLiteConnection connection = new(Connectionstring());
             connection.Open();
@@ -131,21 +130,24 @@ namespace Arbeitszeiten.Klassen
             return list;
         }
 
-        public static int count_table(string Heute)
+        /// <summary>
+        /// Gibt die Heutige Startzeit als DateTime zurück
+        /// </summary>
+        /// <param name="heute">Den Heutigen Tag bereits als passendes DateTime formatiert (YYYY-MM-DD)</param>
+        /// <returns></returns>
+        public static DateTime startzeit_heute(string heute)
         {
-            int Anzahl;
+            DateTime startzeit;
 
             using SQLiteConnection connection = new(Connectionstring());
             connection.Open();
             using (SQLiteCommand command = new(connection))
             {
-                command.CommandText = "SELECT count(Datum) from Zeiten where Datum = \"" + Heute + "\"";
-                Anzahl = Convert.ToInt32(command.ExecuteScalar());
-                command.ExecuteNonQuery();
+                command.CommandText = "select Start from Zeiten where Datum = '" + heute + "'";
+                startzeit = Convert.ToDateTime(command.ExecuteScalar());
             }
-            connection.Close();
 
-            return Anzahl;
+            return startzeit;
         }
     }
 }
