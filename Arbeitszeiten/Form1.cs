@@ -50,11 +50,18 @@ namespace Arbeitszeiten
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(txtBox_Start.Text)); }
+            bool Zeit_abziehen = Convert.ToBoolean(Registry.GetValue("Zeit_abziehen"));
+            double abzug = 0;
+
+            if (Zeit_abziehen)
+                abzug = (Convert.ToDouble(Registry.GetValue("Zeit_abziehen_Dauer")) * 60) * (-1);
+
+            if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(txtBox_Start.Text), abzug); }
             else
             {
                 DateTime dateTime = DateTime.Now;
-                Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue));
+                dateTime = dateTime.AddMinutes(Convert.ToDouble(abzug));
+                Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug);
                 txtBox_Start.Text = dateTime.ToString();
             }
         }
