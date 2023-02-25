@@ -143,7 +143,7 @@ namespace Arbeitszeiten.Klassen
             connection.Open();
             using (SQLiteCommand command = new(connection))
             {
-                command.CommandText = "select Start from Zeiten where Datum = '" + heute + "'";
+                command.CommandText = "select Start from Zeiten where Datum = '" + heute + "' and Ende ISNULL";
                 startzeit = Convert.ToDateTime(command.ExecuteScalar());
             }
 
