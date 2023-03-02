@@ -70,8 +70,8 @@ namespace Arbeitszeiten.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die CREATE TABLE Taetigkeiten (ID_Erfassung INTEGER PRIMARY KEY AUTOINCREMENT, Datum date, Uhrzeit datetime, Tätigkeit TEXT);
-        ///CREATE TABLE Zeiten (ID_Erfassung INTEGER PRIMARY KEY AUTOINCREMENT, Datum DATE, Start DATETIME, Ende DATETIME, Differenz DOUBLE, MehrMinder_Stunden DOUBLE, Bemerkung TEXT
+        ///   Sucht eine lokalisierte Zeichenfolge, die CREATE TABLE Taetigkeiten (_id INTEGER PRIMARY KEY AUTOINCREMENT, Datum date, Uhrzeit datetime, Tätigkeit TEXT);
+        ///CREATE TABLE Zeiten (_id INTEGER PRIMARY KEY AUTOINCREMENT, Datum DATE, Start DATETIME, Ende DATETIME, Differenz DOUBLE, MehrMinder_Stunden DOUBLE, Bemerkung TEXT
         ///default NULL);
         ///CREATE VIEW &apos;geordnet&apos; AS select * from &quot;Zeiten&quot; order by Datum, Start;
         ///CREATE VIEW &apos;Überstunden&apos; AS select round(sum(MehrMinder_Stunden), 2) as Überstunden from &quot;Zeiten&quot;; ähnelt.
