@@ -43,8 +43,8 @@ namespace Arbeitszeiten
                 }
             }
 
-            if (Differenz_dezimal > 0) { lbl_Differenz.Text = "Differenz:  " + Differenz_dezimal.ToString("#0.00") + " Mehrstunden"; }
-            else if (Differenz_dezimal < 0) { lbl_Differenz.Text = "Differenz:  " + Differenz_dezimal.ToString("#0.00") + " Minderstunden"; }
+            if (Differenz_dezimal > 0) { lbl_Differenz.Text = string.Format("Differenz: {0} Mehrstunden", Differenz_dezimal.ToString("#0.00")); }
+            else if (Differenz_dezimal < 0) { lbl_Differenz.Text = string.Format("Differenz: {0} Minderstunden", Differenz_dezimal.ToString("#0.00")); }
             else if (Differenz_dezimal == 0) { lbl_Differenz.Text = "Differenz:  Punktlandung!"; }
         }
 
@@ -63,6 +63,8 @@ namespace Arbeitszeiten
                 dateTime = dateTime.AddMinutes(Convert.ToDouble(abzug));
                 Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug);
                 txtBox_Start.Text = dateTime.ToString();
+                dateTime = dateTime.AddHours(8).AddMinutes(30);
+                lbl_Endzeit.Text = string.Format("Ende: {0}", dateTime.ToString());
             }
         }
 
@@ -122,10 +124,19 @@ namespace Arbeitszeiten
             else
                 chkBox_Pause.Checked = true;
 
-            string startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd")).ToString();
+            DateTime startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
 
-            if (startzeit != "01.01.0001 00:00:00")
-                txtBox_Start.Text = startzeit;
+            if (startzeit.ToString() != "01.01.0001 00:00:00")
+            {
+                txtBox_Start.Text = startzeit.ToString();
+
+                if (Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag")
+                    startzeit = startzeit.AddHours(8).AddMinutes(30);
+                else if (Wochentag == "Freitag")
+                    startzeit = startzeit.AddHours(5);
+
+                lbl_Endzeit.Text = string.Format("Ende: {0}", startzeit.ToString());
+            }
         }
 
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e)

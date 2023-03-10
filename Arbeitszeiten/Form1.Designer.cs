@@ -29,222 +29,232 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtBox_Start = new System.Windows.Forms.TextBox();
-            this.txtBox_Ende = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.lbl_Differenz = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.chkBox_Manuell = new System.Windows.Forms.CheckBox();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.chkBox_Pause = new System.Windows.Forms.CheckBox();
-            this.chkBox_Rechnerisch = new System.Windows.Forms.CheckBox();
-            this.chkBox_Außerhalb = new System.Windows.Forms.CheckBox();
-            this.lbl_Meldung = new System.Windows.Forms.Label();
-            this.txtBox_Bemerkung = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
-            this.SuspendLayout();
+            label1 = new Label();
+            label2 = new Label();
+            txtBox_Start = new TextBox();
+            txtBox_Ende = new TextBox();
+            button1 = new Button();
+            button2 = new Button();
+            lbl_Differenz = new Label();
+            linkLabel1 = new LinkLabel();
+            chkBox_Manuell = new CheckBox();
+            linkLabel2 = new LinkLabel();
+            groupBox1 = new GroupBox();
+            chkBox_Pause = new CheckBox();
+            chkBox_Rechnerisch = new CheckBox();
+            chkBox_Außerhalb = new CheckBox();
+            lbl_Meldung = new Label();
+            txtBox_Bemerkung = new TextBox();
+            label4 = new Label();
+            lbl_Endzeit = new Label();
+            groupBox1.SuspendLayout();
+            SuspendLayout();
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(31, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(52, 15);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Startzeit:";
+            label1.AutoSize = true;
+            label1.Location = new Point(31, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(52, 15);
+            label1.TabIndex = 1;
+            label1.Text = "Startzeit:";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(35, 38);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(48, 15);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Endzeit:";
+            label2.AutoSize = true;
+            label2.Location = new Point(35, 38);
+            label2.Name = "label2";
+            label2.Size = new Size(48, 15);
+            label2.TabIndex = 2;
+            label2.Text = "Endzeit:";
             // 
             // txtBox_Start
             // 
-            this.txtBox_Start.Location = new System.Drawing.Point(89, 6);
-            this.txtBox_Start.Name = "txtBox_Start";
-            this.txtBox_Start.ReadOnly = true;
-            this.txtBox_Start.Size = new System.Drawing.Size(110, 23);
-            this.txtBox_Start.TabIndex = 3;
+            txtBox_Start.Location = new Point(89, 6);
+            txtBox_Start.Name = "txtBox_Start";
+            txtBox_Start.ReadOnly = true;
+            txtBox_Start.Size = new Size(110, 23);
+            txtBox_Start.TabIndex = 3;
             // 
             // txtBox_Ende
             // 
-            this.txtBox_Ende.Location = new System.Drawing.Point(89, 35);
-            this.txtBox_Ende.Name = "txtBox_Ende";
-            this.txtBox_Ende.ReadOnly = true;
-            this.txtBox_Ende.Size = new System.Drawing.Size(110, 23);
-            this.txtBox_Ende.TabIndex = 4;
+            txtBox_Ende.Location = new Point(89, 35);
+            txtBox_Ende.Name = "txtBox_Ende";
+            txtBox_Ende.ReadOnly = true;
+            txtBox_Ende.Size = new Size(110, 23);
+            txtBox_Ende.TabIndex = 4;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(205, 6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Speichern";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            button1.Location = new Point(205, 6);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 5;
+            button1.Text = "Speichern";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(205, 35);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Speichern";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            button2.Location = new Point(205, 35);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 23);
+            button2.TabIndex = 6;
+            button2.Text = "Speichern";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // lbl_Differenz
             // 
-            this.lbl_Differenz.AutoSize = true;
-            this.lbl_Differenz.Location = new System.Drawing.Point(26, 93);
-            this.lbl_Differenz.Name = "lbl_Differenz";
-            this.lbl_Differenz.Size = new System.Drawing.Size(57, 15);
-            this.lbl_Differenz.TabIndex = 7;
-            this.lbl_Differenz.Text = "Differenz:";
+            lbl_Differenz.AutoSize = true;
+            lbl_Differenz.Location = new Point(26, 113);
+            lbl_Differenz.Name = "lbl_Differenz";
+            lbl_Differenz.Size = new Size(57, 15);
+            lbl_Differenz.TabIndex = 7;
+            lbl_Differenz.Text = "Differenz:";
             // 
             // linkLabel1
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(382, 141);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(78, 15);
-            this.linkLabel1.TabIndex = 9;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Einstellungen";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            linkLabel1.AutoSize = true;
+            linkLabel1.Location = new Point(382, 141);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new Size(78, 15);
+            linkLabel1.TabIndex = 9;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "Einstellungen";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
             // chkBox_Manuell
             // 
-            this.chkBox_Manuell.AutoSize = true;
-            this.chkBox_Manuell.Location = new System.Drawing.Point(6, 22);
-            this.chkBox_Manuell.Name = "chkBox_Manuell";
-            this.chkBox_Manuell.Size = new System.Drawing.Size(69, 19);
-            this.chkBox_Manuell.TabIndex = 10;
-            this.chkBox_Manuell.Text = "Manuell";
-            this.chkBox_Manuell.UseVisualStyleBackColor = true;
-            this.chkBox_Manuell.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            chkBox_Manuell.AutoSize = true;
+            chkBox_Manuell.Location = new Point(6, 22);
+            chkBox_Manuell.Name = "chkBox_Manuell";
+            chkBox_Manuell.Size = new Size(69, 19);
+            chkBox_Manuell.TabIndex = 10;
+            chkBox_Manuell.Text = "Manuell";
+            chkBox_Manuell.UseVisualStyleBackColor = true;
+            chkBox_Manuell.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // linkLabel2
             // 
-            this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(315, 141);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(61, 15);
-            this.linkLabel2.TabIndex = 11;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "Statistiken";
-            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            linkLabel2.AutoSize = true;
+            linkLabel2.Location = new Point(315, 141);
+            linkLabel2.Name = "linkLabel2";
+            linkLabel2.Size = new Size(61, 15);
+            linkLabel2.TabIndex = 11;
+            linkLabel2.TabStop = true;
+            linkLabel2.Text = "Statistiken";
+            linkLabel2.LinkClicked += linkLabel2_LinkClicked;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.chkBox_Pause);
-            this.groupBox1.Controls.Add(this.chkBox_Rechnerisch);
-            this.groupBox1.Controls.Add(this.chkBox_Außerhalb);
-            this.groupBox1.Controls.Add(this.chkBox_Manuell);
-            this.groupBox1.Location = new System.Drawing.Point(286, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(174, 126);
-            this.groupBox1.TabIndex = 12;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Optionen";
+            groupBox1.Controls.Add(chkBox_Pause);
+            groupBox1.Controls.Add(chkBox_Rechnerisch);
+            groupBox1.Controls.Add(chkBox_Außerhalb);
+            groupBox1.Controls.Add(chkBox_Manuell);
+            groupBox1.Location = new Point(286, 12);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(174, 126);
+            groupBox1.TabIndex = 12;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Optionen";
             // 
             // chkBox_Pause
             // 
-            this.chkBox_Pause.AutoSize = true;
-            this.chkBox_Pause.Checked = true;
-            this.chkBox_Pause.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkBox_Pause.Location = new System.Drawing.Point(6, 97);
-            this.chkBox_Pause.Name = "chkBox_Pause";
-            this.chkBox_Pause.Size = new System.Drawing.Size(57, 19);
-            this.chkBox_Pause.TabIndex = 13;
-            this.chkBox_Pause.Text = "Pause";
-            this.chkBox_Pause.UseVisualStyleBackColor = true;
-            this.chkBox_Pause.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
+            chkBox_Pause.AutoSize = true;
+            chkBox_Pause.Checked = true;
+            chkBox_Pause.CheckState = CheckState.Checked;
+            chkBox_Pause.Location = new Point(6, 97);
+            chkBox_Pause.Name = "chkBox_Pause";
+            chkBox_Pause.Size = new Size(57, 19);
+            chkBox_Pause.TabIndex = 13;
+            chkBox_Pause.Text = "Pause";
+            chkBox_Pause.UseVisualStyleBackColor = true;
+            chkBox_Pause.CheckedChanged += checkBox1_CheckedChanged_1;
             // 
             // chkBox_Rechnerisch
             // 
-            this.chkBox_Rechnerisch.AutoSize = true;
-            this.chkBox_Rechnerisch.Location = new System.Drawing.Point(6, 72);
-            this.chkBox_Rechnerisch.Name = "chkBox_Rechnerisch";
-            this.chkBox_Rechnerisch.Size = new System.Drawing.Size(154, 19);
-            this.chkBox_Rechnerisch.TabIndex = 12;
-            this.chkBox_Rechnerisch.Text = "Rechnerische Arbeitszeit";
-            this.chkBox_Rechnerisch.UseVisualStyleBackColor = true;
-            this.chkBox_Rechnerisch.CheckedChanged += new System.EventHandler(this.chkBox_Rechnerisch_CheckedChanged);
+            chkBox_Rechnerisch.AutoSize = true;
+            chkBox_Rechnerisch.Location = new Point(6, 72);
+            chkBox_Rechnerisch.Name = "chkBox_Rechnerisch";
+            chkBox_Rechnerisch.Size = new Size(154, 19);
+            chkBox_Rechnerisch.TabIndex = 12;
+            chkBox_Rechnerisch.Text = "Rechnerische Arbeitszeit";
+            chkBox_Rechnerisch.UseVisualStyleBackColor = true;
+            chkBox_Rechnerisch.CheckedChanged += chkBox_Rechnerisch_CheckedChanged;
             // 
             // chkBox_Außerhalb
             // 
-            this.chkBox_Außerhalb.AutoSize = true;
-            this.chkBox_Außerhalb.Location = new System.Drawing.Point(6, 47);
-            this.chkBox_Außerhalb.Name = "chkBox_Außerhalb";
-            this.chkBox_Außerhalb.Size = new System.Drawing.Size(152, 19);
-            this.chkBox_Außerhalb.TabIndex = 11;
-            this.chkBox_Außerhalb.Text = "Außerhalb Arbeitszeiten";
-            this.chkBox_Außerhalb.UseVisualStyleBackColor = true;
+            chkBox_Außerhalb.AutoSize = true;
+            chkBox_Außerhalb.Location = new Point(6, 47);
+            chkBox_Außerhalb.Name = "chkBox_Außerhalb";
+            chkBox_Außerhalb.Size = new Size(152, 19);
+            chkBox_Außerhalb.TabIndex = 11;
+            chkBox_Außerhalb.Text = "Außerhalb Arbeitszeiten";
+            chkBox_Außerhalb.UseVisualStyleBackColor = true;
             // 
             // lbl_Meldung
             // 
-            this.lbl_Meldung.AutoSize = true;
-            this.lbl_Meldung.Location = new System.Drawing.Point(26, 123);
-            this.lbl_Meldung.Name = "lbl_Meldung";
-            this.lbl_Meldung.Size = new System.Drawing.Size(250, 15);
-            this.lbl_Meldung.TabIndex = 13;
-            this.lbl_Meldung.Text = "Es wird NICHTS in die Datenbank geschrieben!";
-            this.lbl_Meldung.Visible = false;
+            lbl_Meldung.AutoSize = true;
+            lbl_Meldung.Location = new Point(30, 141);
+            lbl_Meldung.Name = "lbl_Meldung";
+            lbl_Meldung.Size = new Size(250, 15);
+            lbl_Meldung.TabIndex = 13;
+            lbl_Meldung.Text = "Es wird NICHTS in die Datenbank geschrieben!";
+            lbl_Meldung.Visible = false;
             // 
             // txtBox_Bemerkung
             // 
-            this.txtBox_Bemerkung.Location = new System.Drawing.Point(89, 64);
-            this.txtBox_Bemerkung.Name = "txtBox_Bemerkung";
-            this.txtBox_Bemerkung.Size = new System.Drawing.Size(191, 23);
-            this.txtBox_Bemerkung.TabIndex = 15;
+            txtBox_Bemerkung.Location = new Point(89, 64);
+            txtBox_Bemerkung.Name = "txtBox_Bemerkung";
+            txtBox_Bemerkung.Size = new Size(191, 23);
+            txtBox_Bemerkung.TabIndex = 15;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 67);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(71, 15);
-            this.label4.TabIndex = 14;
-            this.label4.Text = "Bemerkung:";
+            label4.AutoSize = true;
+            label4.Location = new Point(12, 67);
+            label4.Name = "label4";
+            label4.Size = new Size(71, 15);
+            label4.TabIndex = 14;
+            label4.Text = "Bemerkung:";
+            // 
+            // lbl_Endzeit
+            // 
+            lbl_Endzeit.AutoSize = true;
+            lbl_Endzeit.Location = new Point(47, 91);
+            lbl_Endzeit.Name = "lbl_Endzeit";
+            lbl_Endzeit.Size = new Size(36, 15);
+            lbl_Endzeit.TabIndex = 16;
+            lbl_Endzeit.Text = "Ende:";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(473, 167);
-            this.Controls.Add(this.txtBox_Bemerkung);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.linkLabel2);
-            this.Controls.Add(this.linkLabel1);
-            this.Controls.Add(this.lbl_Differenz);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.txtBox_Ende);
-            this.Controls.Add(this.txtBox_Start);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.lbl_Meldung);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
-            this.Text = "Arbeitszeiterfassung";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(473, 167);
+            Controls.Add(lbl_Endzeit);
+            Controls.Add(txtBox_Bemerkung);
+            Controls.Add(label4);
+            Controls.Add(groupBox1);
+            Controls.Add(linkLabel2);
+            Controls.Add(linkLabel1);
+            Controls.Add(lbl_Differenz);
+            Controls.Add(button2);
+            Controls.Add(button1);
+            Controls.Add(txtBox_Ende);
+            Controls.Add(txtBox_Start);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(lbl_Meldung);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Name = "Form1";
+            Text = "Arbeitszeiterfassung";
+            Load += Form1_Load;
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -265,5 +275,6 @@
         private TextBox txtBox_Bemerkung;
         private Label label4;
         public CheckBox chkBox_Pause;
+        private Label lbl_Endzeit;
     }
 }

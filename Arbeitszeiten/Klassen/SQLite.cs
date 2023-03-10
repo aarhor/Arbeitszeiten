@@ -54,7 +54,7 @@ namespace Arbeitszeiten.Klassen
             connection.Close();
         }
 
-        public static void update_table(string Heute, string Ende, decimal Differenz, decimal MehrMinder_Stunden, string Bemerkung)
+        public static void update_table(string Heute, string Ende, decimal Differenz, decimal MehrMinder_Stunden, string? Bemerkung)
         {
             using SQLiteConnection connection = new(Connectionstring());
             connection.Open();
