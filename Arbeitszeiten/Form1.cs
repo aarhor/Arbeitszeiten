@@ -43,6 +43,11 @@ namespace Arbeitszeiten
                 }
             }
 
+            if (Differenz_dezimal >= 10)
+            {
+                MessageBox.Show("Die Arbeitszeit beträgt über 10 Stunden!! Sieh zu das du Land gewinnst und nicht mehr arbeitest!!");
+            }
+
             if (Differenz_dezimal > 0) { lbl_Differenz.Text = string.Format("Differenz: {0} Mehrstunden", Differenz_dezimal.ToString("#0.00")); }
             else if (Differenz_dezimal < 0) { lbl_Differenz.Text = string.Format("Differenz: {0} Minderstunden", Differenz_dezimal.ToString("#0.00")); }
             else if (Differenz_dezimal == 0) { lbl_Differenz.Text = "Differenz:  Punktlandung!"; }
