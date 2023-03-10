@@ -1,6 +1,5 @@
 ﻿using System.Data;
 using System.Data.SQLite;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Arbeitszeiten.Klassen
 {

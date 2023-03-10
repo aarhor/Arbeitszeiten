@@ -1,5 +1,4 @@
 ﻿using Arbeitszeiten.Klassen;
-using System.Text.RegularExpressions;
 
 namespace Arbeitszeiten
 {
