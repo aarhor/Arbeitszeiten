@@ -7,6 +7,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Company>Aarhor</Company>
+    <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,11 +15,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EditorConfigFiles Remove="E:\Dokumente\Programmieren\repos\Arbeitszeiten\Arbeitszeiten\Klassen\.editorconfig" />
+    <EditorConfigFiles Remove="Klassen\.editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="E:\Dokumente\Programmieren\repos\Arbeitszeiten\Arbeitszeiten\.editorconfig" />
+    <Content Include="Resources\Icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include=".editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
