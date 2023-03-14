@@ -1,4 +1,5 @@
 using Arbeitszeiten.Klassen;
+using Arbeitszeiten.Formen;
 
 namespace Arbeitszeiten
 {
@@ -16,8 +17,7 @@ namespace Arbeitszeiten
 
         public static string[] CheckCMDArgs(string[] Argumente)
         {
-            //string Pfad = Application.ExecutablePath;
-            string[] allowedArguments = new string[] { "/Dienstbeginn", "/Dienstende", "/Auﬂerhalb", "/Rechnerisch" };
+            string[] allowedArguments = new string[] { "/Dienstbeginn", "/Dienstende", "/Auﬂerhalb", "/Rechnerisch", "/T‰tigkeiten" };
 
             List<string> validArguments = new List<string>();
             foreach (string arg in Argumente)
@@ -72,6 +72,10 @@ namespace Arbeitszeiten
                         Kommandozeile.Abmelden(Convert.ToDateTime(null), false, false, "null", true);
                         MessageBox.Show("Das Ende wurde erfolgreich eingetragen.");
                         Application.Exit();
+                    }
+                    else if (firstArgument == "/T‰tigkeiten")
+                    {
+                        Application.Run(new T‰tigkeiten());
                     }
                 }
                 else if (CommandLineArguments.Args.Length == 2)

@@ -1,3 +1,4 @@
+using Arbeitszeiten.Formen;
 using Arbeitszeiten.Klassen;
 
 namespace Arbeitszeiten
@@ -150,6 +151,12 @@ namespace Arbeitszeiten
                 Pause = true;
             else
                 Pause = false;
+        }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Tätigkeiten Form_Taetigkeiten = new Tätigkeiten();
+            Form_Taetigkeiten.ShowDialog();
         }
     }
 }

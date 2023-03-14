@@ -47,6 +47,7 @@
             txtBox_Bemerkung = new TextBox();
             label4 = new Label();
             lbl_Endzeit = new Label();
+            linkLabel3 = new LinkLabel();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -116,7 +117,7 @@
             // linkLabel1
             // 
             linkLabel1.AutoSize = true;
-            linkLabel1.Location = new Point(382, 141);
+            linkLabel1.Location = new Point(382, 163);
             linkLabel1.Name = "linkLabel1";
             linkLabel1.Size = new Size(78, 15);
             linkLabel1.TabIndex = 9;
@@ -138,7 +139,7 @@
             // linkLabel2
             // 
             linkLabel2.AutoSize = true;
-            linkLabel2.Location = new Point(315, 141);
+            linkLabel2.Location = new Point(315, 163);
             linkLabel2.Name = "linkLabel2";
             linkLabel2.Size = new Size(61, 15);
             linkLabel2.TabIndex = 11;
@@ -196,7 +197,7 @@
             // lbl_Meldung
             // 
             lbl_Meldung.AutoSize = true;
-            lbl_Meldung.Location = new Point(30, 141);
+            lbl_Meldung.Location = new Point(12, 141);
             lbl_Meldung.Name = "lbl_Meldung";
             lbl_Meldung.Size = new Size(250, 15);
             lbl_Meldung.TabIndex = 13;
@@ -228,11 +229,23 @@
             lbl_Endzeit.TabIndex = 16;
             lbl_Endzeit.Text = "Ende:";
             // 
+            // linkLabel3
+            // 
+            linkLabel3.AutoSize = true;
+            linkLabel3.Location = new Point(245, 163);
+            linkLabel3.Name = "linkLabel3";
+            linkLabel3.Size = new Size(64, 15);
+            linkLabel3.TabIndex = 17;
+            linkLabel3.TabStop = true;
+            linkLabel3.Text = "Tätigkeiten";
+            linkLabel3.LinkClicked += linkLabel3_LinkClicked;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(473, 167);
+            ClientSize = new Size(473, 187);
+            Controls.Add(linkLabel3);
             Controls.Add(lbl_Endzeit);
             Controls.Add(txtBox_Bemerkung);
             Controls.Add(label4);
@@ -276,5 +289,6 @@
         private Label label4;
         public CheckBox chkBox_Pause;
         private Label lbl_Endzeit;
+        private LinkLabel linkLabel3;
     }
 }
