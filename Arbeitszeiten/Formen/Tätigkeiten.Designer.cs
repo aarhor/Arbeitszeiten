@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Tätigkeiten));
             label1 = new Label();
             textBox1 = new TextBox();
             button1 = new Button();
@@ -68,8 +69,10 @@
             Controls.Add(button1);
             Controls.Add(textBox1);
             Controls.Add(label1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Tätigkeiten";
             Text = "Tätigkeiten";
+            TopMost = true;
             ResumeLayout(false);
             PerformLayout();
         }

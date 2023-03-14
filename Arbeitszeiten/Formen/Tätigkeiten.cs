@@ -17,7 +17,10 @@ namespace Arbeitszeiten.Formen
             string Uhrzeit = dateTime.ToString("HH:mm:ss");
 
             if (SQLite.insert_table_Taetigkeit(Datum, Uhrzeit, Tätigkeit))
+            {
                 MessageBox.Show("Erfolgreich eintragen");
+                Application.Exit();
+            }
         }
     }
 }
