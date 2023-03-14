@@ -53,6 +53,36 @@ namespace Arbeitszeiten.Klassen
             connection.Close();
         }
 
+        public static bool insert_table_Taetigkeit(string Datum, string Uhrzeit,string Tätigkeit)
+        {
+            using SQLiteConnection connection = new(Connectionstring());
+            connection.Open();
+            using (var transaction = connection.BeginTransaction())
+            {
+                try
+                {
+                    using (SQLiteCommand command = new(connection))
+                    {
+                        command.CommandText = "INSERT INTO Taetigkeiten (Datum, Uhrzeit, Tätigkeit) VALUES (@Datum, @Uhrzeit, @Tätigkeit)";
+                        command.Parameters.AddWithValue("@Datum", Datum);
+                        command.Parameters.AddWithValue("@Uhrzeit", Uhrzeit);
+                        command.Parameters.AddWithValue("@Tätigkeit", Tätigkeit);
+                        command.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    transaction.Rollback();
+                    return false;
+                }
+            }
+            connection.Close();
+            return true;
+        }
+
         public static void update_table(string Heute, string Ende, decimal Differenz, decimal MehrMinder_Stunden, string? Bemerkung)
         {
             using SQLiteConnection connection = new(Connectionstring());
