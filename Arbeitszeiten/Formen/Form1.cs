@@ -49,9 +49,9 @@ namespace Arbeitszeiten
                 MessageBox.Show("Die Arbeitszeit beträgt über 10 Stunden!! Sieh zu das du Land gewinnst und nicht mehr arbeitest!!");
             }
 
-            if (Differenz_dezimal > 0) { lbl_Differenz.Text = string.Format("Differenz: {0} Mehrstunden", Differenz_dezimal.ToString("#0.00")); }
-            else if (Differenz_dezimal < 0) { lbl_Differenz.Text = string.Format("Differenz: {0} Minderstunden", Differenz_dezimal.ToString("#0.00")); }
-            else if (Differenz_dezimal == 0) { lbl_Differenz.Text = "Differenz:  Punktlandung!"; }
+            if (Differenz_dezimal > 0) { lbl_Differenz.Text = string.Format("Differenz:    {0} Mehrstunden", Differenz_dezimal.ToString("#0.00")); }
+            else if (Differenz_dezimal < 0) { lbl_Differenz.Text = string.Format("Differenz:    {0} Minderstunden", Differenz_dezimal.ToString("#0.00")); }
+            else if (Differenz_dezimal == 0) { lbl_Differenz.Text = "Differenz:     Punktlandung!"; }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -70,7 +70,7 @@ namespace Arbeitszeiten
                 Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug);
                 txtBox_Start.Text = dateTime.ToString();
                 dateTime = dateTime.AddHours(8).AddMinutes(30);
-                lbl_Endzeit.Text = string.Format("Ende: {0}", dateTime.ToString());
+                lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
             }
         }
 
@@ -132,7 +132,7 @@ namespace Arbeitszeiten
 
             DateTime startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
 
-            if (startzeit.ToString() != "01.01.0001 00:00:00")
+            if (startzeit.ToString() != DateTime.MinValue.ToString())
             {
                 txtBox_Start.Text = startzeit.ToString();
 
@@ -141,7 +141,7 @@ namespace Arbeitszeiten
                 else if (Wochentag == "Freitag")
                     startzeit = startzeit.AddHours(5);
 
-                lbl_Endzeit.Text = string.Format("Ende: {0}", startzeit.ToString());
+                lbl_Endzeit.Text = string.Format("Ende:    {0}", startzeit.ToString());
             }
         }
 

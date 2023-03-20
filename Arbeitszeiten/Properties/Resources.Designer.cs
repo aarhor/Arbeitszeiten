@@ -61,20 +61,10 @@ namespace Arbeitszeiten.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Test ähnelt.
-        /// </summary>
-        internal static string Argumente {
-            get {
-                return ResourceManager.GetString("Argumente", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die CREATE TABLE Taetigkeiten (_id INTEGER PRIMARY KEY AUTOINCREMENT, Datum date, Uhrzeit datetime, Tätigkeit TEXT);
-        ///CREATE TABLE Zeiten (_id INTEGER PRIMARY KEY AUTOINCREMENT, Datum DATE, Start DATETIME, Ende DATETIME, Differenz DOUBLE, MehrMinder_Stunden DOUBLE, Bemerkung TEXT
-        ///default NULL);
-        ///CREATE VIEW &apos;geordnet&apos; AS select * from &quot;Zeiten&quot; order by Datum, Start;
-        ///CREATE VIEW &apos;Überstunden&apos; AS select round(sum(MehrMinder_Stunden), 2) as Überstunden from &quot;Zeiten&quot;; ähnelt.
+        ///CREATE TABLE Zeiten (_id INTEGER PRIMARY KEY AUTOINCREMENT, Datum DATE, Start DATETIME, Ende DATETIME, Differenz DOUBLE, MehrMinder_Stunden DOUBLE, Bemerkung TEXT default NULL);
+        ///CREATE VIEW &apos;view_geordnet&apos; AS select * from &quot;Zeiten&quot; order by Datum, Start;
+        ///CREATE VIEW &apos;view_überstunden&apos; AS select round(sum(MehrMinder_Stunden), 2) as Überstunden from &quot;Zeiten&quot;; ähnelt.
         /// </summary>
         internal static string Erstellen {
             get {
