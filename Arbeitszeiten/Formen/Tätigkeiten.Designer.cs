@@ -70,6 +70,8 @@
             Controls.Add(textBox1);
             Controls.Add(label1);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximumSize = new Size(262, 124);
+            MinimumSize = new Size(262, 124);
             Name = "Tätigkeiten";
             Text = "Tätigkeiten";
             TopMost = true;

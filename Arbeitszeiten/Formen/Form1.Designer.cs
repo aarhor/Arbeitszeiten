@@ -117,7 +117,7 @@
             // linkLabel1
             // 
             linkLabel1.AutoSize = true;
-            linkLabel1.Location = new Point(382, 163);
+            linkLabel1.Location = new Point(382, 162);
             linkLabel1.Name = "linkLabel1";
             linkLabel1.Size = new Size(78, 15);
             linkLabel1.TabIndex = 9;
@@ -139,7 +139,7 @@
             // linkLabel2
             // 
             linkLabel2.AutoSize = true;
-            linkLabel2.Location = new Point(315, 163);
+            linkLabel2.Location = new Point(315, 162);
             linkLabel2.Name = "linkLabel2";
             linkLabel2.Size = new Size(61, 15);
             linkLabel2.TabIndex = 11;
@@ -155,7 +155,7 @@
             groupBox1.Controls.Add(chkBox_Manuell);
             groupBox1.Location = new Point(286, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(174, 126);
+            groupBox1.Size = new Size(176, 147);
             groupBox1.TabIndex = 12;
             groupBox1.TabStop = false;
             groupBox1.Text = "Optionen";
@@ -232,7 +232,7 @@
             // linkLabel3
             // 
             linkLabel3.AutoSize = true;
-            linkLabel3.Location = new Point(245, 163);
+            linkLabel3.Location = new Point(245, 162);
             linkLabel3.Name = "linkLabel3";
             linkLabel3.Size = new Size(64, 15);
             linkLabel3.TabIndex = 17;
@@ -244,7 +244,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(473, 187);
+            ClientSize = new Size(474, 186);
             Controls.Add(linkLabel3);
             Controls.Add(lbl_Endzeit);
             Controls.Add(txtBox_Bemerkung);
@@ -260,7 +260,11 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(lbl_Meldung);
+            HelpButton = true;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MaximumSize = new Size(490, 225);
+            MinimumSize = new Size(490, 225);
             Name = "Form1";
             Text = "Arbeitszeiterfassung";
             Load += Form1_Load;
