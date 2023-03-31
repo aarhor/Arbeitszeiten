@@ -30,12 +30,17 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Statistiken));
             dataGridView1 = new DataGridView();
-            Col_Datum = new DataGridViewTextBoxColumn();
             button1 = new Button();
             domainUpDown1 = new DomainUpDown();
             label1 = new Label();
             label2 = new Label();
             domainUpDown2 = new DomainUpDown();
+            lbl_Startzeit = new Label();
+            lbl_Endzeit = new Label();
+            lbl_Arbeitszeit = new Label();
+            lbl_Ueberstunden = new Label();
+            Col_Datum = new DataGridViewTextBoxColumn();
+            Col_id = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -45,7 +50,7 @@
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Col_Datum });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Col_Datum, Col_id });
             dataGridView1.Dock = DockStyle.Left;
             dataGridView1.Location = new Point(0, 0);
             dataGridView1.Name = "dataGridView1";
@@ -56,18 +61,9 @@
             dataGridView1.TabIndex = 0;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
-            // Col_Datum
-            // 
-            Col_Datum.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Col_Datum.HeaderText = "Datum";
-            Col_Datum.Name = "Col_Datum";
-            Col_Datum.ReadOnly = true;
-            Col_Datum.Resizable = DataGridViewTriState.False;
-            Col_Datum.SortMode = DataGridViewColumnSortMode.NotSortable;
-            // 
             // button1
             // 
-            button1.Location = new Point(329, 34);
+            button1.Location = new Point(362, 34);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 1;
@@ -89,7 +85,7 @@
             domainUpDown1.Items.Add("Oktober");
             domainUpDown1.Items.Add("November");
             domainUpDown1.Items.Add("Dezember");
-            domainUpDown1.Location = new Point(188, 7);
+            domainUpDown1.Location = new Point(221, 7);
             domainUpDown1.Name = "domainUpDown1";
             domainUpDown1.Size = new Size(135, 23);
             domainUpDown1.TabIndex = 2;
@@ -97,7 +93,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(137, 9);
+            label1.Location = new Point(170, 9);
             label1.Name = "label1";
             label1.Size = new Size(45, 15);
             label1.TabIndex = 3;
@@ -106,7 +102,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(151, 38);
+            label2.Location = new Point(184, 38);
             label2.Name = "label2";
             label2.Size = new Size(31, 15);
             label2.TabIndex = 4;
@@ -119,16 +115,76 @@
             domainUpDown2.Items.Add("2024");
             domainUpDown2.Items.Add("2025");
             domainUpDown2.Items.Add("2026");
-            domainUpDown2.Location = new Point(188, 36);
+            domainUpDown2.Location = new Point(221, 36);
             domainUpDown2.Name = "domainUpDown2";
             domainUpDown2.Size = new Size(135, 23);
             domainUpDown2.TabIndex = 5;
+            // 
+            // lbl_Startzeit
+            // 
+            lbl_Startzeit.AutoSize = true;
+            lbl_Startzeit.Location = new Point(163, 70);
+            lbl_Startzeit.Margin = new Padding(3, 8, 3, 0);
+            lbl_Startzeit.Name = "lbl_Startzeit";
+            lbl_Startzeit.Size = new Size(52, 15);
+            lbl_Startzeit.TabIndex = 6;
+            lbl_Startzeit.Text = "Startzeit:";
+            // 
+            // lbl_Endzeit
+            // 
+            lbl_Endzeit.AutoSize = true;
+            lbl_Endzeit.Location = new Point(167, 93);
+            lbl_Endzeit.Margin = new Padding(3, 8, 3, 0);
+            lbl_Endzeit.Name = "lbl_Endzeit";
+            lbl_Endzeit.Size = new Size(48, 15);
+            lbl_Endzeit.TabIndex = 7;
+            lbl_Endzeit.Text = "Endzeit:";
+            // 
+            // lbl_Arbeitszeit
+            // 
+            lbl_Arbeitszeit.AutoSize = true;
+            lbl_Arbeitszeit.Location = new Point(158, 116);
+            lbl_Arbeitszeit.Margin = new Padding(3, 8, 3, 0);
+            lbl_Arbeitszeit.Name = "lbl_Arbeitszeit";
+            lbl_Arbeitszeit.Size = new Size(57, 15);
+            lbl_Arbeitszeit.TabIndex = 8;
+            lbl_Arbeitszeit.Text = "Differenz:";
+            // 
+            // lbl_Ueberstunden
+            // 
+            lbl_Ueberstunden.AutoSize = true;
+            lbl_Ueberstunden.Location = new Point(137, 139);
+            lbl_Ueberstunden.Margin = new Padding(3, 8, 3, 0);
+            lbl_Ueberstunden.Name = "lbl_Ueberstunden";
+            lbl_Ueberstunden.Size = new Size(78, 15);
+            lbl_Ueberstunden.TabIndex = 9;
+            lbl_Ueberstunden.Text = "Überstunden:";
+            // 
+            // Col_Datum
+            // 
+            Col_Datum.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Col_Datum.HeaderText = "Datum";
+            Col_Datum.Name = "Col_Datum";
+            Col_Datum.ReadOnly = true;
+            Col_Datum.Resizable = DataGridViewTriState.False;
+            Col_Datum.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Col_id
+            // 
+            Col_id.HeaderText = "_id";
+            Col_id.Name = "Col_id";
+            Col_id.ReadOnly = true;
+            Col_id.Visible = false;
             // 
             // Statistiken
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(471, 255);
+            Controls.Add(lbl_Ueberstunden);
+            Controls.Add(lbl_Arbeitszeit);
+            Controls.Add(lbl_Endzeit);
+            Controls.Add(lbl_Startzeit);
             Controls.Add(domainUpDown2);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -152,8 +208,13 @@
         private Button button1;
         private DomainUpDown domainUpDown1;
         private Label label1;
-        private DataGridViewTextBoxColumn Col_Datum;
         private Label label2;
         private DomainUpDown domainUpDown2;
+        private Label lbl_Startzeit;
+        private Label lbl_Endzeit;
+        private Label lbl_Arbeitszeit;
+        private Label lbl_Ueberstunden;
+        private DataGridViewTextBoxColumn Col_Datum;
+        private DataGridViewTextBoxColumn Col_id;
     }
 }

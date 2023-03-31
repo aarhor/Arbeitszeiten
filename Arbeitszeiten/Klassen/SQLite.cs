@@ -133,32 +133,6 @@ namespace Arbeitszeiten.Klassen
             return Uhrzeit;
         }
 
-        public static List<string> select_Tage_stats(string Monatszahl, string Jahreszahl)
-        {
-            List<string> list = new();
-
-            using SQLiteConnection connection = new(Connectionstring());
-            connection.Open();
-            using (SQLiteCommand command = new(connection))
-            {
-                command.CommandText = "select Datum from Zeiten where Datum like '" + Jahreszahl + "-" + Monatszahl + "-%' group by Datum";
-                IDataReader reader = command.ExecuteReader();
-
-                while (reader.Read() != false)
-                {
-                    int i = 0;
-                    while (i < 1)
-                    {
-                        list.Add(item: reader[i].ToString());
-                        i++;
-                    }
-                }
-            }
-            connection.Close();
-
-            return list;
-        }
-
         /// <summary>
         /// Gibt die Heutige Startzeit als DateTime zurück
         /// </summary>
@@ -177,6 +151,106 @@ namespace Arbeitszeiten.Klassen
             }
 
             return startzeit;
+        }
+
+        /// <summary>
+        /// Gibt einen bestimmten Wert aus der Datenbank zurück.
+        /// </summary>
+        /// <param name="SQL_Befehl">Der SQL-Befehl wo der Wert ermittelt wird. Es darf nur einen Rückgabewert geben.</param>
+        /// <returns>Gibt den gewünschten Wert als String zurück.</returns>
+        public static string Bestimmter_wert(string SQL_Befehl)
+        {
+            string Rückgabe = string.Empty;
+
+            using (SQLiteConnection connection = new SQLiteConnection(Connectionstring()))
+            {
+                connection.Open();
+
+                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                {
+
+                    try
+                    {
+                        using (SQLiteCommand command = new(connection))
+                        {
+                            command.CommandText = SQL_Befehl;
+                            command.ExecuteNonQuery();
+
+                            using (IDataReader reader = command.ExecuteReader())
+                            {
+                                if (reader.Read() != false)
+                                    Rückgabe = reader[0].ToString();
+                            }
+                        }
+                        transaction.Commit();
+                        connection.Close();
+                        return Rückgabe;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                        transaction.Rollback();
+                        connection.Close();
+                        return string.Empty;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Erzeugt eine Liste mit Daten aus der Datenbank zum darstellen von einträgen.
+        /// </summary>
+        /// <param name="SQL_Befehl">Der SQL Befehl der genutzt werden soll.</param>
+        /// <param name="Anzahl_spalten">Die Anzahl der Spalten die abgefragt werden sollen. Maximal 14.</param>
+        /// <returns>Gibt eine Liste mit den gewünschten Daten zurück.</returns>
+        public static List<string> Auflistung_Einträge(string SQL_Befehl, int Anzahl_spalten)
+        {
+            List<string> list = new();
+
+            using (SQLiteConnection connection = new SQLiteConnection(Connectionstring()))
+            {
+                connection.Open();
+
+                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                {
+
+                    try
+                    {
+                        using (SQLiteCommand command = new(connection))
+                        {
+                            command.CommandText = SQL_Befehl;
+                            command.ExecuteNonQuery();
+
+                            using (IDataReader reader = command.ExecuteReader())
+                            {
+                                while (reader.Read() != false)
+                                {
+                                    int i = 0;
+                                    while (i < Anzahl_spalten)
+                                    {
+                                        list.Add(reader[i].ToString());
+                                        i++;
+                                    }
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                        connection.Close();
+
+                        return list;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                        transaction.Rollback();
+                        connection.Close();
+
+                        list.Clear();
+                        list.Add("# Leer #");
+                        return list;
+                    }
+                }
+            }
         }
     }
 }

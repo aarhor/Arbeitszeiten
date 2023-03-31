@@ -19,21 +19,22 @@ namespace Arbeitszeiten
 
             string Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown1.Text) + 1].ToString();
             string Jahr = domainUpDown2.Text;
-            List<string> list = SQLite.select_Tage_stats(Monatszahl, Jahr);
+            string SQL_Befehl = string.Format("select Datum, _id from Zeiten where Datum like '{0}-{1}-%' group by Datum", Jahr, Monatszahl);
+            List<string> list = SQLite.Auflistung_Einträge(SQL_Befehl, 2);
 
-            foreach (DateTime dateTime in from string s in list
-                                          let dateTime = Convert.ToDateTime(s)
-                                          select dateTime)
+            for (int i = 0; i < list.Count(); i = i + 2)
             {
-                dataGridView1.Rows.Add(dateTime.ToString("dd.MM.yyyy"));
+                dataGridView1.Rows.Add(list[i], list[i + 1]);
             }
         }
 
         public void Tag_auswählen(DateTime Tag)
         {
             string Tag_conv = Tag.ToString("yyyy-MM-dd");
-            label2.Text = Tag_conv;
-            string SQL_Befehl = "select * from Zeiten where Datum = '" + Tag_conv + "'";
+            string SQL_Befehl = string.Format("select Start, Ende, Differenz, MehrMinder_Stunden, Bemerkung from Zeiten where Datum = '{0}'", Tag_conv);
+            //List<string> list_Daten = new;
+            //list_Daten.Clear();
+            //list_Daten = SQLite.Auflistung_Einträge(SQL_Befehl, 5);
         }
 
         private void Statistiken_Load(object sender, EventArgs e)
@@ -53,7 +54,8 @@ namespace Arbeitszeiten
             if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
                 string Tag = dataGridView1.Rows[index: dataGridView1.CurrentCell.RowIndex].Cells[0].Value.ToString();
-                Tag_auswählen(Convert.ToDateTime(Tag));
+                if (Tag != "Alle Tage")
+                    Tag_auswählen(Convert.ToDateTime(Tag));
             }
         }
     }
