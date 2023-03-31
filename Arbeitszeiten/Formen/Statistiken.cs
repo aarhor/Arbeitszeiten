@@ -1,5 +1,4 @@
 ﻿using Arbeitszeiten.Klassen;
-using System.Data;
 
 namespace Arbeitszeiten
 {
@@ -24,17 +23,30 @@ namespace Arbeitszeiten
 
             for (int i = 0; i < list.Count(); i = i + 2)
             {
-                dataGridView1.Rows.Add(list[i], list[i + 1]);
+                DateTime tag = Convert.ToDateTime(list[i]);
+                dataGridView1.Rows.Add(tag.ToString("dd.MM.yyyy"), list[i + 1]);
             }
         }
 
-        public void Tag_auswählen(DateTime Tag)
+        public void Tag_auswählen(string _id, string Tag)
         {
-            string Tag_conv = Tag.ToString("yyyy-MM-dd");
-            string SQL_Befehl = string.Format("select Start, Ende, Differenz, MehrMinder_Stunden, Bemerkung from Zeiten where Datum = '{0}'", Tag_conv);
-            //List<string> list_Daten = new;
-            //list_Daten.Clear();
-            //list_Daten = SQLite.Auflistung_Einträge(SQL_Befehl, 5);
+            if (Tag != "Alle Tage")
+            {
+                try
+                {
+                    string SQL_Befehl = string.Format("select Start, Ende, Differenz, MehrMinder_Stunden, Bemerkung from Zeiten where _id = '{0}'", _id);
+                    List<string> list_Daten = SQLite.Auflistung_Einträge(SQL_Befehl, 5);
+                    lbl_Startzeit.Text = string.Format("Startzeit: {0}", list_Daten[0].Substring(list_Daten[0].Length - 8, 8));
+                    lbl_Endzeit.Text = string.Format("Endzeit: {0}", list_Daten[1].Substring(list_Daten[1].Length - 8, 8));
+                    lbl_Arbeitszeit.Text = string.Format("Differenz: {0} Stunden", list_Daten[2]);
+                    lbl_Ueberstunden.Text = string.Format("Überstunden: {0} Stunden", list_Daten[3]);
+                    richTextBox1.Text = list_Daten[4];
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+            }
         }
 
         private void Statistiken_Load(object sender, EventArgs e)
@@ -51,11 +63,21 @@ namespace Arbeitszeiten
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            lbl_Startzeit.Text = string.Format("Startzeit: ");
+            lbl_Endzeit.Text = string.Format("Endzeit: ");
+            lbl_Arbeitszeit.Text = string.Format("Differenz: ");
+            lbl_Ueberstunden.Text = string.Format("Überstunden: ");
+            richTextBox1.Text = string.Empty;
+
+            string Tag, id = string.Empty;
             if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
-                string Tag = dataGridView1.Rows[index: dataGridView1.CurrentCell.RowIndex].Cells[0].Value.ToString();
+                Tag = dataGridView1.Rows[index: dataGridView1.CurrentCell.RowIndex].Cells[0].Value.ToString();
                 if (Tag != "Alle Tage")
-                    Tag_auswählen(Convert.ToDateTime(Tag));
+                {
+                    id = dataGridView1.Rows[index: dataGridView1.CurrentCell.RowIndex].Cells[1].Value.ToString();
+                    Tag_auswählen(id, Tag);
+                }
             }
         }
     }

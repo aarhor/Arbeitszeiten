@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Statistiken));
             dataGridView1 = new DataGridView();
+            Col_Datum = new DataGridViewTextBoxColumn();
+            Col_id = new DataGridViewTextBoxColumn();
             button1 = new Button();
             domainUpDown1 = new DomainUpDown();
             label1 = new Label();
@@ -39,8 +41,8 @@
             lbl_Endzeit = new Label();
             lbl_Arbeitszeit = new Label();
             lbl_Ueberstunden = new Label();
-            Col_Datum = new DataGridViewTextBoxColumn();
-            Col_id = new DataGridViewTextBoxColumn();
+            label3 = new Label();
+            richTextBox1 = new RichTextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -60,6 +62,22 @@
             dataGridView1.Size = new Size(131, 255);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            // 
+            // Col_Datum
+            // 
+            Col_Datum.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Col_Datum.HeaderText = "Datum";
+            Col_Datum.Name = "Col_Datum";
+            Col_Datum.ReadOnly = true;
+            Col_Datum.Resizable = DataGridViewTriState.False;
+            Col_Datum.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Col_id
+            // 
+            Col_id.HeaderText = "_id";
+            Col_id.Name = "Col_id";
+            Col_id.ReadOnly = true;
+            Col_id.Visible = false;
             // 
             // button1
             // 
@@ -160,27 +178,32 @@
             lbl_Ueberstunden.TabIndex = 9;
             lbl_Ueberstunden.Text = "Überstunden:";
             // 
-            // Col_Datum
+            // label3
             // 
-            Col_Datum.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Col_Datum.HeaderText = "Datum";
-            Col_Datum.Name = "Col_Datum";
-            Col_Datum.ReadOnly = true;
-            Col_Datum.Resizable = DataGridViewTriState.False;
-            Col_Datum.SortMode = DataGridViewColumnSortMode.NotSortable;
+            label3.AutoSize = true;
+            label3.Location = new Point(144, 162);
+            label3.Margin = new Padding(3, 8, 3, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(71, 15);
+            label3.TabIndex = 10;
+            label3.Text = "Bemerkung:";
             // 
-            // Col_id
+            // richTextBox1
             // 
-            Col_id.HeaderText = "_id";
-            Col_id.Name = "Col_id";
-            Col_id.ReadOnly = true;
-            Col_id.Visible = false;
+            richTextBox1.Location = new Point(144, 180);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.ReadOnly = true;
+            richTextBox1.Size = new Size(315, 63);
+            richTextBox1.TabIndex = 11;
+            richTextBox1.Text = "";
             // 
             // Statistiken
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(471, 255);
+            Controls.Add(richTextBox1);
+            Controls.Add(label3);
             Controls.Add(lbl_Ueberstunden);
             Controls.Add(lbl_Arbeitszeit);
             Controls.Add(lbl_Endzeit);
@@ -216,5 +239,7 @@
         private Label lbl_Ueberstunden;
         private DataGridViewTextBoxColumn Col_Datum;
         private DataGridViewTextBoxColumn Col_id;
+        private Label label3;
+        private RichTextBox richTextBox1;
     }
 }
