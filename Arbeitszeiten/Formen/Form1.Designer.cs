@@ -33,8 +33,8 @@
             label2 = new Label();
             txtBox_Start = new TextBox();
             txtBox_Ende = new TextBox();
-            button1 = new Button();
-            button2 = new Button();
+            btn_Start = new Button();
+            btn_Ende = new Button();
             lbl_Differenz = new Label();
             linkLabel1 = new LinkLabel();
             chkBox_Manuell = new CheckBox();
@@ -85,25 +85,25 @@
             txtBox_Ende.Size = new Size(110, 23);
             txtBox_Ende.TabIndex = 4;
             // 
-            // button1
+            // btn_Start
             // 
-            button1.Location = new Point(205, 6);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 5;
-            button1.Text = "Speichern";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            btn_Start.Location = new Point(205, 6);
+            btn_Start.Name = "btn_Start";
+            btn_Start.Size = new Size(75, 23);
+            btn_Start.TabIndex = 5;
+            btn_Start.Text = "Anfang";
+            btn_Start.UseVisualStyleBackColor = true;
+            btn_Start.Click += button1_Click;
             // 
-            // button2
+            // btn_Ende
             // 
-            button2.Location = new Point(205, 35);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 6;
-            button2.Text = "Speichern";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
+            btn_Ende.Location = new Point(205, 35);
+            btn_Ende.Name = "btn_Ende";
+            btn_Ende.Size = new Size(75, 23);
+            btn_Ende.TabIndex = 6;
+            btn_Ende.Text = "Ende";
+            btn_Ende.UseVisualStyleBackColor = true;
+            btn_Ende.Click += button2_Click;
             // 
             // lbl_Differenz
             // 
@@ -253,8 +253,8 @@
             Controls.Add(linkLabel2);
             Controls.Add(linkLabel1);
             Controls.Add(lbl_Differenz);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            Controls.Add(btn_Ende);
+            Controls.Add(btn_Start);
             Controls.Add(txtBox_Ende);
             Controls.Add(txtBox_Start);
             Controls.Add(label2);
@@ -277,8 +277,8 @@
         #endregion
         private Label label1;
         private Label label2;
-        private Button button1;
-        private Button button2;
+        private Button btn_Start;
+        private Button btn_Ende;
         private LinkLabel linkLabel1;
         private TextBox txtBox_Start;
         private TextBox txtBox_Ende;
