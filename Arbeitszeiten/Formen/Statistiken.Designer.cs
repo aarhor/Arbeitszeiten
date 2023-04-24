@@ -33,10 +33,10 @@
             Col_Datum = new DataGridViewTextBoxColumn();
             Col_id = new DataGridViewTextBoxColumn();
             button1 = new Button();
-            domainUpDown1 = new DomainUpDown();
+            domainUpDown_Monat = new DomainUpDown();
             label1 = new Label();
             label2 = new Label();
-            domainUpDown2 = new DomainUpDown();
+            domainUpDown_Jahr = new DomainUpDown();
             lbl_Startzeit = new Label();
             lbl_Endzeit = new Label();
             lbl_Arbeitszeit = new Label();
@@ -89,24 +89,25 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
-            // domainUpDown1
+            // domainUpDown_Monat
             // 
-            domainUpDown1.Items.Add("Januar");
-            domainUpDown1.Items.Add("Februar");
-            domainUpDown1.Items.Add("März");
-            domainUpDown1.Items.Add("April");
-            domainUpDown1.Items.Add("Mai");
-            domainUpDown1.Items.Add("Juni");
-            domainUpDown1.Items.Add("Juli");
-            domainUpDown1.Items.Add("August");
-            domainUpDown1.Items.Add("September");
-            domainUpDown1.Items.Add("Oktober");
-            domainUpDown1.Items.Add("November");
-            domainUpDown1.Items.Add("Dezember");
-            domainUpDown1.Location = new Point(221, 7);
-            domainUpDown1.Name = "domainUpDown1";
-            domainUpDown1.Size = new Size(135, 23);
-            domainUpDown1.TabIndex = 2;
+            domainUpDown_Monat.Items.Add("Januar");
+            domainUpDown_Monat.Items.Add("Februar");
+            domainUpDown_Monat.Items.Add("März");
+            domainUpDown_Monat.Items.Add("April");
+            domainUpDown_Monat.Items.Add("Mai");
+            domainUpDown_Monat.Items.Add("Juni");
+            domainUpDown_Monat.Items.Add("Juli");
+            domainUpDown_Monat.Items.Add("August");
+            domainUpDown_Monat.Items.Add("September");
+            domainUpDown_Monat.Items.Add("Oktober");
+            domainUpDown_Monat.Items.Add("November");
+            domainUpDown_Monat.Items.Add("Dezember");
+            domainUpDown_Monat.Location = new Point(221, 7);
+            domainUpDown_Monat.Name = "domainUpDown_Monat";
+            domainUpDown_Monat.ReadOnly = true;
+            domainUpDown_Monat.Size = new Size(135, 23);
+            domainUpDown_Monat.TabIndex = 2;
             // 
             // label1
             // 
@@ -126,17 +127,92 @@
             label2.TabIndex = 4;
             label2.Text = "Jahr:";
             // 
-            // domainUpDown2
+            // domainUpDown_Jahr
             // 
-            domainUpDown2.Items.Add("2022");
-            domainUpDown2.Items.Add("2023");
-            domainUpDown2.Items.Add("2024");
-            domainUpDown2.Items.Add("2025");
-            domainUpDown2.Items.Add("2026");
-            domainUpDown2.Location = new Point(221, 36);
-            domainUpDown2.Name = "domainUpDown2";
-            domainUpDown2.Size = new Size(135, 23);
-            domainUpDown2.TabIndex = 5;
+            domainUpDown_Jahr.Items.Add("2022");
+            domainUpDown_Jahr.Items.Add("2023");
+            domainUpDown_Jahr.Items.Add("2024");
+            domainUpDown_Jahr.Items.Add("2025");
+            domainUpDown_Jahr.Items.Add("2026");
+            domainUpDown_Jahr.Items.Add("2027");
+            domainUpDown_Jahr.Items.Add("2028");
+            domainUpDown_Jahr.Items.Add("2029");
+            domainUpDown_Jahr.Items.Add("2030");
+            domainUpDown_Jahr.Items.Add("2031");
+            domainUpDown_Jahr.Items.Add("2032");
+            domainUpDown_Jahr.Items.Add("2033");
+            domainUpDown_Jahr.Items.Add("2034");
+            domainUpDown_Jahr.Items.Add("2035");
+            domainUpDown_Jahr.Items.Add("2036");
+            domainUpDown_Jahr.Items.Add("2037");
+            domainUpDown_Jahr.Items.Add("2038");
+            domainUpDown_Jahr.Items.Add("2039");
+            domainUpDown_Jahr.Items.Add("2040");
+            domainUpDown_Jahr.Items.Add("2041");
+            domainUpDown_Jahr.Items.Add("2042");
+            domainUpDown_Jahr.Items.Add("2043");
+            domainUpDown_Jahr.Items.Add("2044");
+            domainUpDown_Jahr.Items.Add("2045");
+            domainUpDown_Jahr.Items.Add("2046");
+            domainUpDown_Jahr.Items.Add("2047");
+            domainUpDown_Jahr.Items.Add("2048");
+            domainUpDown_Jahr.Items.Add("2049");
+            domainUpDown_Jahr.Items.Add("2050");
+            domainUpDown_Jahr.Items.Add("2051");
+            domainUpDown_Jahr.Items.Add("2052");
+            domainUpDown_Jahr.Items.Add("2053");
+            domainUpDown_Jahr.Items.Add("2054");
+            domainUpDown_Jahr.Items.Add("2055");
+            domainUpDown_Jahr.Items.Add("2056");
+            domainUpDown_Jahr.Items.Add("2057");
+            domainUpDown_Jahr.Items.Add("2058");
+            domainUpDown_Jahr.Items.Add("2059");
+            domainUpDown_Jahr.Items.Add("2060");
+            domainUpDown_Jahr.Items.Add("2061");
+            domainUpDown_Jahr.Items.Add("2062");
+            domainUpDown_Jahr.Items.Add("2063");
+            domainUpDown_Jahr.Items.Add("2064");
+            domainUpDown_Jahr.Items.Add("2065");
+            domainUpDown_Jahr.Items.Add("2066");
+            domainUpDown_Jahr.Items.Add("2067");
+            domainUpDown_Jahr.Items.Add("2068");
+            domainUpDown_Jahr.Items.Add("2069");
+            domainUpDown_Jahr.Items.Add("2070");
+            domainUpDown_Jahr.Items.Add("2071");
+            domainUpDown_Jahr.Items.Add("2072");
+            domainUpDown_Jahr.Items.Add("2073");
+            domainUpDown_Jahr.Items.Add("2074");
+            domainUpDown_Jahr.Items.Add("2075");
+            domainUpDown_Jahr.Items.Add("2076");
+            domainUpDown_Jahr.Items.Add("2077");
+            domainUpDown_Jahr.Items.Add("2078");
+            domainUpDown_Jahr.Items.Add("2079");
+            domainUpDown_Jahr.Items.Add("2080");
+            domainUpDown_Jahr.Items.Add("2081");
+            domainUpDown_Jahr.Items.Add("2082");
+            domainUpDown_Jahr.Items.Add("2083");
+            domainUpDown_Jahr.Items.Add("2084");
+            domainUpDown_Jahr.Items.Add("2085");
+            domainUpDown_Jahr.Items.Add("2086");
+            domainUpDown_Jahr.Items.Add("2087");
+            domainUpDown_Jahr.Items.Add("2088");
+            domainUpDown_Jahr.Items.Add("2089");
+            domainUpDown_Jahr.Items.Add("2090");
+            domainUpDown_Jahr.Items.Add("2091");
+            domainUpDown_Jahr.Items.Add("2092");
+            domainUpDown_Jahr.Items.Add("2093");
+            domainUpDown_Jahr.Items.Add("2094");
+            domainUpDown_Jahr.Items.Add("2095");
+            domainUpDown_Jahr.Items.Add("2096");
+            domainUpDown_Jahr.Items.Add("2097");
+            domainUpDown_Jahr.Items.Add("2098");
+            domainUpDown_Jahr.Items.Add("2099");
+            domainUpDown_Jahr.Items.Add("2100");
+            domainUpDown_Jahr.Location = new Point(221, 36);
+            domainUpDown_Jahr.Name = "domainUpDown_Jahr";
+            domainUpDown_Jahr.ReadOnly = true;
+            domainUpDown_Jahr.Size = new Size(135, 23);
+            domainUpDown_Jahr.TabIndex = 5;
             // 
             // lbl_Startzeit
             // 
@@ -208,10 +284,10 @@
             Controls.Add(lbl_Arbeitszeit);
             Controls.Add(lbl_Endzeit);
             Controls.Add(lbl_Startzeit);
-            Controls.Add(domainUpDown2);
+            Controls.Add(domainUpDown_Jahr);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(domainUpDown1);
+            Controls.Add(domainUpDown_Monat);
             Controls.Add(button1);
             Controls.Add(dataGridView1);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -229,10 +305,10 @@
 
         private DataGridView dataGridView1;
         private Button button1;
-        private DomainUpDown domainUpDown1;
+        private DomainUpDown domainUpDown_Monat;
         private Label label1;
         private Label label2;
-        private DomainUpDown domainUpDown2;
+        private DomainUpDown domainUpDown_Jahr;
         private Label lbl_Startzeit;
         private Label lbl_Endzeit;
         private Label lbl_Arbeitszeit;
