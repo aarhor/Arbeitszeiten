@@ -16,8 +16,8 @@ namespace Arbeitszeiten
             dataGridView1.Rows.Clear();
             dataGridView1.Rows.Add("Alle Tage");
 
-            string Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown1.Text) + 1].ToString();
-            string Jahr = domainUpDown2.Text;
+            string Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown_Monat.Text) + 1].ToString();
+            string Jahr = domainUpDown_Jahr.Text;
             string SQL_Befehl = string.Format("select Datum, _id from Zeiten where Datum like '{0}-{1}-%' group by Datum", Jahr, Monatszahl);
             List<string> list = SQLite.Auflistung_Einträge(SQL_Befehl, 2);
 
@@ -51,8 +51,12 @@ namespace Arbeitszeiten
 
         private void Statistiken_Load(object sender, EventArgs e)
         {
-            domainUpDown1.SelectedIndex = 0;
-            domainUpDown2.SelectedIndex = 0;
+            DateTime heute = DateTime.Now;
+            string Monat = heute.ToString("MMMM");
+            string Jahr = heute.ToString("yyyy");
+
+            domainUpDown_Monat.SelectedItem = Monat;
+            domainUpDown_Jahr.SelectedItem = Jahr;
             Tage_abfragen();
         }
 

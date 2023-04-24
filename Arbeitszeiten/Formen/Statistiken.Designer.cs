@@ -33,10 +33,10 @@
             Col_Datum = new DataGridViewTextBoxColumn();
             Col_id = new DataGridViewTextBoxColumn();
             button1 = new Button();
-            domainUpDown1 = new DomainUpDown();
+            domainUpDown_Monat = new DomainUpDown();
             label1 = new Label();
             label2 = new Label();
-            domainUpDown2 = new DomainUpDown();
+            domainUpDown_Jahr = new DomainUpDown();
             lbl_Startzeit = new Label();
             lbl_Endzeit = new Label();
             lbl_Arbeitszeit = new Label();
@@ -89,24 +89,24 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
-            // domainUpDown1
+            // domainUpDown_Monat
             // 
-            domainUpDown1.Items.Add("Januar");
-            domainUpDown1.Items.Add("Februar");
-            domainUpDown1.Items.Add("März");
-            domainUpDown1.Items.Add("April");
-            domainUpDown1.Items.Add("Mai");
-            domainUpDown1.Items.Add("Juni");
-            domainUpDown1.Items.Add("Juli");
-            domainUpDown1.Items.Add("August");
-            domainUpDown1.Items.Add("September");
-            domainUpDown1.Items.Add("Oktober");
-            domainUpDown1.Items.Add("November");
-            domainUpDown1.Items.Add("Dezember");
-            domainUpDown1.Location = new Point(221, 7);
-            domainUpDown1.Name = "domainUpDown1";
-            domainUpDown1.Size = new Size(135, 23);
-            domainUpDown1.TabIndex = 2;
+            domainUpDown_Monat.Items.Add("Januar");
+            domainUpDown_Monat.Items.Add("Februar");
+            domainUpDown_Monat.Items.Add("März");
+            domainUpDown_Monat.Items.Add("April");
+            domainUpDown_Monat.Items.Add("Mai");
+            domainUpDown_Monat.Items.Add("Juni");
+            domainUpDown_Monat.Items.Add("Juli");
+            domainUpDown_Monat.Items.Add("August");
+            domainUpDown_Monat.Items.Add("September");
+            domainUpDown_Monat.Items.Add("Oktober");
+            domainUpDown_Monat.Items.Add("November");
+            domainUpDown_Monat.Items.Add("Dezember");
+            domainUpDown_Monat.Location = new Point(221, 7);
+            domainUpDown_Monat.Name = "domainUpDown_Monat";
+            domainUpDown_Monat.Size = new Size(135, 23);
+            domainUpDown_Monat.TabIndex = 2;
             // 
             // label1
             // 
@@ -126,17 +126,17 @@
             label2.TabIndex = 4;
             label2.Text = "Jahr:";
             // 
-            // domainUpDown2
+            // domainUpDown_Jahr
             // 
-            domainUpDown2.Items.Add("2022");
-            domainUpDown2.Items.Add("2023");
-            domainUpDown2.Items.Add("2024");
-            domainUpDown2.Items.Add("2025");
-            domainUpDown2.Items.Add("2026");
-            domainUpDown2.Location = new Point(221, 36);
-            domainUpDown2.Name = "domainUpDown2";
-            domainUpDown2.Size = new Size(135, 23);
-            domainUpDown2.TabIndex = 5;
+            domainUpDown_Jahr.Items.Add("2022");
+            domainUpDown_Jahr.Items.Add("2023");
+            domainUpDown_Jahr.Items.Add("2024");
+            domainUpDown_Jahr.Items.Add("2025");
+            domainUpDown_Jahr.Items.Add("2026");
+            domainUpDown_Jahr.Location = new Point(221, 36);
+            domainUpDown_Jahr.Name = "domainUpDown_Jahr";
+            domainUpDown_Jahr.Size = new Size(135, 23);
+            domainUpDown_Jahr.TabIndex = 5;
             // 
             // lbl_Startzeit
             // 
@@ -208,10 +208,10 @@
             Controls.Add(lbl_Arbeitszeit);
             Controls.Add(lbl_Endzeit);
             Controls.Add(lbl_Startzeit);
-            Controls.Add(domainUpDown2);
+            Controls.Add(domainUpDown_Jahr);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(domainUpDown1);
+            Controls.Add(domainUpDown_Monat);
             Controls.Add(button1);
             Controls.Add(dataGridView1);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -229,10 +229,10 @@
 
         private DataGridView dataGridView1;
         private Button button1;
-        private DomainUpDown domainUpDown1;
+        private DomainUpDown domainUpDown_Monat;
         private Label label1;
         private Label label2;
-        private DomainUpDown domainUpDown2;
+        private DomainUpDown domainUpDown_Jahr;
         private Label lbl_Startzeit;
         private Label lbl_Endzeit;
         private Label lbl_Arbeitszeit;
