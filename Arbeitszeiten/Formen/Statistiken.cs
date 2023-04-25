@@ -1,4 +1,5 @@
-﻿using Arbeitszeiten.Klassen;
+﻿using Arbeitszeiten.Formen;
+using Arbeitszeiten.Klassen;
 
 namespace Arbeitszeiten
 {
@@ -26,6 +27,16 @@ namespace Arbeitszeiten
                 DateTime tag = Convert.ToDateTime(list[i]);
                 dataGridView1.Rows.Add(tag.ToString("dd.MM.yyyy"), list[i + 1]);
             }
+        }
+
+        public void Graphen_zeichnen()
+        {
+            lbl_Startzeit.Text = string.Format("Startzeit: {0}", "---");
+            lbl_Endzeit.Text = string.Format("Endzeit: {0}", "---");
+            lbl_Arbeitszeit.Text = string.Format("Differenz: {0}", "---");
+            lbl_Ueberstunden.Text = string.Format("Überstunden: {0}", "---");
+            richTextBox1.Text = string.Empty;
+
         }
 
         public void Tag_auswählen(string _id, string Tag)
@@ -85,10 +96,22 @@ namespace Arbeitszeiten
                 Tag = dataGridView1.Rows[index: dataGridView1.CurrentCell.RowIndex].Cells[0].Value.ToString();
                 if (Tag != "Alle Tage")
                 {
+                    weiteresToolStripMenuItem.Enabled = true;
                     id = dataGridView1.Rows[index: dataGridView1.CurrentCell.RowIndex].Cells[1].Value.ToString();
                     Tag_auswählen(id, Tag);
                 }
+                else
+                {
+                    weiteresToolStripMenuItem.Enabled = false;
+                    Graphen_zeichnen();
+                }
             }
+        }
+
+        private void weiteresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Bearbeiten Form_Bearbeiten = new();
+            Form_Bearbeiten.ShowDialog();
         }
     }
 }
