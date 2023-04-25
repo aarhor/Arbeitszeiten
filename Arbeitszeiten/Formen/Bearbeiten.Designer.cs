@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Bearbeiten));
             label1 = new Label();
             txtBox_ID = new TextBox();
             txtBox_Start = new TextBox();
@@ -41,6 +42,7 @@
             btn_Heute_Datum = new Button();
             btn_Jetzt_Start = new Button();
             btn_Jetzt_Ende = new Button();
+            btn_Speichern = new Button();
             SuspendLayout();
             // 
             // label1
@@ -101,7 +103,7 @@
             // 
             richTextBox_Bemerkung.Location = new Point(89, 128);
             richTextBox_Bemerkung.Name = "richTextBox_Bemerkung";
-            richTextBox_Bemerkung.Size = new Size(149, 55);
+            richTextBox_Bemerkung.Size = new Size(230, 55);
             richTextBox_Bemerkung.TabIndex = 6;
             richTextBox_Bemerkung.Text = "";
             // 
@@ -163,11 +165,22 @@
             btn_Jetzt_Ende.UseVisualStyleBackColor = true;
             btn_Jetzt_Ende.Click += btn_Jetzt_Ende_Click;
             // 
+            // btn_Speichern
+            // 
+            btn_Speichern.Location = new Point(89, 189);
+            btn_Speichern.Name = "btn_Speichern";
+            btn_Speichern.Size = new Size(75, 23);
+            btn_Speichern.TabIndex = 13;
+            btn_Speichern.Text = "Speichern";
+            btn_Speichern.UseVisualStyleBackColor = true;
+            btn_Speichern.Click += btn_Speichern_Click;
+            // 
             // Bearbeiten
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(329, 361);
+            ClientSize = new Size(329, 223);
+            Controls.Add(btn_Speichern);
             Controls.Add(btn_Jetzt_Ende);
             Controls.Add(btn_Jetzt_Start);
             Controls.Add(btn_Heute_Datum);
@@ -181,8 +194,10 @@
             Controls.Add(label2);
             Controls.Add(txtBox_ID);
             Controls.Add(label1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Bearbeiten";
             Text = "Bearbeiten";
+            Load += Bearbeiten_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -202,5 +217,6 @@
         private Button btn_Heute_Datum;
         private Button btn_Jetzt_Start;
         private Button btn_Jetzt_Ende;
+        private Button btn_Speichern;
     }
 }

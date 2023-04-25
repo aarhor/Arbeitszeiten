@@ -53,7 +53,7 @@ namespace Arbeitszeiten.Klassen
             connection.Close();
         }
 
-        public static bool insert_table_Taetigkeit(string Datum, string Uhrzeit,string Tätigkeit)
+        public static bool insert_table_Taetigkeit(string Datum, string Uhrzeit, string Tätigkeit)
         {
             using SQLiteConnection connection = new(Connectionstring());
             connection.Open();
@@ -192,6 +192,39 @@ namespace Arbeitszeiten.Klassen
                         transaction.Rollback();
                         connection.Close();
                         return string.Empty;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gibt einen bestimmten Wert aus der Datenbank zurück.
+        /// </summary>
+        /// <param name="SQL_Befehl"></param>
+        /// <returns>Keine Art von Rückgabe.</returns>
+        public static void Nur_Befehl(string SQL_Befehl)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(Connectionstring()))
+            {
+                connection.Open();
+
+                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SQLiteCommand command = new(connection))
+                        {
+                            command.CommandText = SQL_Befehl;
+                            command.ExecuteNonQuery();
+                        }
+                        transaction.Commit();
+                        connection.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                        transaction.Rollback();
+                        connection.Close();
                     }
                 }
             }

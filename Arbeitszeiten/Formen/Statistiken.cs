@@ -11,6 +11,7 @@ namespace Arbeitszeiten
         }
 
         string[] Monate = { "Januar", "01", "Februar", "02", "März", "03", "April", "04", "Mai", "05", "Juni", "06", "Juli", "07", "August", "08", "September", "09", "Oktober", "10", "November", "11", "Dezember", "12" };
+        string id = string.Empty;
 
         public void Tage_abfragen()
         {
@@ -90,7 +91,7 @@ namespace Arbeitszeiten
             lbl_Ueberstunden.Text = string.Format("Überstunden: ");
             richTextBox1.Text = string.Empty;
 
-            string Tag, id = string.Empty;
+            string Tag = string.Empty;
             if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
                 Tag = dataGridView1.Rows[index: dataGridView1.CurrentCell.RowIndex].Cells[0].Value.ToString();
@@ -110,8 +111,19 @@ namespace Arbeitszeiten
 
         private void weiteresToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Properties.Settings.Default.ID_Bearbeiten = id;
+            Properties.Settings.Default.Save();
+
             Bearbeiten Form_Bearbeiten = new();
             Form_Bearbeiten.ShowDialog();
+        }
+
+        private void löschenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SQLite.Nur_Befehl("delete from Zeiten where _id = " + id);
+            id = string.Empty;
+            MessageBox.Show("Der Eintrag wurde gelöscht");
+            Tage_abfragen();
         }
     }
 }

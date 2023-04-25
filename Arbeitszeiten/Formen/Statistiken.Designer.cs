@@ -45,6 +45,7 @@
             richTextBox1 = new RichTextBox();
             menuStrip1 = new MenuStrip();
             weiteresToolStripMenuItem = new ToolStripMenuItem();
+            löschenToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -278,7 +279,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { weiteresToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { weiteresToolStripMenuItem, löschenToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(448, 24);
@@ -291,6 +292,13 @@
             weiteresToolStripMenuItem.Size = new Size(75, 20);
             weiteresToolStripMenuItem.Text = "Bearbeiten";
             weiteresToolStripMenuItem.Click += weiteresToolStripMenuItem_Click;
+            // 
+            // löschenToolStripMenuItem
+            // 
+            löschenToolStripMenuItem.Name = "löschenToolStripMenuItem";
+            löschenToolStripMenuItem.Size = new Size(63, 20);
+            löschenToolStripMenuItem.Text = "Löschen";
+            löschenToolStripMenuItem.Click += löschenToolStripMenuItem_Click;
             // 
             // Statistiken
             // 
@@ -344,5 +352,6 @@
         private ToolStripMenuItem weiteresToolStripMenuItem;
         private DataGridViewTextBoxColumn Col_Datum;
         private DataGridViewTextBoxColumn Col_id;
+        private ToolStripMenuItem löschenToolStripMenuItem;
     }
 }

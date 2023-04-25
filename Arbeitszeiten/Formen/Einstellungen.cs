@@ -11,6 +11,8 @@ namespace Arbeitszeiten
 
         private void btn_Speichern_Click(object sender, EventArgs e)
         {
+            txtBox_Pfad.Text = txtBox_Pfad.Text.Replace("\"", string.Empty);
+
             Registry.SetValue("Dateipfad", txtBox_Pfad.Text);
             if (!File.Exists(txtBox_Pfad.Text))
             {
