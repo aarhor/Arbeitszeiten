@@ -47,7 +47,7 @@
 
             if (Differenz_dezimal >= 10)
             {
-                MessageBox.Show("Die Arbeitszeit beträgt mehr als 10 Stunden!!\nSieh zu das du Land gewinnst und nicht mehr arbeitest!!");
+                MessageBox.Show(new Form { TopMost = true }, "Die Arbeitszeit beträgt mehr als 10 Stunden!!\nSieh zu das du Land gewinnst und nicht mehr arbeitest!!");
             }
 
             return Ueberzeit;

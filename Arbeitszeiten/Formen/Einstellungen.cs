@@ -17,10 +17,10 @@ namespace Arbeitszeiten
                 SQLite.create_table();
 
                 if (File.Exists(txtBox_Pfad.Text))
-                    MessageBox.Show("Der Dateipfad wurde erfolgreich in der Registry gespeichert und die Datei wurde erstellt.\nBitte einmal das Programm neustarten.");
+                    MessageBox.Show(new Form { TopMost = true }, "Der Dateipfad wurde erfolgreich in der Registry gespeichert und die Datei wurde erstellt.\nBitte einmal das Programm neustarten.");
             }
             else
-                MessageBox.Show("Der Dateipfad wurde erfolgreich in der Registry gespeichert.");
+                MessageBox.Show(new Form { TopMost = true }, "Der Dateipfad wurde erfolgreich in der Registry gespeichert.");
         }
 
         private void Einstellungen_Load(object sender, EventArgs e)
@@ -32,7 +32,7 @@ namespace Arbeitszeiten
             if (vorhanden)
                 txtBox_Pfad.Text = Registry.GetValue("Dateipfad");
             else
-                MessageBox.Show("Es ist noch kein Pfad vorhanden!");
+                MessageBox.Show(new Form { TopMost = true }, "Es ist noch kein Pfad vorhanden!");
 
             if (Zeit_abziehen)
             {
@@ -57,7 +57,7 @@ namespace Arbeitszeiten
 
         private void label1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("In dieses Feld kommt der KOMPLETTE Pfad zu der .db Datei (z.b. \"C:\\Temp\\Arbeitszeiten.db\"");
+            MessageBox.Show(new Form { TopMost = true }, "In dieses Feld kommt der KOMPLETTE Pfad zu der .db Datei (z.b. \"C:\\Temp\\Arbeitszeiten.db\"");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -65,7 +65,7 @@ namespace Arbeitszeiten
             decimal abzug = Math.Round(Convert.ToDecimal(txtBox_Minuten.Text) / 60, 2);
 
             Registry.SetValue("Zeit_abziehen_Dauer", abzug.ToString());
-            MessageBox.Show("Der WErt wurde eingetragen.");
+            MessageBox.Show(new Form { TopMost = true }, "Der WErt wurde eingetragen.");
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -81,7 +81,7 @@ namespace Arbeitszeiten
 
         private void label3_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Wenn der start button gedrückt wird, wird immer automatisch die angegebene Zeit von der aktuellen abgezogen.\n" +
+            MessageBox.Show(new Form { TopMost = true }, "Wenn der start button gedrückt wird, wird immer automatisch die angegebene Zeit von der aktuellen abgezogen.\n" +
                 "Die Zeit MUSS in Minuten angegeben werden. Auch wenn 1, 2, 3... Stunden sein soll. Aktuell werden NUR komplette Minuten unterstützt.");
         }
 
@@ -93,7 +93,7 @@ namespace Arbeitszeiten
                 button1.Enabled = true;
                 Registry.SetValue("Zeit_abziehen", true.ToString());
 
-                MessageBox.Show("Wenn der start button gedrückt wird, wird immer automatisch die angegebene Zeit von der aktuellen abgezogen.\n" +
+                MessageBox.Show(new Form { TopMost = true }, "Wenn der start button gedrückt wird, wird immer automatisch die angegebene Zeit von der aktuellen abgezogen.\n" +
                     "Die Zeit MUSS in Minuten angegeben werden. Auch wenn 1, 2, 3... Stunden sein soll. Aktuell werden NUR komplette Minuten unterstützt.");
             }
             else
@@ -102,7 +102,7 @@ namespace Arbeitszeiten
                 button1.Enabled = false;
                 Registry.SetValue("Zeit_abziehen", false.ToString());
 
-                MessageBox.Show("Es wird keine Zeit von der Startzeit abgezogen.");
+                MessageBox.Show(new Form { TopMost = true }, "Es wird keine Zeit von der Startzeit abgezogen.");
             }
         }
     }
