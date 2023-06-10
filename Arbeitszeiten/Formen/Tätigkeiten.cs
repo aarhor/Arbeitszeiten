@@ -18,7 +18,7 @@ namespace Arbeitszeiten.Formen
 
             if (SQLite.insert_table_Taetigkeit(Datum, Uhrzeit, Tätigkeit))
             {
-                MessageBox.Show("Erfolgreich eintragen");
+                MessageBox.Show(new Form { TopMost = true }, "Erfolgreich eintragen");
                 Application.Exit();
             }
         }

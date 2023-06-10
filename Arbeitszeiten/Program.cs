@@ -48,9 +48,7 @@ namespace Arbeitszeiten
                 Application.Run(new Einstellungen());
             else
             {
-                string firstArgument = "";
-                string secondArgument = "";
-
+                string firstArgument;
                 if (CommandLineArguments.Args.Length == 1)
                 {
                     firstArgument = CommandLineArguments.Args[0];
@@ -64,14 +62,23 @@ namespace Arbeitszeiten
                     if (firstArgument == "/Dienstbeginn")
                     {
                         Kommandozeile.Anmelden(Convert.ToDateTime(null), abzug);
-                        MessageBox.Show("Der Beginn wurde erfolgreich eingetragen.");
+                        MessageBox.Show(new Form { TopMost = true }, "Der Beginn wurde erfolgreich eingetragen.");
                         Application.Exit();
                     }
                     else if (firstArgument == "/Dienstende")
                     {
-                        Kommandozeile.Abmelden(Convert.ToDateTime(null), false, false, "null", true);
-                        MessageBox.Show("Das Ende wurde erfolgreich eingetragen.");
-                        Application.Exit();
+                        DialogResult dialogResult = MessageBox.Show(new Form { TopMost = true }, "Möchtest du eine Bemerkung mit angeben?", "Bemerkung", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                        if (dialogResult == DialogResult.Yes)
+                        {
+                            Bemerkung Form_Bemerkung = new Bemerkung();
+                            Form_Bemerkung.ShowDialog();
+                        }
+                        else
+                        {
+                            Kommandozeile.Abmelden(Convert.ToDateTime(null), false, false, "null", true);
+                            MessageBox.Show(new Form { TopMost = true }, "Das Ende wurde erfolgreich eingetragen.");
+                            Application.Exit();
+                        }
                     }
                     else if (firstArgument == "/Tätigkeiten")
                     {
@@ -81,12 +88,11 @@ namespace Arbeitszeiten
                 else if (CommandLineArguments.Args.Length == 2)
                 {
                     firstArgument = CommandLineArguments.Args[0];
-                    secondArgument = CommandLineArguments.Args[1];
-
+                    string secondArgument = CommandLineArguments.Args[1];
                     if (firstArgument == "/Dienstende" && secondArgument == "/Außerhalb")
                     {
                         Kommandozeile.Abmelden(Convert.ToDateTime(null), true, false, "null", true);
-                        MessageBox.Show("Das Ende wurde erfolgreich eingetragen.");
+                        MessageBox.Show(new Form { TopMost = true }, "Das Ende wurde erfolgreich eingetragen.");
                         Application.Exit();
                     }
                 }
