@@ -1,7 +1,8 @@
 {
   "profiles": {
     "Arbeitszeiten": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "/Dienstende"
     }
   }
 }

@@ -69,11 +69,16 @@ namespace Arbeitszeiten
                     {
                         DialogResult dialogResult = MessageBox.Show(new Form { TopMost = true }, "Möchtest du eine Bemerkung mit angeben?", "Bemerkung", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                         if (dialogResult == DialogResult.Yes)
-                        { }
-
-                        Kommandozeile.Abmelden(Convert.ToDateTime(null), false, false, "null", true);
-                        MessageBox.Show(new Form { TopMost = true }, "Das Ende wurde erfolgreich eingetragen.");
-                        Application.Exit();
+                        {
+                            Bemerkung Form_Bemerkung = new Bemerkung();
+                            Form_Bemerkung.ShowDialog();
+                        }
+                        else
+                        {
+                            Kommandozeile.Abmelden(Convert.ToDateTime(null), false, false, "null", true);
+                            MessageBox.Show(new Form { TopMost = true }, "Das Ende wurde erfolgreich eingetragen.");
+                            Application.Exit();
+                        }
                     }
                     else if (firstArgument == "/Tätigkeiten")
                     {

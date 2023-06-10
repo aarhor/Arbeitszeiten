@@ -27,16 +27,24 @@
             decimal Ueberzeit = 0;
             decimal Pausenzeit = 0;
 
-            if (Pause) { Pausenzeit = Convert.ToDecimal(0.5); }
-
             if (!Außerhalb)
             {
                 if (Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag")
+                {
+                    if (Pause) { Pausenzeit = Convert.ToDecimal(0.5); }
+
                     Ueberzeit = Differenz_dezimal - Convert.ToDecimal(8 + Pausenzeit);
+                }
                 else if (Wochentag == "Freitag")
+                {
                     Ueberzeit = Differenz_dezimal - Convert.ToDecimal(5 + Pausenzeit);
+                }
                 else if (Wochentag == "Samstag" || Wochentag == "Sonntag")
-                    Ueberzeit = Differenz_dezimal - Convert.ToDecimal(0 + Pausenzeit);
+                {
+                    if (Pause) { Pausenzeit = Convert.ToDecimal(0.5); }
+
+                    Ueberzeit = Differenz_dezimal - Convert.ToDecimal(5 + Pausenzeit);
+                }
             }
             else
                 Ueberzeit = Differenz_dezimal - 0;
