@@ -136,7 +136,7 @@ namespace Arbeitszeiten.Klassen
         /// <summary>
         /// Gibt die Heutige Startzeit als DateTime zurück
         /// </summary>
-        /// <param name="heute">Den Heutigen Tag bereits als passendes DateTime formatiert (YYYY-MM-DD)</param>
+        /// <param name="heute">Den Heutigen Tag bereits als passendes DateTime formatiert (yyyy-MM-dd)</param>
         /// <returns></returns>
         public static DateTime startzeit_heute(string heute)
         {
