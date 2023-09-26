@@ -55,6 +55,8 @@ namespace Arbeitszeiten
 
                     bool Zeit_abziehen = Convert.ToBoolean(Registry.GetValue("Zeit_abziehen"));
                     double abzug = 0;
+                    DateTime dateTime = DateTime.Now;
+                    string Startzeit, Endzeit;
 
                     if (Zeit_abziehen)
                         abzug = (Convert.ToDouble(Registry.GetValue("Zeit_abziehen_Dauer")) * 60) * (-1);
@@ -62,7 +64,12 @@ namespace Arbeitszeiten
                     if (firstArgument == "/Dienstbeginn")
                     {
                         Kommandozeile.Anmelden(Convert.ToDateTime(null), abzug);
-                        MessageBox.Show(new Form { TopMost = true }, "Der Beginn wurde erfolgreich eingetragen.");
+
+                        Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd")).ToString();
+
+                        MessageBox.Show(new Form { TopMost = true }, string.Format("Der Beginn wurde erfolgreich eingetragen.\n" +
+                            "Beginn: {0}\n" +
+                            "Ende: ", Startzeit));
                         Application.Exit();
                     }
                     else if (firstArgument == "/Dienstende")
@@ -75,8 +82,15 @@ namespace Arbeitszeiten
                         }
                         else
                         {
+                            Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd")).ToString();
+
                             Kommandozeile.Abmelden(Convert.ToDateTime(null), false, false, "null", true);
-                            MessageBox.Show(new Form { TopMost = true }, "Das Ende wurde erfolgreich eingetragen.");
+
+                            Endzeit = SQLite.Bestimmter_wert("select Ende from Zeiten order by _id DESC LIMIT 1");
+
+                            MessageBox.Show(new Form { TopMost = true }, string.Format("Das Ende wurde erfolgreich eingetragen.\n" +
+                            "Beginn: {0}\n" +
+                            "Ende: {1}", Startzeit, Endzeit));
                             Application.Exit();
                         }
                     }
