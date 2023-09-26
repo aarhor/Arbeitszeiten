@@ -74,13 +74,13 @@ namespace Arbeitszeiten
                     }
                     else if (firstArgument == "/Dienstende")
                     {
-                        DialogResult dialogResult = MessageBox.Show(new Form { TopMost = true }, "Möchtest du eine Bemerkung mit angeben?", "Bemerkung", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                        DialogResult dialogResult = MessageBox.Show(new Form { TopMost = true }, "Möchtest du eine Bemerkung mit angeben?", "Bemerkung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                         if (dialogResult == DialogResult.Yes)
                         {
                             Bemerkung Form_Bemerkung = new Bemerkung();
                             Form_Bemerkung.ShowDialog();
                         }
-                        else
+                        else if (dialogResult == DialogResult.No)
                         {
                             Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd")).ToString();
 
@@ -93,6 +93,8 @@ namespace Arbeitszeiten
                             "Ende: {1}", Startzeit, Endzeit));
                             Application.Exit();
                         }
+                        else if (dialogResult == DialogResult.No)
+                            MessageBox.Show("Es wurden keine Änderungen durchgeführt");
                     }
                     else if (firstArgument == "/Tätigkeiten")
                     {
