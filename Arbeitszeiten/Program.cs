@@ -93,7 +93,7 @@ namespace Arbeitszeiten
                             "Ende: {1}", Startzeit, Endzeit));
                             Application.Exit();
                         }
-                        else if (dialogResult == DialogResult.No)
+                        else if (dialogResult == DialogResult.Cancel)
                             MessageBox.Show("Es wurden keine Änderungen durchgeführt");
                     }
                     else if (firstArgument == "/Tätigkeiten")
