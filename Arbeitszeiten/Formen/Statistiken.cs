@@ -44,7 +44,7 @@ namespace Arbeitszeiten
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message.ToString());
+                    richTextBox1.Text = "## Für diesen Tag gibt es noch keine Endzeit ##";
                 }
             }
         }
