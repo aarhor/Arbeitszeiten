@@ -46,7 +46,7 @@ namespace Arbeitszeiten
 
             if (Differenz_dezimal >= 10)
             {
-                MessageBox.Show(new Form { TopMost = true },"Die Arbeitszeit beträgt über 10 Stunden!! Sieh zu das du Land gewinnst und nicht mehr arbeitest!!");
+                MessageBox.Show(new Form { TopMost = true }, "Die Arbeitszeit beträgt über 10 Stunden!! Sieh zu das du Land gewinnst und nicht mehr arbeitest!!");
             }
 
             if (Differenz_dezimal > 0) { lbl_Differenz.Text = string.Format("Differenz:    {0} Mehrstunden", Differenz_dezimal.ToString("#0.00")); }

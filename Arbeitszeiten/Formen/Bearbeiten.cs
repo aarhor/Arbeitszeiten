@@ -31,7 +31,7 @@ namespace Arbeitszeiten.Formen
 
         private void btn_Heute_Datum_Click(object sender, EventArgs e)
         {
-            txtBox_Datum.Text = DateTime.Now.ToString("dd.MM.yyyy ");
+            txtBox_Datum.Text = DateTime.Now.ToString("dd.MM.yyyy");
         }
 
         private void Bearbeiten_Load(object sender, EventArgs e)
@@ -53,7 +53,19 @@ namespace Arbeitszeiten.Formen
 
         private void btn_Speichern_Click(object sender, EventArgs e)
         {
+            var Null_wenn_leer = (string s) => s.Length == 0 ? "null" : string.Format("'{0}'", s);
+            string id, Startzeit, Endzeit, Datum, Bemerkung, SQL_Befehl;
 
+            id = txtBox_ID.Text;
+            Datum = Null_wenn_leer(txtBox_Datum.Text);
+            Startzeit = Null_wenn_leer(txtBox_Start.Text);
+            Endzeit = Null_wenn_leer(txtBox_Ende.Text);
+            Bemerkung = Null_wenn_leer(richTextBox_Bemerkung.Text);
+
+            //Datum in "yyyy-MM-dd" Format umstellen
+            SQL_Befehl = string.Format("update Zeiten set Datum = {0}, Start = {1}, Ende = {2}, Bemerkung = {3} where _id = '{4}'", Datum, Startzeit, Endzeit, Bemerkung, id);
+
+            SQLite.Nur_Befehl(SQL_Befehl);
         }
     }
 }

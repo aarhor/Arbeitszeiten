@@ -74,7 +74,7 @@ namespace Arbeitszeiten.Klassen
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(new Form { TopMost = true },e.Message);
+                    MessageBox.Show(new Form { TopMost = true }, e.Message);
                     transaction.Rollback();
                     return false;
                 }
@@ -108,7 +108,7 @@ namespace Arbeitszeiten.Klassen
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(new Form { TopMost = true },e.Message);
+                    MessageBox.Show(new Form { TopMost = true }, e.Message);
                     transaction.Rollback();
                 }
             }
@@ -188,7 +188,7 @@ namespace Arbeitszeiten.Klassen
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(new Form { TopMost = true },ex.Message.ToString());
+                        MessageBox.Show(new Form { TopMost = true }, ex.Message.ToString());
                         transaction.Rollback();
                         connection.Close();
                         return string.Empty;
@@ -202,7 +202,7 @@ namespace Arbeitszeiten.Klassen
         /// </summary>
         /// <param name="SQL_Befehl"></param>
         /// <returns>Keine Art von Rückgabe.</returns>
-        public static void Nur_Befehl(string SQL_Befehl)
+        public static bool Nur_Befehl(string SQL_Befehl)
         {
             using (SQLiteConnection connection = new SQLiteConnection(Connectionstring()))
             {
@@ -219,12 +219,14 @@ namespace Arbeitszeiten.Klassen
                         }
                         transaction.Commit();
                         connection.Close();
+                        return true;
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message.ToString());
                         transaction.Rollback();
                         connection.Close();
+                        return false;
                     }
                 }
             }
@@ -274,7 +276,7 @@ namespace Arbeitszeiten.Klassen
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(new Form { TopMost = true },ex.Message.ToString());
+                        MessageBox.Show(new Form { TopMost = true }, ex.Message.ToString());
                         transaction.Rollback();
                         connection.Close();
 
