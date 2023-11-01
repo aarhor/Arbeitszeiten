@@ -48,6 +48,7 @@
             label4 = new Label();
             lbl_Endzeit = new Label();
             linkLabel3 = new LinkLabel();
+            lbl_Absolut = new Label();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -108,7 +109,8 @@
             // lbl_Differenz
             // 
             lbl_Differenz.AutoSize = true;
-            lbl_Differenz.Location = new Point(26, 113);
+            lbl_Differenz.Location = new Point(26, 121);
+            lbl_Differenz.Margin = new Padding(3, 12, 3, 0);
             lbl_Differenz.Name = "lbl_Differenz";
             lbl_Differenz.Size = new Size(57, 15);
             lbl_Differenz.TabIndex = 7;
@@ -117,7 +119,7 @@
             // linkLabel1
             // 
             linkLabel1.AutoSize = true;
-            linkLabel1.Location = new Point(382, 162);
+            linkLabel1.Location = new Point(384, 185);
             linkLabel1.Name = "linkLabel1";
             linkLabel1.Size = new Size(78, 15);
             linkLabel1.TabIndex = 9;
@@ -139,7 +141,7 @@
             // linkLabel2
             // 
             linkLabel2.AutoSize = true;
-            linkLabel2.Location = new Point(315, 162);
+            linkLabel2.Location = new Point(401, 170);
             linkLabel2.Name = "linkLabel2";
             linkLabel2.Size = new Size(61, 15);
             linkLabel2.TabIndex = 11;
@@ -155,7 +157,7 @@
             groupBox1.Controls.Add(chkBox_Manuell);
             groupBox1.Location = new Point(286, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(176, 147);
+            groupBox1.Size = new Size(176, 140);
             groupBox1.TabIndex = 12;
             groupBox1.TabStop = false;
             groupBox1.Text = "Optionen";
@@ -197,7 +199,7 @@
             // lbl_Meldung
             // 
             lbl_Meldung.AutoSize = true;
-            lbl_Meldung.Location = new Point(12, 141);
+            lbl_Meldung.Location = new Point(12, 185);
             lbl_Meldung.Name = "lbl_Meldung";
             lbl_Meldung.Size = new Size(250, 15);
             lbl_Meldung.TabIndex = 13;
@@ -223,7 +225,8 @@
             // lbl_Endzeit
             // 
             lbl_Endzeit.AutoSize = true;
-            lbl_Endzeit.Location = new Point(47, 91);
+            lbl_Endzeit.Location = new Point(47, 94);
+            lbl_Endzeit.Margin = new Padding(3, 12, 3, 0);
             lbl_Endzeit.Name = "lbl_Endzeit";
             lbl_Endzeit.Size = new Size(36, 15);
             lbl_Endzeit.TabIndex = 16;
@@ -232,7 +235,7 @@
             // linkLabel3
             // 
             linkLabel3.AutoSize = true;
-            linkLabel3.Location = new Point(245, 162);
+            linkLabel3.Location = new Point(398, 155);
             linkLabel3.Name = "linkLabel3";
             linkLabel3.Size = new Size(64, 15);
             linkLabel3.TabIndex = 17;
@@ -240,11 +243,22 @@
             linkLabel3.Text = "Tätigkeiten";
             linkLabel3.LinkClicked += linkLabel3_LinkClicked;
             // 
+            // lbl_Absolut
+            // 
+            lbl_Absolut.AutoSize = true;
+            lbl_Absolut.Location = new Point(31, 148);
+            lbl_Absolut.Margin = new Padding(3, 12, 3, 0);
+            lbl_Absolut.Name = "lbl_Absolut";
+            lbl_Absolut.Size = new Size(51, 15);
+            lbl_Absolut.TabIndex = 18;
+            lbl_Absolut.Text = "Absolut:";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(474, 186);
+            ClientSize = new Size(474, 209);
+            Controls.Add(lbl_Absolut);
             Controls.Add(linkLabel3);
             Controls.Add(lbl_Endzeit);
             Controls.Add(txtBox_Bemerkung);
@@ -263,7 +277,6 @@
             HelpButton = true;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
-            MaximumSize = new Size(490, 225);
             MinimumSize = new Size(490, 225);
             Name = "Form1";
             Text = "Arbeitszeiterfassung";
@@ -294,5 +307,6 @@
         public CheckBox chkBox_Pause;
         private Label lbl_Endzeit;
         private LinkLabel linkLabel3;
+        private Label lbl_Absolut;
     }
 }

@@ -98,7 +98,7 @@ namespace Arbeitszeiten
                     }
                     else if (firstArgument == "/Tätigkeiten")
                     {
-                        Application.Run(new Tätigkeiten());
+                        Application.Run(new Tätigkeiten { TopMost = true });
                     }
                 }
                 else if (CommandLineArguments.Args.Length == 2)
