@@ -44,7 +44,7 @@
             label3 = new Label();
             richTextBox1 = new RichTextBox();
             menuStrip1 = new MenuStrip();
-            weiteresToolStripMenuItem = new ToolStripMenuItem();
+            BearbeitenToolStripMenuItem = new ToolStripMenuItem();
             löschenToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             menuStrip1.SuspendLayout();
@@ -279,19 +279,19 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { weiteresToolStripMenuItem, löschenToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { BearbeitenToolStripMenuItem, löschenToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(448, 24);
             menuStrip1.TabIndex = 12;
             menuStrip1.Text = "menuStrip1";
             // 
-            // weiteresToolStripMenuItem
+            // BearbeitenToolStripMenuItem
             // 
-            weiteresToolStripMenuItem.Name = "weiteresToolStripMenuItem";
-            weiteresToolStripMenuItem.Size = new Size(75, 20);
-            weiteresToolStripMenuItem.Text = "Bearbeiten";
-            weiteresToolStripMenuItem.Click += weiteresToolStripMenuItem_Click;
+            BearbeitenToolStripMenuItem.Name = "BearbeitenToolStripMenuItem";
+            BearbeitenToolStripMenuItem.Size = new Size(75, 20);
+            BearbeitenToolStripMenuItem.Text = "Bearbeiten";
+            BearbeitenToolStripMenuItem.Click += BearbeitenToolStripMenuItem_Click;
             // 
             // löschenToolStripMenuItem
             // 
@@ -349,7 +349,7 @@
         private Label label3;
         private RichTextBox richTextBox1;
         private MenuStrip menuStrip1;
-        private ToolStripMenuItem weiteresToolStripMenuItem;
+        private ToolStripMenuItem BearbeitenToolStripMenuItem;
         private DataGridViewTextBoxColumn Col_Datum;
         private DataGridViewTextBoxColumn Col_id;
         private ToolStripMenuItem löschenToolStripMenuItem;

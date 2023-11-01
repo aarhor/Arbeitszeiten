@@ -35,6 +35,9 @@ namespace Arbeitszeiten
 
         public void Graphen_zeichnen()
         {
+            BearbeitenToolStripMenuItem.Enabled = false;
+            löschenToolStripMenuItem.Enabled = false;
+
             try
             {
                 double Ueberstunden_Monat = Convert.ToDouble(SQLite.Bestimmter_wert(string.Format("select sum(MehrMinder_Stunden) as Überstunden from Zeiten where Datum like '{0}-{1}-%'", Jahr, Monatszahl)));
@@ -114,25 +117,18 @@ namespace Arbeitszeiten
                 Tag = dataGridView1.Rows[index: dataGridView1.CurrentCell.RowIndex].Cells[0].Value.ToString();
                 if (Tag != "Alle Tage")
                 {
-                    weiteresToolStripMenuItem.Enabled = true;
+                    BearbeitenToolStripMenuItem.Enabled = true;
+                    löschenToolStripMenuItem.Enabled = true;
                     id = dataGridView1.Rows[index: dataGridView1.CurrentCell.RowIndex].Cells[1].Value.ToString();
                     Tag_auswählen(id, Tag);
                 }
                 else
                 {
-                    weiteresToolStripMenuItem.Enabled = false;
+                    BearbeitenToolStripMenuItem.Enabled = false;
+                    löschenToolStripMenuItem.Enabled = false;
                     Graphen_zeichnen();
                 }
             }
-        }
-
-        private void weiteresToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.ID_Bearbeiten = id;
-            Properties.Settings.Default.Save();
-
-            Bearbeiten Form_Bearbeiten = new();
-            Form_Bearbeiten.ShowDialog();
         }
 
         private void löschenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -141,6 +137,15 @@ namespace Arbeitszeiten
             id = string.Empty;
             MessageBox.Show("Der Eintrag wurde gelöscht");
             Tage_abfragen();
+        }
+
+        private void BearbeitenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.ID_Bearbeiten = id;
+            Properties.Settings.Default.Save();
+
+            Bearbeiten Form_Bearbeiten = new();
+            Form_Bearbeiten.ShowDialog();
         }
     }
 }
