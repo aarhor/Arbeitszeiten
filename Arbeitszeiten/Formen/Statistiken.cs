@@ -11,15 +11,17 @@ namespace Arbeitszeiten
         }
 
         string[] Monate = { "Januar", "01", "Februar", "02", "März", "03", "April", "04", "Mai", "05", "Juni", "06", "Juli", "07", "August", "08", "September", "09", "Oktober", "10", "November", "11", "Dezember", "12" };
-        string id = string.Empty;
+        string id, Monatszahl, Jahr = string.Empty;
+        int Arbeitstage_Monat = 0;
 
         public void Tage_abfragen()
         {
+            Arbeitstage_Monat = 0;
             dataGridView1.Rows.Clear();
             dataGridView1.Rows.Add("Alle Tage");
 
-            string Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown_Monat.Text) + 1].ToString();
-            string Jahr = domainUpDown_Jahr.Text;
+            Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown_Monat.Text) + 1].ToString();
+            Jahr = domainUpDown_Jahr.Text;
             string SQL_Befehl = string.Format("select Datum, _id from Zeiten where Datum like '{0}-{1}-%' group by Datum", Jahr, Monatszahl);
             List<string> list = SQLite.Auflistung_Einträge(SQL_Befehl, 2);
 
@@ -27,17 +29,30 @@ namespace Arbeitszeiten
             {
                 DateTime tag = Convert.ToDateTime(list[i]);
                 dataGridView1.Rows.Add(tag.ToString("dd.MM.yyyy"), list[i + 1]);
+                Arbeitstage_Monat++;
             }
         }
 
         public void Graphen_zeichnen()
         {
-            lbl_Startzeit.Text = string.Format("Startzeit: {0}", "---");
-            lbl_Endzeit.Text = string.Format("Endzeit: {0}", "---");
-            lbl_Arbeitszeit.Text = string.Format("Differenz: {0}", "---");
-            lbl_Ueberstunden.Text = string.Format("Überstunden: {0}", "---");
-            richTextBox1.Text = string.Empty;
-
+            try
+            {
+                double Ueberstunden_Monat = Convert.ToDouble(SQLite.Bestimmter_wert(string.Format("select sum(MehrMinder_Stunden) as Überstunden from Zeiten where Datum like '{0}-{1}-%'", Jahr, Monatszahl)));
+                double GesamtStunden_Monat = Convert.ToDouble(SQLite.Bestimmter_wert(string.Format("select sum(Differenz) as Gesamt from Zeiten where Datum like '{0}-{1}-%'", Jahr, Monatszahl)));
+                lbl_Startzeit.Text = string.Format("Startzeit: {0}", "---");
+                lbl_Endzeit.Text = string.Format("Endzeit: {0}", "---");
+                lbl_Arbeitszeit.Text = string.Format("Differenz: {0} Stunden an {1} Arbeitstagen", Math.Round(GesamtStunden_Monat, 2), Arbeitstage_Monat);
+                lbl_Ueberstunden.Text = string.Format("Überstunden: {0} Stunden", Math.Round(Ueberstunden_Monat, 2));
+                richTextBox1.Text = string.Empty;
+            }
+            catch (FormatException)
+            {
+                lbl_Startzeit.Text = string.Format("Startzeit: {0}", "---");
+                lbl_Endzeit.Text = string.Format("Endzeit: {0}", "---");
+                lbl_Arbeitszeit.Text = string.Format("Differenz: {0}", "---");
+                lbl_Ueberstunden.Text = string.Format("Überstunden: {0}", "---");
+                richTextBox1.Text = "## Es gibt aktuell noch nicht genügend Daten um die Zeiten zu berechnen ##";
+            }
         }
 
         public void Tag_auswählen(string _id, string Tag)
@@ -76,11 +91,13 @@ namespace Arbeitszeiten
             domainUpDown_Monat.SelectedItem = Monat;
             domainUpDown_Jahr.SelectedItem = Jahr;
             Tage_abfragen();
+            Graphen_zeichnen();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             Tage_abfragen();
+            Graphen_zeichnen();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
