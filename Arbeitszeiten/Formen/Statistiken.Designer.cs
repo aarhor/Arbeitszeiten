@@ -46,6 +46,7 @@
             menuStrip1 = new MenuStrip();
             BearbeitenToolStripMenuItem = new ToolStripMenuItem();
             löschenToolStripMenuItem = new ToolStripMenuItem();
+            lbl_Datum = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -62,8 +63,7 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersVisible = false;
-            dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(131, 249);
+            dataGridView1.Size = new Size(131, 268);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -221,7 +221,7 @@
             // lbl_Startzeit
             // 
             lbl_Startzeit.AutoSize = true;
-            lbl_Startzeit.Location = new Point(163, 90);
+            lbl_Startzeit.Location = new Point(163, 110);
             lbl_Startzeit.Margin = new Padding(3, 8, 3, 0);
             lbl_Startzeit.Name = "lbl_Startzeit";
             lbl_Startzeit.Size = new Size(52, 15);
@@ -231,7 +231,7 @@
             // lbl_Endzeit
             // 
             lbl_Endzeit.AutoSize = true;
-            lbl_Endzeit.Location = new Point(167, 113);
+            lbl_Endzeit.Location = new Point(167, 133);
             lbl_Endzeit.Margin = new Padding(3, 8, 3, 0);
             lbl_Endzeit.Name = "lbl_Endzeit";
             lbl_Endzeit.Size = new Size(48, 15);
@@ -241,7 +241,7 @@
             // lbl_Arbeitszeit
             // 
             lbl_Arbeitszeit.AutoSize = true;
-            lbl_Arbeitszeit.Location = new Point(158, 136);
+            lbl_Arbeitszeit.Location = new Point(158, 156);
             lbl_Arbeitszeit.Margin = new Padding(3, 8, 3, 0);
             lbl_Arbeitszeit.Name = "lbl_Arbeitszeit";
             lbl_Arbeitszeit.Size = new Size(57, 15);
@@ -251,7 +251,7 @@
             // lbl_Ueberstunden
             // 
             lbl_Ueberstunden.AutoSize = true;
-            lbl_Ueberstunden.Location = new Point(137, 159);
+            lbl_Ueberstunden.Location = new Point(137, 179);
             lbl_Ueberstunden.Margin = new Padding(3, 8, 3, 0);
             lbl_Ueberstunden.Name = "lbl_Ueberstunden";
             lbl_Ueberstunden.Size = new Size(78, 15);
@@ -261,7 +261,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(144, 182);
+            label3.Location = new Point(144, 202);
             label3.Margin = new Padding(3, 8, 3, 0);
             label3.Name = "label3";
             label3.Size = new Size(71, 15);
@@ -270,7 +270,7 @@
             // 
             // richTextBox1
             // 
-            richTextBox1.Location = new Point(144, 200);
+            richTextBox1.Location = new Point(144, 220);
             richTextBox1.Name = "richTextBox1";
             richTextBox1.ReadOnly = true;
             richTextBox1.Size = new Size(293, 63);
@@ -287,7 +287,8 @@
             menuStrip1.Text = "menuStrip1";
             // 
             // BearbeitenToolStripMenuItem
-            // 
+            //
+            BearbeitenToolStripMenuItem.Enabled = false;
             BearbeitenToolStripMenuItem.Name = "BearbeitenToolStripMenuItem";
             BearbeitenToolStripMenuItem.Size = new Size(75, 20);
             BearbeitenToolStripMenuItem.Text = "Bearbeiten";
@@ -300,11 +301,22 @@
             löschenToolStripMenuItem.Text = "Löschen";
             löschenToolStripMenuItem.Click += löschenToolStripMenuItem_Click;
             // 
+            // lbl_Datum
+            // 
+            lbl_Datum.AutoSize = true;
+            lbl_Datum.Location = new Point(169, 87);
+            lbl_Datum.Margin = new Padding(3, 8, 3, 0);
+            lbl_Datum.Name = "lbl_Datum";
+            lbl_Datum.Size = new Size(46, 15);
+            lbl_Datum.TabIndex = 13;
+            lbl_Datum.Text = "Datum:";
+            // 
             // Statistiken
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(448, 273);
+            ClientSize = new Size(448, 292);
+            Controls.Add(lbl_Datum);
             Controls.Add(richTextBox1);
             Controls.Add(label3);
             Controls.Add(lbl_Ueberstunden);
@@ -321,7 +333,6 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             MaximizeBox = false;
-            MaximumSize = new Size(464, 312);
             MinimizeBox = false;
             MinimumSize = new Size(464, 312);
             Name = "Statistiken";
@@ -353,5 +364,6 @@
         private DataGridViewTextBoxColumn Col_Datum;
         private DataGridViewTextBoxColumn Col_id;
         private ToolStripMenuItem löschenToolStripMenuItem;
+        private Label lbl_Datum;
     }
 }

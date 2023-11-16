@@ -14,7 +14,7 @@ namespace Arbeitszeiten
 
         private void Berechnen()
         {
-            decimal Differenz_dezimal;
+            decimal Differenz_dezimal = 0;
             bool Rechnerisch = chkBox_Rechnerisch.Checked;
             string Bemerkung = "null";
 
@@ -23,24 +23,35 @@ namespace Arbeitszeiten
 
             if (chkBox_Außerhalb.Checked)
             {
-                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), true, Rechnerisch, Bemerkung, Pause); }
+                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), true, Rechnerisch, Bemerkung, Pause); }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
                     Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), true, Rechnerisch, Bemerkung, Pause);
 
-                    txtBox_Ende.Text = dateTime.ToString();
+                    mskdtxtBox_Ende.Text = dateTime.ToString();
                 }
             }
             else
             {
-                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(txtBox_Ende.Text), false, Rechnerisch, Bemerkung, Pause); }
+                if (chkBox_Manuell.Checked)
+                {
+                    try
+                    {
+                        Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), false, Rechnerisch, Bemerkung, Pause);
+                    }
+                    catch (FormatException ex)
+                    {
+                        MessageBox.Show("es wurde ein Fehler festegestellt:\n" + ex.Message.ToString());
+                        throw;
+                    }
+                }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
                     Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), false, Rechnerisch, Bemerkung, Pause);
 
-                    txtBox_Ende.Text = dateTime.ToString();
+                    mskdtxtBox_Ende.Text = dateTime.ToString();
                 }
             }
 
@@ -49,7 +60,7 @@ namespace Arbeitszeiten
                 MessageBox.Show(new Form { TopMost = true }, "Die Arbeitszeit beträgt über 10 Stunden!! Sieh zu das du Land gewinnst und nicht mehr arbeitest!!");
             }
 
-            TimeSpan timespan = TimeSpan.FromHours(Convert.ToDouble(Differenz_dezimal));
+            //TimeSpan timespan = TimeSpan.FromHours(Convert.ToDouble(Differenz_dezimal));
             //string output = timespan.ToString("hh\\:mm\\:ss");
 
             if (Differenz_dezimal > 0) { lbl_Differenz.Text = string.Format("Differenz:    {0} Mehrstunden", Differenz_dezimal); }
@@ -65,13 +76,13 @@ namespace Arbeitszeiten
             if (Zeit_abziehen)
                 abzug = (Convert.ToDouble(Registry.GetValue("Zeit_abziehen_Dauer")) * 60) * (-1);
 
-            if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(txtBox_Start.Text), abzug); }
+            if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug); }
             else
             {
                 DateTime dateTime = DateTime.Now;
                 dateTime = dateTime.AddMinutes(Convert.ToDouble(abzug));
                 Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug);
-                txtBox_Start.Text = dateTime.ToString();
+                mskdtxtBox_Start.Text = dateTime.ToString();
                 dateTime = dateTime.AddHours(8).AddMinutes(30);
                 lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
             }
@@ -92,20 +103,15 @@ namespace Arbeitszeiten
         {
             if (chkBox_Manuell.Checked)
             {
-                txtBox_Start.ReadOnly = false;
-                txtBox_Start.PlaceholderText = "05.11.1998 00:00:01";
+                mskdtxtBox_Start.ReadOnly = false;
 
-                txtBox_Ende.ReadOnly = false;
-                txtBox_Ende.PlaceholderText = "05.11.1998 00:00:01";
+                mskdtxtBox_Ende.ReadOnly = false;
             }
             else
             {
-                txtBox_Start.ReadOnly = true;
-                txtBox_Start.PlaceholderText = string.Empty;
+                mskdtxtBox_Start.ReadOnly = true;
 
-
-                txtBox_Ende.ReadOnly = true;
-                txtBox_Ende.PlaceholderText = string.Empty;
+                mskdtxtBox_Ende.ReadOnly = true;
             }
         }
 
@@ -137,7 +143,7 @@ namespace Arbeitszeiten
 
             if (startzeit.ToString() != DateTime.MinValue.ToString())
             {
-                txtBox_Start.Text = startzeit.ToString();
+                mskdtxtBox_Start.Text = startzeit.ToString();
 
                 if (Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag")
                     startzeit = startzeit.AddHours(8).AddMinutes(30);

@@ -37,6 +37,12 @@ namespace Arbeitszeiten
         {
             BearbeitenToolStripMenuItem.Enabled = false;
             löschenToolStripMenuItem.Enabled = false;
+            lbl_Datum.Text = string.Format("Datum: {0}", "---");
+            lbl_Startzeit.Text = string.Format("Startzeit: {0}", "---");
+            lbl_Endzeit.Text = string.Format("Endzeit: {0}", "---");
+            lbl_Arbeitszeit.Text = string.Format("Differenz: {0}", "---");
+            lbl_Ueberstunden.Text = string.Format("Überstunden: {0}", "---");
+            richTextBox1.Text = string.Empty;
 
             try
             {
@@ -64,8 +70,11 @@ namespace Arbeitszeiten
             {
                 try
                 {
+                    DateTime dateTime = Convert.ToDateTime(Tag);
                     string SQL_Befehl = string.Format("select Start, Ende, Differenz, MehrMinder_Stunden, Bemerkung from Zeiten where _id = '{0}'", _id);
                     List<string> list_Daten = SQLite.Auflistung_Einträge(SQL_Befehl, 5);
+
+                    lbl_Datum.Text = string.Format("Datum: {0}", dateTime.ToString("dddd, dd.MM.yyyy"));
                     lbl_Startzeit.Text = string.Format("Startzeit: {0}", list_Daten[0].Substring(list_Daten[0].Length - 8, 8));
 
                     if (!string.IsNullOrEmpty(list_Daten[1]))
@@ -130,7 +139,7 @@ namespace Arbeitszeiten
                 }
             }
         }
-
+        
         private void löschenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SQLite.Nur_Befehl("delete from Zeiten where _id = " + id);

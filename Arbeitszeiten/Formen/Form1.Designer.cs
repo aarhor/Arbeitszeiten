@@ -31,8 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             label1 = new Label();
             label2 = new Label();
-            txtBox_Start = new TextBox();
-            txtBox_Ende = new TextBox();
             btn_Start = new Button();
             btn_Ende = new Button();
             lbl_Differenz = new Label();
@@ -40,6 +38,7 @@
             chkBox_Manuell = new CheckBox();
             linkLabel2 = new LinkLabel();
             groupBox1 = new GroupBox();
+            checkBox1 = new CheckBox();
             chkBox_Pause = new CheckBox();
             chkBox_Rechnerisch = new CheckBox();
             chkBox_Außerhalb = new CheckBox();
@@ -49,6 +48,8 @@
             lbl_Endzeit = new Label();
             linkLabel3 = new LinkLabel();
             lbl_Absolut = new Label();
+            mskdtxtBox_Start = new MaskedTextBox();
+            mskdtxtBox_Ende = new MaskedTextBox();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -69,22 +70,6 @@
             label2.Size = new Size(48, 15);
             label2.TabIndex = 2;
             label2.Text = "Endzeit:";
-            // 
-            // txtBox_Start
-            // 
-            txtBox_Start.Location = new Point(89, 6);
-            txtBox_Start.Name = "txtBox_Start";
-            txtBox_Start.ReadOnly = true;
-            txtBox_Start.Size = new Size(110, 23);
-            txtBox_Start.TabIndex = 3;
-            // 
-            // txtBox_Ende
-            // 
-            txtBox_Ende.Location = new Point(89, 35);
-            txtBox_Ende.Name = "txtBox_Ende";
-            txtBox_Ende.ReadOnly = true;
-            txtBox_Ende.Size = new Size(110, 23);
-            txtBox_Ende.TabIndex = 4;
             // 
             // btn_Start
             // 
@@ -119,7 +104,7 @@
             // linkLabel1
             // 
             linkLabel1.AutoSize = true;
-            linkLabel1.Location = new Point(384, 185);
+            linkLabel1.Location = new Point(384, 196);
             linkLabel1.Name = "linkLabel1";
             linkLabel1.Size = new Size(78, 15);
             linkLabel1.TabIndex = 9;
@@ -141,7 +126,7 @@
             // linkLabel2
             // 
             linkLabel2.AutoSize = true;
-            linkLabel2.Location = new Point(401, 170);
+            linkLabel2.Location = new Point(401, 181);
             linkLabel2.Name = "linkLabel2";
             linkLabel2.Size = new Size(61, 15);
             linkLabel2.TabIndex = 11;
@@ -151,16 +136,28 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(checkBox1);
             groupBox1.Controls.Add(chkBox_Pause);
             groupBox1.Controls.Add(chkBox_Rechnerisch);
             groupBox1.Controls.Add(chkBox_Außerhalb);
             groupBox1.Controls.Add(chkBox_Manuell);
             groupBox1.Location = new Point(286, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(176, 140);
+            groupBox1.Size = new Size(176, 151);
             groupBox1.TabIndex = 12;
             groupBox1.TabStop = false;
             groupBox1.Text = "Optionen";
+            // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(6, 122);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(105, 19);
+            checkBox1.TabIndex = 14;
+            checkBox1.Text = "Hallo / Tschüss";
+            checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.Visible = false;
             // 
             // chkBox_Pause
             // 
@@ -199,7 +196,7 @@
             // lbl_Meldung
             // 
             lbl_Meldung.AutoSize = true;
-            lbl_Meldung.Location = new Point(12, 185);
+            lbl_Meldung.Location = new Point(12, 196);
             lbl_Meldung.Name = "lbl_Meldung";
             lbl_Meldung.Size = new Size(250, 15);
             lbl_Meldung.TabIndex = 13;
@@ -235,7 +232,7 @@
             // linkLabel3
             // 
             linkLabel3.AutoSize = true;
-            linkLabel3.Location = new Point(398, 155);
+            linkLabel3.Location = new Point(398, 166);
             linkLabel3.Name = "linkLabel3";
             linkLabel3.Size = new Size(64, 15);
             linkLabel3.TabIndex = 17;
@@ -253,11 +250,33 @@
             lbl_Absolut.TabIndex = 18;
             lbl_Absolut.Text = "Absolut:";
             // 
+            // mskdtxtBox_Start
+            // 
+            mskdtxtBox_Start.Location = new Point(89, 7);
+            mskdtxtBox_Start.Mask = "00/00/0000 00:00";
+            mskdtxtBox_Start.Name = "mskdtxtBox_Start";
+            mskdtxtBox_Start.ReadOnly = true;
+            mskdtxtBox_Start.Size = new Size(110, 23);
+            mskdtxtBox_Start.TabIndex = 19;
+            mskdtxtBox_Start.ValidatingType = typeof(DateTime);
+            // 
+            // mskdtxtBox_Ende
+            // 
+            mskdtxtBox_Ende.Location = new Point(89, 36);
+            mskdtxtBox_Ende.Mask = "00/00/0000 00:00";
+            mskdtxtBox_Ende.Name = "mskdtxtBox_Ende";
+            mskdtxtBox_Ende.ReadOnly = true;
+            mskdtxtBox_Ende.Size = new Size(110, 23);
+            mskdtxtBox_Ende.TabIndex = 20;
+            mskdtxtBox_Ende.ValidatingType = typeof(DateTime);
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(474, 209);
+            ClientSize = new Size(474, 218);
+            Controls.Add(mskdtxtBox_Ende);
+            Controls.Add(mskdtxtBox_Start);
             Controls.Add(lbl_Absolut);
             Controls.Add(linkLabel3);
             Controls.Add(lbl_Endzeit);
@@ -269,8 +288,6 @@
             Controls.Add(lbl_Differenz);
             Controls.Add(btn_Ende);
             Controls.Add(btn_Start);
-            Controls.Add(txtBox_Ende);
-            Controls.Add(txtBox_Start);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(lbl_Meldung);
@@ -293,8 +310,6 @@
         private Button btn_Start;
         private Button btn_Ende;
         private LinkLabel linkLabel1;
-        private TextBox txtBox_Start;
-        private TextBox txtBox_Ende;
         private Label lbl_Differenz;
         private CheckBox chkBox_Manuell;
         private LinkLabel linkLabel2;
@@ -308,5 +323,8 @@
         private Label lbl_Endzeit;
         private LinkLabel linkLabel3;
         private Label lbl_Absolut;
+        public CheckBox checkBox1;
+        private MaskedTextBox mskdtxtBox_Start;
+        private MaskedTextBox mskdtxtBox_Ende;
     }
 }
