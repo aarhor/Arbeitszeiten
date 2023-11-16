@@ -31,18 +31,18 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Bearbeiten));
             label1 = new Label();
             txtBox_ID = new TextBox();
-            txtBox_Start = new TextBox();
             label2 = new Label();
-            txtBox_Ende = new TextBox();
             label3 = new Label();
             richTextBox_Bemerkung = new RichTextBox();
             label4 = new Label();
-            txtBox_Datum = new TextBox();
             label5 = new Label();
             btn_Heute_Datum = new Button();
             btn_Jetzt_Start = new Button();
             btn_Jetzt_Ende = new Button();
             btn_Speichern = new Button();
+            mskdtxtBox_Datum = new MaskedTextBox();
+            mskdtxtBox_Start = new MaskedTextBox();
+            mskdtxtBox_Ende = new MaskedTextBox();
             SuspendLayout();
             // 
             // label1
@@ -63,14 +63,6 @@
             txtBox_ID.Size = new Size(149, 23);
             txtBox_ID.TabIndex = 1;
             // 
-            // txtBox_Start
-            // 
-            txtBox_Start.Location = new Point(89, 70);
-            txtBox_Start.Name = "txtBox_Start";
-            txtBox_Start.PlaceholderText = "00:00:00";
-            txtBox_Start.Size = new Size(149, 23);
-            txtBox_Start.TabIndex = 3;
-            // 
             // label2
             // 
             label2.AutoSize = true;
@@ -80,14 +72,6 @@
             label2.Size = new Size(52, 15);
             label2.TabIndex = 2;
             label2.Text = "Startzeit:";
-            // 
-            // txtBox_Ende
-            // 
-            txtBox_Ende.Location = new Point(89, 99);
-            txtBox_Ende.Name = "txtBox_Ende";
-            txtBox_Ende.PlaceholderText = "00:00:00";
-            txtBox_Ende.Size = new Size(149, 23);
-            txtBox_Ende.TabIndex = 5;
             // 
             // label3
             // 
@@ -110,20 +94,12 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(12, 131);
+            label4.Location = new Point(12, 128);
             label4.Margin = new Padding(3, 8, 3, 0);
             label4.Name = "label4";
             label4.Size = new Size(71, 15);
             label4.TabIndex = 7;
             label4.Text = "Bemerkung:";
-            // 
-            // txtBox_Datum
-            // 
-            txtBox_Datum.Location = new Point(89, 41);
-            txtBox_Datum.Name = "txtBox_Datum";
-            txtBox_Datum.PlaceholderText = "dd.MM.yyyy";
-            txtBox_Datum.Size = new Size(149, 23);
-            txtBox_Datum.TabIndex = 9;
             // 
             // label5
             // 
@@ -175,29 +151,57 @@
             btn_Speichern.UseVisualStyleBackColor = true;
             btn_Speichern.Click += btn_Speichern_Click;
             // 
+            // mskdtxtBox_Datum
+            // 
+            mskdtxtBox_Datum.Location = new Point(89, 41);
+            mskdtxtBox_Datum.Mask = "00/00/0000";
+            mskdtxtBox_Datum.Name = "mskdtxtBox_Datum";
+            mskdtxtBox_Datum.Size = new Size(149, 23);
+            mskdtxtBox_Datum.TabIndex = 14;
+            mskdtxtBox_Datum.ValidatingType = typeof(DateTime);
+            // 
+            // mskdtxtBox_Start
+            // 
+            mskdtxtBox_Start.Location = new Point(89, 70);
+            mskdtxtBox_Start.Mask = "90:00:00";
+            mskdtxtBox_Start.Name = "mskdtxtBox_Start";
+            mskdtxtBox_Start.Size = new Size(149, 23);
+            mskdtxtBox_Start.TabIndex = 15;
+            mskdtxtBox_Start.ValidatingType = typeof(DateTime);
+            // 
+            // mskdtxtBox_Ende
+            // 
+            mskdtxtBox_Ende.Location = new Point(89, 99);
+            mskdtxtBox_Ende.Mask = "90:00:00";
+            mskdtxtBox_Ende.Name = "mskdtxtBox_Ende";
+            mskdtxtBox_Ende.Size = new Size(149, 23);
+            mskdtxtBox_Ende.TabIndex = 16;
+            mskdtxtBox_Ende.ValidatingType = typeof(DateTime);
+            // 
             // Bearbeiten
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(329, 223);
+            ClientSize = new Size(332, 221);
+            Controls.Add(mskdtxtBox_Ende);
+            Controls.Add(mskdtxtBox_Start);
+            Controls.Add(mskdtxtBox_Datum);
             Controls.Add(btn_Speichern);
             Controls.Add(btn_Jetzt_Ende);
             Controls.Add(btn_Jetzt_Start);
             Controls.Add(btn_Heute_Datum);
-            Controls.Add(txtBox_Datum);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(richTextBox_Bemerkung);
-            Controls.Add(txtBox_Ende);
             Controls.Add(label3);
-            Controls.Add(txtBox_Start);
             Controls.Add(label2);
             Controls.Add(txtBox_ID);
             Controls.Add(label1);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Location = new Point(348, 260);
+            MaximumSize = new Size(348, 260);
             Name = "Bearbeiten";
             Text = "Bearbeiten";
-            Load += Bearbeiten_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -206,17 +210,17 @@
 
         private Label label1;
         private TextBox txtBox_ID;
-        private TextBox txtBox_Start;
         private Label label2;
-        private TextBox txtBox_Ende;
         private Label label3;
         private RichTextBox richTextBox_Bemerkung;
         private Label label4;
-        private TextBox txtBox_Datum;
         private Label label5;
         private Button btn_Heute_Datum;
         private Button btn_Jetzt_Start;
         private Button btn_Jetzt_Ende;
         private Button btn_Speichern;
+        private MaskedTextBox mskdtxtBox_Datum;
+        private MaskedTextBox mskdtxtBox_Start;
+        private MaskedTextBox mskdtxtBox_Ende;
     }
 }
