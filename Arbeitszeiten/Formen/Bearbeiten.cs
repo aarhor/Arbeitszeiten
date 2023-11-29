@@ -24,15 +24,15 @@ namespace Arbeitszeiten.Formen
         {
             txtBox_ID.Text = Properties.Settings.Default.ID_Bearbeiten;
 
-            string SQL_Befehl = string.Format("select Datum, Start, Ende, Bemerkung from Zeiten where _id = '{0}'", txtBox_ID.Text);
+            string SQL_Befehl = string.Format("select Datum, Start, Ende, Bemerkung from Zeiten where _id = '{0}'", _id);
             List<string> list_Daten = SQLite.Auflistung_Einträge(SQL_Befehl, 4);
 
-            mskdtxtBox_Datum.Text = list_Daten[0].Remove(10);
-            mskdtxtBox_Start.Text = list_Daten[1].Remove(0, 11);
+            mskdtxtBox_Datum.Text = Convert.ToDateTime(list_Daten[0]).ToString("dd.MM.yyyy");
+            mskdtxtBox_Start.Text = Convert.ToDateTime(list_Daten[1]).ToString("HH:mm:ss");
 
             if (!string.IsNullOrEmpty(list_Daten[2]))
             {
-                mskdtxtBox_Ende.Text = list_Daten[2].Remove(0, 11);
+                mskdtxtBox_Ende.Text = Convert.ToDateTime(list_Daten[2]).ToString("HH:mm:ss");
                 richTextBox_Bemerkung.Text = list_Daten[3];
             }
         }
@@ -64,7 +64,10 @@ namespace Arbeitszeiten.Formen
             Endzeit = Null_wenn_leer(mskdtxtBox_Ende.Text);
             Bemerkung = Null_wenn_leer(richTextBox_Bemerkung.Text);
 
-            //Datum in "yyyy-MM-dd" Format umstellen
+            if (Bemerkung != "null")
+            {
+
+            }
             SQL_Befehl = string.Format("update Zeiten set Datum = {0}, Start = {1}, Ende = {2}, Bemerkung = {3} where _id = '{4}'", Datum, Startzeit, Endzeit, Bemerkung, id);
 
             SQLite.Nur_Befehl(SQL_Befehl);

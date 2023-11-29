@@ -19,7 +19,7 @@ namespace Arbeitszeiten
         {
             Arbeitstage_Monat = 0;
             dataGridView1.Rows.Clear();
-            dataGridView1.Rows.Add("Alle Tage");
+            dataGridView1.Rows.Add("Alle Tage", "0");
 
             Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown_Monat.Text) + 1].ToString();
             Jahr = domainUpDown_Jahr.Text;
@@ -121,9 +121,9 @@ namespace Arbeitszeiten
             lbl_Ueberstunden.Text = string.Format("Überstunden: ");
             richTextBox1.Text = string.Empty;
 
-            string Tag = string.Empty;
             if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
+                string Tag = string.Empty;
                 Tag = dataGridView1.Rows[index: dataGridView1.CurrentCell.RowIndex].Cells[0].Value.ToString();
                 if (Tag != "Alle Tage")
                 {
@@ -175,7 +175,7 @@ namespace Arbeitszeiten
             string Arbeitstage = string.Format("{0} Arbeitstagen", Zeiten[2]);
 
             if (Arbeitstage == "1 Arbeitstagen")
-                Arbeitstage= string.Format("{0} Arbeitstag", Zeiten[2]);
+                Arbeitstage = string.Format("{0} Arbeitstag", Zeiten[2]);
 
             lbl_Startzeit.Text = string.Format("Startzeit: ---");
             lbl_Endzeit.Text = string.Format("Endzeit: ---");
