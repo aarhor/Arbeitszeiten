@@ -1,5 +1,6 @@
 ﻿using Arbeitszeiten.Formen;
 using Arbeitszeiten.Klassen;
+using System.Security.Cryptography;
 
 namespace Arbeitszeiten
 {
@@ -139,7 +140,7 @@ namespace Arbeitszeiten
                 }
             }
         }
-        
+
         private void löschenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SQLite.Nur_Befehl("delete from Zeiten where _id = " + id);
@@ -150,11 +151,36 @@ namespace Arbeitszeiten
 
         private void BearbeitenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.ID_Bearbeiten = id;
-            Properties.Settings.Default.Save();
-
-            Bearbeiten Form_Bearbeiten = new();
+            Bearbeiten Form_Bearbeiten = new(id);
             Form_Bearbeiten.ShowDialog();
+        }
+
+        private void domainUpDown_Monat_SelectedItemChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                Tage_abfragen();
+                Graphen_zeichnen();
+            }
+        }
+
+        private void jahresüberblickToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Clear();
+            string Jahr = domainUpDown_Jahr.Text;
+            string SQL_Befehl = string.Format("select round(sum(MehrMinder_Stunden), 2), round(sum(Differenz), 2), count(_id) as Anzahl_Tage from Zeiten where Datum like '{0}-%-%'", Jahr);
+            List<string> Zeiten = SQLite.Auflistung_Einträge(SQL_Befehl, 3);
+            string Ueberstunden = Zeiten[0];
+            string Arbeitszeit = Zeiten[1];
+            string Arbeitstage = string.Format("{0} Arbeitstagen", Zeiten[2]);
+
+            if (Arbeitstage == "1 Arbeitstagen")
+                Arbeitstage= string.Format("{0} Arbeitstag", Zeiten[2]);
+
+            lbl_Startzeit.Text = string.Format("Startzeit: ---");
+            lbl_Endzeit.Text = string.Format("Endzeit: ---");
+            lbl_Arbeitszeit.Text = string.Format("Differenz: {0} Stunden an {1}", Arbeitszeit, Arbeitstage);
+            lbl_Ueberstunden.Text = string.Format("Überstunden: {0} Stunden an {1}", Ueberstunden, Arbeitstage);
         }
     }
 }
