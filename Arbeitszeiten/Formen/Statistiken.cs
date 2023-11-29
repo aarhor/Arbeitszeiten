@@ -11,7 +11,7 @@ namespace Arbeitszeiten
             InitializeComponent();
         }
 
-        string[] Monate = { "Januar", "01", "Februar", "02", "März", "03", "April", "04", "Mai", "05", "Juni", "06", "Juli", "07", "August", "08", "September", "09", "Oktober", "10", "November", "11", "Dezember", "12" };
+        private readonly string[] Monate = ["Januar", "01", "Februar", "02", "März", "03", "April", "04", "Mai", "05", "Juni", "06", "Juli", "07", "August", "08", "September", "09", "Oktober", "10", "November", "11", "Dezember", "12"];
         string id, Monatszahl, Jahr = string.Empty;
         int Arbeitstage_Monat = 0;
 
@@ -143,10 +143,12 @@ namespace Arbeitszeiten
 
         private void löschenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SQLite.Nur_Befehl("delete from Zeiten where _id = " + id);
-            id = string.Empty;
-            MessageBox.Show("Der Eintrag wurde gelöscht");
-            Tage_abfragen();
+            if (SQLite.Nur_Befehl("delete from Zeiten where _id = " + id))
+            {
+                id = string.Empty;
+                MessageBox.Show("Der Eintrag wurde gelöscht");
+                Tage_abfragen();
+            }
         }
 
         private void BearbeitenToolStripMenuItem_Click(object sender, EventArgs e)
