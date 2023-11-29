@@ -22,7 +22,7 @@ namespace Arbeitszeiten.Formen
 
         void Eintragen(string _id)
         {
-            txtBox_ID.Text = Properties.Settings.Default.ID_Bearbeiten;
+            txtBox_ID.Text = _id;
 
             string SQL_Befehl = string.Format("select Datum, Start, Ende, Bemerkung from Zeiten where _id = '{0}'", _id);
             List<string> list_Daten = SQLite.Auflistung_Einträge(SQL_Befehl, 4);
@@ -68,6 +68,7 @@ namespace Arbeitszeiten.Formen
             {
 
             }
+
             SQL_Befehl = string.Format("update Zeiten set Datum = {0}, Start = {1}, Ende = {2}, Bemerkung = {3} where _id = '{4}'", Datum, Startzeit, Endzeit, Bemerkung, id);
 
             SQLite.Nur_Befehl(SQL_Befehl);
