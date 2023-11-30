@@ -47,7 +47,7 @@
             button1.Location = new Point(60, 56);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
-            button1.TabIndex = 1;
+            button1.TabIndex = 2;
             button1.Text = "Speichern";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
@@ -57,7 +57,7 @@
             txtBox_Bemerkung.Location = new Point(12, 27);
             txtBox_Bemerkung.Name = "txtBox_Bemerkung";
             txtBox_Bemerkung.Size = new Size(180, 23);
-            txtBox_Bemerkung.TabIndex = 2;
+            txtBox_Bemerkung.TabIndex = 1;
             // 
             // Bemerkung
             // 
