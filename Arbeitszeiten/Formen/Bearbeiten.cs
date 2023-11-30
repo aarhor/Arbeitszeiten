@@ -55,7 +55,7 @@ namespace Arbeitszeiten.Formen
         private void btn_Speichern_Click(object sender, EventArgs e)
         {
             var Null_wenn_leer = (string s) => s.Length == 0 ? "null" : string.Format("'{0}'", s);
-            string id, Startzeit, Endzeit, Datum, Bemerkung, SQL_Befehl;
+            string id, Startzeit, Endzeit, Datum, Bemerkung, SQL_Befehl = "";
             DateTime dateTime = Convert.ToDateTime(mskdtxtBox_Datum.Text);
 
             id = txtBox_ID.Text;
@@ -66,12 +66,14 @@ namespace Arbeitszeiten.Formen
 
             if (Bemerkung != "null")    //Ende wurde bearbeitet
             {
-                string Mehrstunden, Ueberstunden;
+                DateTime Beginn = Convert.ToDateTime(Datum + " " + SQLite.Bestimmter_wert(string.Format("select start from Zeiten where _id = {0}", id)));
+                TimeSpan Differenz = dateTime - Beginn;
+                decimal Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), false, true, Bemerkung, true, true);
             }
+            else
+                SQL_Befehl = string.Format("update Zeiten set Datum = {0}, Start = {1}, Ende = {2}, Bemerkung = {3} where _id = '{4}'", Datum, Startzeit, Endzeit, Bemerkung, id);
 
-            SQL_Befehl = string.Format("update Zeiten set Datum = {0}, Start = {1}, Ende = {2}, Bemerkung = {3} where _id = '{4}'", Datum, Startzeit, Endzeit, Bemerkung, id);
-
-            SQLite.Nur_Befehl(SQL_Befehl);
+            //SQLite.Nur_Befehl(SQL_Befehl);
         }
     }
 }

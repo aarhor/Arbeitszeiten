@@ -172,7 +172,7 @@
             // mskdtxtBox_Ende
             // 
             mskdtxtBox_Ende.Location = new Point(89, 99);
-            mskdtxtBox_Ende.Mask = "90:00:00";
+            mskdtxtBox_Ende.Mask = "00:00:00";
             mskdtxtBox_Ende.Name = "mskdtxtBox_Ende";
             mskdtxtBox_Ende.Size = new Size(149, 23);
             mskdtxtBox_Ende.TabIndex = 16;

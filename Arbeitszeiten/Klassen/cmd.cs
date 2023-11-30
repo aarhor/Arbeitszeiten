@@ -12,7 +12,7 @@
             SQLite.insert_table(heute, Startzeit);
         }
 
-        public static decimal Abmelden(DateTime dateTime, bool Außerhalb, bool Rechnerisch, string Bemerkung, bool Pause)
+        public static decimal Abmelden(DateTime dateTime, bool Außerhalb, bool Rechnerisch, string Bemerkung, bool Pause, bool Bearbeiten = false)
         {
             if (dateTime == DateTime.MinValue) { dateTime = DateTime.Now; }
 
@@ -53,7 +53,7 @@
                 SQLite.update_table(heute, Ende_Gelände, Differenz_dezimal, Ueberzeit, Bemerkung);
 
 
-            if (Differenz_dezimal >= 10)
+            if (Differenz_dezimal >= 10 && Bearbeiten == false)
             {
                 MessageBox.Show(new Form { TopMost = true }, "Die Arbeitszeit beträgt mehr als 10 Stunden!!\nSieh zu das du Land gewinnst und nicht mehr arbeitest!!");
             }
