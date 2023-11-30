@@ -64,9 +64,9 @@ namespace Arbeitszeiten.Formen
             Endzeit = Null_wenn_leer(mskdtxtBox_Ende.Text);
             Bemerkung = Null_wenn_leer(richTextBox_Bemerkung.Text);
 
-            if (Bemerkung != "null")
+            if (Bemerkung != "null")    //Ende wurde bearbeitet
             {
-
+                string Mehrstunden, Ueberstunden;
             }
 
             SQL_Befehl = string.Format("update Zeiten set Datum = {0}, Start = {1}, Ende = {2}, Bemerkung = {3} where _id = '{4}'", Datum, Startzeit, Endzeit, Bemerkung, id);
