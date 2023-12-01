@@ -83,7 +83,7 @@ namespace Arbeitszeiten.Klassen
             return true;
         }
 
-        public static void update_table(string Heute, string Ende, decimal Differenz, decimal MehrMinder_Stunden, string? Bemerkung)
+        public static void update_table(string Heute, string Ende, decimal Differenz, decimal MehrMinder_Stunden, string? Bemerkung, int _id)
         {
             using SQLiteConnection connection = new(Connectionstring());
             connection.Open();
@@ -96,7 +96,7 @@ namespace Arbeitszeiten.Klassen
                         if (Bemerkung == "null")
                             Bemerkung = null;
 
-                        command.CommandText = "UPDATE Zeiten SET Ende = @Ende, Differenz = @Differenz, MehrMinder_Stunden = @MehrMinder_Stunden, Bemerkung = @Bemerkung where Datum = \"" + Heute + "\" and Ende IS NULL order by Start DESC LIMIT 1";
+                        command.CommandText = string.Format("UPDATE Zeiten SET Ende = @Ende, Differenz = @Differenz, MehrMinder_Stunden = @MehrMinder_Stunden, Bemerkung = @Bemerkung where _id = {0}", _id);
                         command.Parameters.AddWithValue("@Ende", Ende);
                         command.Parameters.AddWithValue("@Differenz", Differenz);
                         command.Parameters.AddWithValue("@MehrMinder_Stunden", MehrMinder_Stunden);

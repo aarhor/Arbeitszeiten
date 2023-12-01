@@ -1,14 +1,4 @@
 ﻿using Arbeitszeiten.Klassen;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Arbeitszeiten.Formen
 {
@@ -55,10 +45,10 @@ namespace Arbeitszeiten.Formen
         private void btn_Speichern_Click(object sender, EventArgs e)
         {
             var Null_wenn_leer = (string s) => s.Length == 0 ? "null" : string.Format("'{0}'", s);
-            string id, Startzeit, Endzeit, Datum, Bemerkung, SQL_Befehl = "";
+            string Startzeit, Endzeit, Datum, Bemerkung, SQL_Befehl = "";
+            int id = int.Parse(txtBox_ID.Text);
             DateTime dateTime = Convert.ToDateTime(mskdtxtBox_Datum.Text);
 
-            id = txtBox_ID.Text;
             Datum = Null_wenn_leer(dateTime.ToString("yyyy-MM-dd"));
             Startzeit = Null_wenn_leer(mskdtxtBox_Start.Text);
             Endzeit = Null_wenn_leer(mskdtxtBox_Ende.Text);
@@ -68,7 +58,7 @@ namespace Arbeitszeiten.Formen
             {
                 DateTime Beginn = Convert.ToDateTime(Datum + " " + SQLite.Bestimmter_wert(string.Format("select start from Zeiten where _id = {0}", id)));
                 TimeSpan Differenz = dateTime - Beginn;
-                decimal Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), false, true, Bemerkung, true, true);
+                decimal Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), false, true, Bemerkung, true, id, true);
             }
             else
                 SQL_Befehl = string.Format("update Zeiten set Datum = {0}, Start = {1}, Ende = {2}, Bemerkung = {3} where _id = '{4}'", Datum, Startzeit, Endzeit, Bemerkung, id);

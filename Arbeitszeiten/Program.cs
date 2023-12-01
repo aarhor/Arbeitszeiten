@@ -1,5 +1,6 @@
 using Arbeitszeiten.Klassen;
 using Arbeitszeiten.Formen;
+using System;
 
 namespace Arbeitszeiten
 {
@@ -49,14 +50,17 @@ namespace Arbeitszeiten
             else
             {
                 string firstArgument;
+                int id;
+                DateTime dateTime = DateTime.Now;
+
                 if (CommandLineArguments.Args.Length == 1)
                 {
                     firstArgument = CommandLineArguments.Args[0];
 
                     bool Zeit_abziehen = Convert.ToBoolean(Registry.GetValue("Zeit_abziehen"));
                     double abzug = 0;
-                    DateTime dateTime = DateTime.Now;
-                    string Startzeit, Endzeit;
+                    DateTime Startzeit = DateTime.MinValue;
+                    DateTime Endzeit = DateTime.MinValue;
 
                     if (Zeit_abziehen)
                         abzug = (Convert.ToDouble(Registry.GetValue("Zeit_abziehen_Dauer")) * 60) * (-1);
@@ -65,7 +69,7 @@ namespace Arbeitszeiten
                     {
                         Kommandozeile.Anmelden(Convert.ToDateTime(null), abzug);
 
-                        Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd")).ToString();
+                        Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
 
                         MessageBox.Show(new Form { TopMost = true }, string.Format("Der Beginn wurde erfolgreich eingetragen.\n" +
                             "Beginn: {0}\n" +
@@ -77,16 +81,20 @@ namespace Arbeitszeiten
                         DialogResult dialogResult = MessageBox.Show(new Form { TopMost = true }, "Möchtest du eine Bemerkung mit angeben?", "Bemerkung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                         if (dialogResult == DialogResult.Yes)
                         {
-                            Bemerkung Form_Bemerkung = new Bemerkung();
+                            Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
+                            id = int.Parse(SQLite.Bestimmter_wert(string.Format("select _id from Zeiten where Datum = '{0}' and Ende ISNULL", Startzeit.ToString("yyyy-MM-dd"))));
+
+                            Bemerkung Form_Bemerkung = new Bemerkung(id);
                             Form_Bemerkung.ShowDialog();
                         }
                         else if (dialogResult == DialogResult.No)
                         {
-                            Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd")).ToString();
+                            Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
+                            id = int.Parse(SQLite.Bestimmter_wert(string.Format("select _id from Zeiten where Datum = '{0}' and Ende ISNULL", Startzeit.ToString("yyyy-MM-dd"))));
 
-                            Kommandozeile.Abmelden(Convert.ToDateTime(null), false, false, "null", true);
+                            Kommandozeile.Abmelden(Convert.ToDateTime(null), false, false, "null", true, id);
 
-                            Endzeit = SQLite.Bestimmter_wert("select Ende from Zeiten order by _id DESC LIMIT 1");
+                            Endzeit = Convert.ToDateTime(SQLite.Bestimmter_wert("select Ende from Zeiten where _id = " + id.ToString()));
 
                             MessageBox.Show(new Form { TopMost = true }, string.Format("Das Ende wurde erfolgreich eingetragen.\n" +
                             "Beginn: {0}\n" +
@@ -107,7 +115,10 @@ namespace Arbeitszeiten
                     string secondArgument = CommandLineArguments.Args[1];
                     if (firstArgument == "/Dienstende" && secondArgument == "/Außerhalb")
                     {
-                        Kommandozeile.Abmelden(Convert.ToDateTime(null), true, false, "null", true);
+                        string Startzeit_Ausserhalb = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd")).ToString();
+                        id = int.Parse(SQLite.Bestimmter_wert(string.Format("select _id from Zeiten where Datum = '{0}' and Ende ISNULL", Startzeit_Ausserhalb)));
+
+                        Kommandozeile.Abmelden(Convert.ToDateTime(null), true, false, "null", true, id);
                         MessageBox.Show(new Form { TopMost = true }, "Das Ende wurde erfolgreich eingetragen.");
                         Application.Exit();
                     }

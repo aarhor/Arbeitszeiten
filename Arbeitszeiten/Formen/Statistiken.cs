@@ -1,6 +1,5 @@
 ﻿using Arbeitszeiten.Formen;
 using Arbeitszeiten.Klassen;
-using System.Security.Cryptography;
 
 namespace Arbeitszeiten
 {

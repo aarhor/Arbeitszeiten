@@ -12,7 +12,7 @@
             SQLite.insert_table(heute, Startzeit);
         }
 
-        public static decimal Abmelden(DateTime dateTime, bool Außerhalb, bool Rechnerisch, string Bemerkung, bool Pause, bool Bearbeiten = false)
+        public static decimal Abmelden(DateTime dateTime, bool Außerhalb, bool Rechnerisch, string Bemerkung, bool Pause, int _id, bool Bearbeiten = false)
         {
             if (dateTime == DateTime.MinValue) { dateTime = DateTime.Now; }
 
@@ -50,7 +50,7 @@
                 Ueberzeit = Differenz_dezimal - 0;
 
             if (!Rechnerisch)
-                SQLite.update_table(heute, Ende_Gelände, Differenz_dezimal, Ueberzeit, Bemerkung);
+                SQLite.update_table(heute, Ende_Gelände, Differenz_dezimal, Ueberzeit, Bemerkung, _id);
 
 
             if (Differenz_dezimal >= 10 && Bearbeiten == false)

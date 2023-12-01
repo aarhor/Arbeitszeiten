@@ -11,6 +11,7 @@ namespace Arbeitszeiten
         }
 
         bool Pause = true;
+        int _id = 0;
 
         private void Berechnen()
         {
@@ -23,11 +24,11 @@ namespace Arbeitszeiten
 
             if (chkBox_Außerhalb.Checked)
             {
-                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), true, Rechnerisch, Bemerkung, Pause); }
+                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), true, Rechnerisch, Bemerkung, Pause,_id); }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
-                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), true, Rechnerisch, Bemerkung, Pause);
+                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), true, Rechnerisch, Bemerkung, Pause, _id);
 
                     mskdtxtBox_Ende.Text = dateTime.ToString();
                 }
@@ -38,7 +39,7 @@ namespace Arbeitszeiten
                 {
                     try
                     {
-                        Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), false, Rechnerisch, Bemerkung, Pause);
+                        Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), false, Rechnerisch, Bemerkung, Pause, _id);
                     }
                     catch (FormatException ex)
                     {
@@ -49,7 +50,7 @@ namespace Arbeitszeiten
                 else
                 {
                     DateTime dateTime = DateTime.Now;
-                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), false, Rechnerisch, Bemerkung, Pause);
+                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), false, Rechnerisch, Bemerkung, Pause, _id);
 
                     mskdtxtBox_Ende.Text = dateTime.ToString();
                 }
@@ -59,9 +60,6 @@ namespace Arbeitszeiten
             {
                 MessageBox.Show(new Form { TopMost = true }, "Die Arbeitszeit beträgt über 10 Stunden!! Sieh zu das du Land gewinnst und nicht mehr arbeitest!!");
             }
-
-            //TimeSpan timespan = TimeSpan.FromHours(Convert.ToDouble(Differenz_dezimal));
-            //string output = timespan.ToString("hh\\:mm\\:ss");
 
             if (Differenz_dezimal > 0) { lbl_Differenz.Text = string.Format("Differenz:    {0} Mehrstunden", Differenz_dezimal); }
             else if (Differenz_dezimal < 0) { lbl_Differenz.Text = string.Format("Differenz:    {0} Minderstunden", Differenz_dezimal); }
@@ -144,6 +142,7 @@ namespace Arbeitszeiten
             if (startzeit.ToString() != DateTime.MinValue.ToString())
             {
                 mskdtxtBox_Start.Text = startzeit.ToString();
+                _id = int.Parse(SQLite.Bestimmter_wert("select _id from Zeiten where Datum = '" + startzeit.ToString("yyyy-MM-dd") + "' and Ende ISNULL"));
 
                 if (Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag")
                     startzeit = startzeit.AddHours(8).AddMinutes(30);
