@@ -43,6 +43,10 @@
             mskdtxtBox_Datum = new MaskedTextBox();
             mskdtxtBox_Start = new MaskedTextBox();
             mskdtxtBox_Ende = new MaskedTextBox();
+            chkBox_Pause = new CheckBox();
+            groupBox1 = new GroupBox();
+            chkBox_Ausserhalb = new CheckBox();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -178,11 +182,43 @@
             mskdtxtBox_Ende.TabIndex = 16;
             mskdtxtBox_Ende.ValidatingType = typeof(DateTime);
             // 
+            // chkBox_Pause
+            // 
+            chkBox_Pause.AutoSize = true;
+            chkBox_Pause.Location = new Point(6, 22);
+            chkBox_Pause.Name = "chkBox_Pause";
+            chkBox_Pause.Size = new Size(57, 19);
+            chkBox_Pause.TabIndex = 17;
+            chkBox_Pause.Text = "Pause";
+            chkBox_Pause.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(chkBox_Ausserhalb);
+            groupBox1.Controls.Add(chkBox_Pause);
+            groupBox1.Location = new Point(325, 12);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(97, 200);
+            groupBox1.TabIndex = 18;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Optionen";
+            // 
+            // chkBox_Ausserhalb
+            // 
+            chkBox_Ausserhalb.AutoSize = true;
+            chkBox_Ausserhalb.Location = new Point(6, 47);
+            chkBox_Ausserhalb.Name = "chkBox_Ausserhalb";
+            chkBox_Ausserhalb.Size = new Size(81, 19);
+            chkBox_Ausserhalb.TabIndex = 18;
+            chkBox_Ausserhalb.Text = "Außerhalb";
+            chkBox_Ausserhalb.UseVisualStyleBackColor = true;
+            // 
             // Bearbeiten
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(332, 221);
+            ClientSize = new Size(429, 221);
+            Controls.Add(groupBox1);
             Controls.Add(mskdtxtBox_Ende);
             Controls.Add(mskdtxtBox_Start);
             Controls.Add(mskdtxtBox_Datum);
@@ -198,10 +234,12 @@
             Controls.Add(txtBox_ID);
             Controls.Add(label1);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Location = new Point(348, 260);
-            MaximumSize = new Size(348, 260);
+            Location = new Point(445, 260);
+            MinimumSize = new Size(445, 260);
             Name = "Bearbeiten";
             Text = "Bearbeiten";
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -222,5 +260,8 @@
         private MaskedTextBox mskdtxtBox_Datum;
         private MaskedTextBox mskdtxtBox_Start;
         private MaskedTextBox mskdtxtBox_Ende;
+        private CheckBox chkBox_Pause;
+        private GroupBox groupBox1;
+        private CheckBox chkBox_Ausserhalb;
     }
 }

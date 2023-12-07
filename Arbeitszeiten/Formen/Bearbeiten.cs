@@ -45,25 +45,32 @@ namespace Arbeitszeiten.Formen
         private void btn_Speichern_Click(object sender, EventArgs e)
         {
             var Null_wenn_leer = (string s) => s.Length == 0 ? "null" : string.Format("'{0}'", s);
-            string Startzeit, Endzeit, Datum, Bemerkung, SQL_Befehl = "";
+            var Null_wenn_leer_Endzeit = (string s) => s == "  :  :" ? "null" : string.Format("'{0}'", s);
+
+            string Startzeit, Endzeit, Datum, Bemerkung, SQL_Befehl;
             int id = int.Parse(txtBox_ID.Text);
             DateTime dateTime = Convert.ToDateTime(mskdtxtBox_Datum.Text);
 
             Datum = Null_wenn_leer(dateTime.ToString("yyyy-MM-dd"));
             Startzeit = Null_wenn_leer(mskdtxtBox_Start.Text);
-            Endzeit = Null_wenn_leer(mskdtxtBox_Ende.Text);
+            Endzeit = Null_wenn_leer_Endzeit(mskdtxtBox_Ende.Text);
             Bemerkung = Null_wenn_leer(richTextBox_Bemerkung.Text);
 
-            if (Bemerkung != "null")    //Ende wurde bearbeitet
+            SQLite.Nur_Befehl(string.Format("update Zeiten set Start = {0} where _id = {1}", Startzeit, id));
+
+            if (Endzeit != "null")    //Ende wurde bearbeitet
             {
-                DateTime Beginn = Convert.ToDateTime(Datum + " " + SQLite.Bestimmter_wert(string.Format("select start from Zeiten where _id = {0}", id)));
-                TimeSpan Differenz = dateTime - Beginn;
-                decimal Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), false, true, Bemerkung, true, id, true);
+                bool Pause = chkBox_Pause.Checked;
+                bool Ausserhalb = chkBox_Ausserhalb.Checked;
+                string Datum_Endzeit = string.Format("{0} {1}", dateTime.ToString("dd.MM.yyyy"), mskdtxtBox_Ende.Text);
+
+                Kommandozeile.Abmelden(Convert.ToDateTime(Datum_Endzeit), Ausserhalb, false, Bemerkung, Pause, id, true);
             }
             else
+            {
                 SQL_Befehl = string.Format("update Zeiten set Datum = {0}, Start = {1}, Ende = {2}, Bemerkung = {3} where _id = '{4}'", Datum, Startzeit, Endzeit, Bemerkung, id);
-
-            //SQLite.Nur_Befehl(SQL_Befehl);
+                SQLite.Nur_Befehl(SQL_Befehl);
+            }
         }
     }
 }

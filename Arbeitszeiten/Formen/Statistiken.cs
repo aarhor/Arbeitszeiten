@@ -14,15 +14,12 @@ namespace Arbeitszeiten
         string id, Monatszahl, Jahr = string.Empty;
         int Arbeitstage_Monat = 0;
 
-        public void Tage_abfragen()
+        public void Tage_abfragen(string SQL_Befehl)
         {
             Arbeitstage_Monat = 0;
             dataGridView1.Rows.Clear();
             dataGridView1.Rows.Add("Alle Tage", "0");
 
-            Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown_Monat.Text) + 1].ToString();
-            Jahr = domainUpDown_Jahr.Text;
-            string SQL_Befehl = string.Format("select Datum, _id from Zeiten where Datum like '{0}-{1}-%' group by Datum", Jahr, Monatszahl);
             List<string> list = SQLite.Auflistung_Einträge(SQL_Befehl, 2);
 
             for (int i = 0; i < list.Count(); i = i + 2)
@@ -102,13 +99,19 @@ namespace Arbeitszeiten
 
             domainUpDown_Monat.SelectedItem = Monat;
             domainUpDown_Jahr.SelectedItem = Jahr;
-            Tage_abfragen();
+
+            Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown_Monat.Text) + 1].ToString();
+            
+            Tage_abfragen(string.Format("select Datum, _id from Zeiten where Datum like '{0}-{1}-%' group by Datum", Jahr, heute.ToString("MM")));
             Graphen_zeichnen();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Tage_abfragen();
+            Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown_Monat.Text) + 1].ToString();
+            Jahr = domainUpDown_Jahr.Text;
+
+            Tage_abfragen(string.Format("select Datum, _id from Zeiten where Datum like '{0}-{1}-%' group by Datum", Jahr, Monatszahl));
             Graphen_zeichnen();
         }
 
@@ -146,7 +149,11 @@ namespace Arbeitszeiten
             {
                 id = string.Empty;
                 MessageBox.Show("Der Eintrag wurde gelöscht");
-                Tage_abfragen();
+
+                Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown_Monat.Text) + 1].ToString();
+                Jahr = domainUpDown_Jahr.Text;
+                
+                Tage_abfragen(string.Format("select Datum, _id from Zeiten where Datum like '{0}-{1}-%' group by Datum", Jahr, Monatszahl));
             }
         }
 
@@ -160,7 +167,10 @@ namespace Arbeitszeiten
         {
             if (checkBox1.Checked)
             {
-                Tage_abfragen();
+                Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown_Monat.Text) + 1].ToString();
+                Jahr = domainUpDown_Jahr.Text;
+
+                Tage_abfragen(string.Format("select Datum, _id from Zeiten where Datum like '{0}-{1}-%' group by Datum", Jahr, Monatszahl));
                 Graphen_zeichnen();
             }
         }

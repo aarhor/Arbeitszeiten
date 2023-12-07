@@ -49,6 +49,7 @@
             jahresüberblickToolStripMenuItem = new ToolStripMenuItem();
             lbl_Datum = new Label();
             checkBox1 = new CheckBox();
+            ohneEndeToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -283,7 +284,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { BearbeitenToolStripMenuItem, löschenToolStripMenuItem, jahresüberblickToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { BearbeitenToolStripMenuItem, löschenToolStripMenuItem, jahresüberblickToolStripMenuItem, ohneEndeToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(448, 24);
@@ -334,6 +335,12 @@
             checkBox1.TabIndex = 14;
             checkBox1.Text = "Auto";
             checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // ohneEndeToolStripMenuItem
+            // 
+            ohneEndeToolStripMenuItem.Name = "ohneEndeToolStripMenuItem";
+            ohneEndeToolStripMenuItem.Size = new Size(77, 20);
+            ohneEndeToolStripMenuItem.Text = "Ohne Ende";
             // 
             // Statistiken
             // 
@@ -392,5 +399,6 @@
         private Label lbl_Datum;
         private CheckBox checkBox1;
         private ToolStripMenuItem jahresüberblickToolStripMenuItem;
+        private ToolStripMenuItem ohneEndeToolStripMenuItem;
     }
 }
