@@ -341,6 +341,7 @@
             ohneEndeToolStripMenuItem.Name = "ohneEndeToolStripMenuItem";
             ohneEndeToolStripMenuItem.Size = new Size(77, 20);
             ohneEndeToolStripMenuItem.Text = "Ohne Ende";
+            ohneEndeToolStripMenuItem.Click += ohneEndeToolStripMenuItem_Click;
             // 
             // Statistiken
             // 

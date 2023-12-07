@@ -47,7 +47,12 @@ namespace Arbeitszeiten
                 double GesamtStunden_Monat = Convert.ToDouble(SQLite.Bestimmter_wert(string.Format("select sum(Differenz) as Gesamt from Zeiten where Datum like '{0}-{1}-%'", Jahr, Monatszahl)));
                 lbl_Startzeit.Text = string.Format("Startzeit: {0}", "---");
                 lbl_Endzeit.Text = string.Format("Endzeit: {0}", "---");
-                lbl_Arbeitszeit.Text = string.Format("Differenz: {0} Stunden an {1} Arbeitstagen", Math.Round(GesamtStunden_Monat, 2), Arbeitstage_Monat);
+                string AnzahlTage_Monat = Arbeitstage_Monat.ToString();
+
+                if (Arbeitstage_Monat == 187)
+                    AnzahlTage_Monat = "GZUZ";
+
+                lbl_Arbeitszeit.Text = string.Format("Differenz: {0} Stunden an {1} Arbeitstagen", Math.Round(GesamtStunden_Monat, 2), AnzahlTage_Monat);
                 lbl_Ueberstunden.Text = string.Format("Überstunden: {0} Stunden", Math.Round(Ueberstunden_Monat, 2));
                 richTextBox1.Text = string.Empty;
             }
@@ -101,7 +106,7 @@ namespace Arbeitszeiten
             domainUpDown_Jahr.SelectedItem = Jahr;
 
             Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown_Monat.Text) + 1].ToString();
-            
+
             Tage_abfragen(string.Format("select Datum, _id from Zeiten where Datum like '{0}-{1}-%' group by Datum", Jahr, heute.ToString("MM")));
             Graphen_zeichnen();
         }
@@ -152,7 +157,7 @@ namespace Arbeitszeiten
 
                 Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown_Monat.Text) + 1].ToString();
                 Jahr = domainUpDown_Jahr.Text;
-                
+
                 Tage_abfragen(string.Format("select Datum, _id from Zeiten where Datum like '{0}-{1}-%' group by Datum", Jahr, Monatszahl));
             }
         }
@@ -192,6 +197,11 @@ namespace Arbeitszeiten
             lbl_Endzeit.Text = string.Format("Endzeit: ---");
             lbl_Arbeitszeit.Text = string.Format("Differenz: {0} Stunden an {1}", Arbeitszeit, Arbeitstage);
             lbl_Ueberstunden.Text = string.Format("Überstunden: {0} Stunden an {1}", Ueberstunden, Arbeitstage);
+        }
+
+        private void ohneEndeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Tage_abfragen("select Datum, _id from Zeiten where Ende isNull");
         }
     }
 }
