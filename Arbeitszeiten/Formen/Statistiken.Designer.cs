@@ -47,9 +47,9 @@
             BearbeitenToolStripMenuItem = new ToolStripMenuItem();
             löschenToolStripMenuItem = new ToolStripMenuItem();
             jahresüberblickToolStripMenuItem = new ToolStripMenuItem();
+            ohneEndeToolStripMenuItem = new ToolStripMenuItem();
             lbl_Datum = new Label();
             checkBox1 = new CheckBox();
-            ohneEndeToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -68,7 +68,7 @@
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.Size = new Size(131, 268);
             dataGridView1.TabIndex = 0;
-            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            dataGridView1.CellClick += dataGridView1_CellContentClick;
             // 
             // Col_Datum
             // 
@@ -314,6 +314,13 @@
             jahresüberblickToolStripMenuItem.Text = "Jahresüberblick";
             jahresüberblickToolStripMenuItem.Click += jahresüberblickToolStripMenuItem_Click;
             // 
+            // ohneEndeToolStripMenuItem
+            // 
+            ohneEndeToolStripMenuItem.Name = "ohneEndeToolStripMenuItem";
+            ohneEndeToolStripMenuItem.Size = new Size(77, 20);
+            ohneEndeToolStripMenuItem.Text = "Ohne Ende";
+            ohneEndeToolStripMenuItem.Click += ohneEndeToolStripMenuItem_Click;
+            // 
             // lbl_Datum
             // 
             lbl_Datum.AutoSize = true;
@@ -335,13 +342,6 @@
             checkBox1.TabIndex = 14;
             checkBox1.Text = "Auto";
             checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // ohneEndeToolStripMenuItem
-            // 
-            ohneEndeToolStripMenuItem.Name = "ohneEndeToolStripMenuItem";
-            ohneEndeToolStripMenuItem.Size = new Size(77, 20);
-            ohneEndeToolStripMenuItem.Text = "Ohne Ende";
-            ohneEndeToolStripMenuItem.Click += ohneEndeToolStripMenuItem_Click;
             // 
             // Statistiken
             // 
@@ -394,12 +394,12 @@
         private RichTextBox richTextBox1;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem BearbeitenToolStripMenuItem;
-        private DataGridViewTextBoxColumn Col_Datum;
-        private DataGridViewTextBoxColumn Col_id;
         private ToolStripMenuItem löschenToolStripMenuItem;
         private Label lbl_Datum;
         private CheckBox checkBox1;
         private ToolStripMenuItem jahresüberblickToolStripMenuItem;
         private ToolStripMenuItem ohneEndeToolStripMenuItem;
+        private DataGridViewTextBoxColumn Col_Datum;
+        private DataGridViewTextBoxColumn Col_id;
     }
 }
