@@ -99,6 +99,8 @@ namespace Arbeitszeiten
                         dateTime = dateTime.AddHours(8).AddMinutes(30);
                         lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
                     }
+
+                    btn_Ende.Enabled = true;
                 }
             }
             else
@@ -113,12 +115,15 @@ namespace Arbeitszeiten
                     dateTime = dateTime.AddHours(8).AddMinutes(30);
                     lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
                 }
+
+                btn_Ende.Enabled = true;
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             Berechnen();
+            btn_Ende.Enabled = false;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -180,6 +185,7 @@ namespace Arbeitszeiten
                     startzeit = startzeit.AddHours(5);
 
                 lbl_Endzeit.Text = string.Format("Ende:    {0}", startzeit.ToString());
+                btn_Ende.Enabled = true;
             }
         }
 

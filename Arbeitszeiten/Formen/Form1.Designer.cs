@@ -83,6 +83,7 @@
             // 
             // btn_Ende
             // 
+            btn_Ende.Enabled = false;
             btn_Ende.Location = new Point(205, 35);
             btn_Ende.Name = "btn_Ende";
             btn_Ende.Size = new Size(75, 23);
