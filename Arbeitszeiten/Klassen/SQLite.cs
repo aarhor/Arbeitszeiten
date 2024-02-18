@@ -7,10 +7,11 @@ namespace Arbeitszeiten.Klassen
     {
         static string Connectionstring()
         {
-            SQLiteConnectionStringBuilder conString = new SQLiteConnectionStringBuilder();
-            conString.DataSource = Registry.GetValue("Dateipfad");
-            conString.Version = 3;
-            //conString.Password = "Temp1234";
+            SQLiteConnectionStringBuilder conString = new()
+            {
+                DataSource = Registry.GetValue("Dateipfad"),
+                Version = 3
+            };
 
             return conString.ConnectionString;
         }
