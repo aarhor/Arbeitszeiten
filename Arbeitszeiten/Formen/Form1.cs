@@ -15,7 +15,7 @@ namespace Arbeitszeiten
 
         private void Berechnen()
         {
-            decimal Differenz_dezimal = 0;
+            decimal Differenz_dezimal;
             bool Rechnerisch = chkBox_Rechnerisch.Checked;
             string Bemerkung = "null";
 
@@ -24,7 +24,7 @@ namespace Arbeitszeiten
 
             if (chkBox_Auﬂerhalb.Checked)
             {
-                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), true, Rechnerisch, Bemerkung, Pause,_id); }
+                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), true, Rechnerisch, Bemerkung, Pause, _id); }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
@@ -43,7 +43,7 @@ namespace Arbeitszeiten
                     }
                     catch (FormatException ex)
                     {
-                        MessageBox.Show("es wurde ein Fehler festegestellt:\n" + ex.Message.ToString());
+                        MessageBox.Show("Es wurde ein Fehler festegestellt:\n" + ex.Message.ToString());
                         throw;
                     }
                 }
@@ -70,19 +70,49 @@ namespace Arbeitszeiten
         {
             bool Zeit_abziehen = Convert.ToBoolean(Registry.GetValue("Zeit_abziehen"));
             double abzug = 0;
+            List<string> list = SQLite.Auflistung_Eintr‰ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
+            string Datum = Convert.ToDateTime(list[1]).ToString("d");
+            string Beginn = Convert.ToDateTime(list[2]).ToString("t");
 
             if (Zeit_abziehen)
                 abzug = (Convert.ToDouble(Registry.GetValue("Zeit_abziehen_Dauer")) * 60) * (-1);
 
-            if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug); }
+            if (list.Count > 0)
+            {
+                string Datum_id = string.Format("ID:\t{0}\n" +
+                                              "Datum:\t{1}\n" +
+                                              "Beginn:\t{2}", list[0], Datum, Beginn);
+
+                if (string.IsNullOrEmpty(list[3]))
+                {
+                    MessageBox.Show("Der letzte Eintrag wurde noch nicht angeschlossen. ‹ber die Statistiken muss erst ein Ende eingetragen werden damit ein neuer Eintrag angelegt werden kann.\n\n" + Datum_id, "Ende fehlt", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
+                else
+                {
+                    if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug); }
+                    else
+                    {
+                        DateTime dateTime = DateTime.Now;
+                        dateTime = dateTime.AddMinutes(Convert.ToDouble(abzug));
+                        Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug);
+                        mskdtxtBox_Start.Text = dateTime.ToString();
+                        dateTime = dateTime.AddHours(8).AddMinutes(30);
+                        lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
+                    }
+                }
+            }
             else
             {
-                DateTime dateTime = DateTime.Now;
-                dateTime = dateTime.AddMinutes(Convert.ToDouble(abzug));
-                Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug);
-                mskdtxtBox_Start.Text = dateTime.ToString();
-                dateTime = dateTime.AddHours(8).AddMinutes(30);
-                lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
+                if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug); }
+                else
+                {
+                    DateTime dateTime = DateTime.Now;
+                    dateTime = dateTime.AddMinutes(Convert.ToDouble(abzug));
+                    Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug);
+                    mskdtxtBox_Start.Text = dateTime.ToString();
+                    dateTime = dateTime.AddHours(8).AddMinutes(30);
+                    lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
+                }
             }
         }
 
