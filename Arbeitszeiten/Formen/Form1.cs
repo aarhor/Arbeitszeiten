@@ -11,10 +11,11 @@ namespace Arbeitszeiten
         }
 
         bool Pause = true;
+        int _id = 0;
 
         private void Berechnen()
         {
-            decimal Differenz_dezimal = 0;
+            decimal Differenz_dezimal;
             bool Rechnerisch = chkBox_Rechnerisch.Checked;
             string Bemerkung = "null";
 
@@ -23,11 +24,11 @@ namespace Arbeitszeiten
 
             if (chkBox_Außerhalb.Checked)
             {
-                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), true, Rechnerisch, Bemerkung, Pause); }
+                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), true, Rechnerisch, Bemerkung, Pause, _id); }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
-                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), true, Rechnerisch, Bemerkung, Pause);
+                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), true, Rechnerisch, Bemerkung, Pause, _id);
 
                     mskdtxtBox_Ende.Text = dateTime.ToString();
                 }
@@ -38,18 +39,18 @@ namespace Arbeitszeiten
                 {
                     try
                     {
-                        Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), false, Rechnerisch, Bemerkung, Pause);
+                        Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), false, Rechnerisch, Bemerkung, Pause, _id);
                     }
                     catch (FormatException ex)
                     {
-                        MessageBox.Show("es wurde ein Fehler festegestellt:\n" + ex.Message.ToString());
+                        MessageBox.Show("Es wurde ein Fehler festegestellt:\n" + ex.Message.ToString());
                         throw;
                     }
                 }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
-                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), false, Rechnerisch, Bemerkung, Pause);
+                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), false, Rechnerisch, Bemerkung, Pause, _id);
 
                     mskdtxtBox_Ende.Text = dateTime.ToString();
                 }
@@ -60,9 +61,6 @@ namespace Arbeitszeiten
                 MessageBox.Show(new Form { TopMost = true }, "Die Arbeitszeit beträgt über 10 Stunden!! Sieh zu das du Land gewinnst und nicht mehr arbeitest!!");
             }
 
-            //TimeSpan timespan = TimeSpan.FromHours(Convert.ToDouble(Differenz_dezimal));
-            //string output = timespan.ToString("hh\\:mm\\:ss");
-
             if (Differenz_dezimal > 0) { lbl_Differenz.Text = string.Format("Differenz:    {0} Mehrstunden", Differenz_dezimal); }
             else if (Differenz_dezimal < 0) { lbl_Differenz.Text = string.Format("Differenz:    {0} Minderstunden", Differenz_dezimal); }
             else if (Differenz_dezimal == 0) { lbl_Differenz.Text = "Differenz:     Punktlandung!"; }
@@ -72,25 +70,60 @@ namespace Arbeitszeiten
         {
             bool Zeit_abziehen = Convert.ToBoolean(Registry.GetValue("Zeit_abziehen"));
             double abzug = 0;
+            List<string> list = SQLite.Auflistung_Einträge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
+            string Datum = Convert.ToDateTime(list[1]).ToString("d");
+            string Beginn = Convert.ToDateTime(list[2]).ToString("t");
 
             if (Zeit_abziehen)
                 abzug = (Convert.ToDouble(Registry.GetValue("Zeit_abziehen_Dauer")) * 60) * (-1);
 
-            if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug); }
+            if (list.Count > 0)
+            {
+                string Datum_id = string.Format("ID:\t{0}\n" +
+                                              "Datum:\t{1}\n" +
+                                              "Beginn:\t{2}", list[0], Datum, Beginn);
+
+                if (string.IsNullOrEmpty(list[3]))
+                {
+                    MessageBox.Show("Der letzte Eintrag wurde noch nicht angeschlossen. Über die Statistiken muss erst ein Ende eingetragen werden damit ein neuer Eintrag angelegt werden kann.\n\n" + Datum_id, "Ende fehlt", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
+                else
+                {
+                    if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug); }
+                    else
+                    {
+                        DateTime dateTime = DateTime.Now;
+                        dateTime = dateTime.AddMinutes(Convert.ToDouble(abzug));
+                        Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug);
+                        mskdtxtBox_Start.Text = dateTime.ToString();
+                        dateTime = dateTime.AddHours(8).AddMinutes(30);
+                        lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
+                    }
+
+                    btn_Ende.Enabled = true;
+                }
+            }
             else
             {
-                DateTime dateTime = DateTime.Now;
-                dateTime = dateTime.AddMinutes(Convert.ToDouble(abzug));
-                Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug);
-                mskdtxtBox_Start.Text = dateTime.ToString();
-                dateTime = dateTime.AddHours(8).AddMinutes(30);
-                lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
+                if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug); }
+                else
+                {
+                    DateTime dateTime = DateTime.Now;
+                    dateTime = dateTime.AddMinutes(Convert.ToDouble(abzug));
+                    Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug);
+                    mskdtxtBox_Start.Text = dateTime.ToString();
+                    dateTime = dateTime.AddHours(8).AddMinutes(30);
+                    lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
+                }
+
+                btn_Ende.Enabled = true;
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             Berechnen();
+            btn_Ende.Enabled = false;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -144,6 +177,7 @@ namespace Arbeitszeiten
             if (startzeit.ToString() != DateTime.MinValue.ToString())
             {
                 mskdtxtBox_Start.Text = startzeit.ToString();
+                _id = int.Parse(SQLite.Bestimmter_wert("select _id from Zeiten where Datum = '" + startzeit.ToString("yyyy-MM-dd") + "' and Ende ISNULL"));
 
                 if (Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag")
                     startzeit = startzeit.AddHours(8).AddMinutes(30);
@@ -151,6 +185,7 @@ namespace Arbeitszeiten
                     startzeit = startzeit.AddHours(5);
 
                 lbl_Endzeit.Text = string.Format("Ende:    {0}", startzeit.ToString());
+                btn_Ende.Enabled = true;
             }
         }
 

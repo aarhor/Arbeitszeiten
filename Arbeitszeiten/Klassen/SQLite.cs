@@ -7,11 +7,13 @@ namespace Arbeitszeiten.Klassen
     {
         static string Connectionstring()
         {
-            string Pfad = Registry.GetValue("Dateipfad");
-            string Version = "3";
-            string Connectionstring = "DataSource=" + Pfad + "; Version=" + Version;
+            SQLiteConnectionStringBuilder conString = new()
+            {
+                DataSource = Registry.GetValue("Dateipfad"),
+                Version = 3
+            };
 
-            return Connectionstring;
+            return conString.ConnectionString;
         }
 
         public static void create_table()
@@ -83,7 +85,7 @@ namespace Arbeitszeiten.Klassen
             return true;
         }
 
-        public static void update_table(string Heute, string Ende, decimal Differenz, decimal MehrMinder_Stunden, string? Bemerkung)
+        public static bool update_table(string Heute, string Ende, decimal Differenz, decimal MehrMinder_Stunden, string? Bemerkung, int _id)
         {
             using SQLiteConnection connection = new(Connectionstring());
             connection.Open();
@@ -96,7 +98,7 @@ namespace Arbeitszeiten.Klassen
                         if (Bemerkung == "null")
                             Bemerkung = null;
 
-                        command.CommandText = "UPDATE Zeiten SET Ende = @Ende, Differenz = @Differenz, MehrMinder_Stunden = @MehrMinder_Stunden, Bemerkung = @Bemerkung where Datum = \"" + Heute + "\" and Ende IS NULL order by Start DESC LIMIT 1";
+                        command.CommandText = string.Format("UPDATE Zeiten SET Ende = @Ende, Differenz = @Differenz, MehrMinder_Stunden = @MehrMinder_Stunden, Bemerkung = @Bemerkung where _id = {0}", _id);
                         command.Parameters.AddWithValue("@Ende", Ende);
                         command.Parameters.AddWithValue("@Differenz", Differenz);
                         command.Parameters.AddWithValue("@MehrMinder_Stunden", MehrMinder_Stunden);
@@ -110,12 +112,14 @@ namespace Arbeitszeiten.Klassen
                 {
                     MessageBox.Show(new Form { TopMost = true }, e.Message);
                     transaction.Rollback();
+                    return false;
                 }
             }
             connection.Close();
+            return true;
         }
 
-        public static string select_table(string Heute)
+        public static string select_table(string Heute, string id)
         {
             DateTime dateTime;
             string Uhrzeit;
@@ -124,7 +128,7 @@ namespace Arbeitszeiten.Klassen
             connection.Open();
             using (SQLiteCommand command = new(connection))
             {
-                command.CommandText = "SELECT Start from Zeiten where Datum = \"" + Heute + "\" and Ende IS NULL order by Start DESC LIMIT 1";
+                command.CommandText = "SELECT Start from Zeiten where _id = " + id;
                 dateTime = Convert.ToDateTime(command.ExecuteScalar());
                 Uhrzeit = dateTime.TimeOfDay.ToString();
             }

@@ -46,7 +46,10 @@
             menuStrip1 = new MenuStrip();
             BearbeitenToolStripMenuItem = new ToolStripMenuItem();
             löschenToolStripMenuItem = new ToolStripMenuItem();
+            jahresüberblickToolStripMenuItem = new ToolStripMenuItem();
+            ohneEndeToolStripMenuItem = new ToolStripMenuItem();
             lbl_Datum = new Label();
+            checkBox1 = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -65,7 +68,7 @@
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.Size = new Size(131, 268);
             dataGridView1.TabIndex = 0;
-            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            dataGridView1.CellClick += dataGridView1_CellContentClick;
             // 
             // Col_Datum
             // 
@@ -112,6 +115,7 @@
             domainUpDown_Monat.ReadOnly = true;
             domainUpDown_Monat.Size = new Size(135, 23);
             domainUpDown_Monat.TabIndex = 2;
+            domainUpDown_Monat.SelectedItemChanged += domainUpDown_Monat_SelectedItemChanged;
             // 
             // label1
             // 
@@ -217,6 +221,7 @@
             domainUpDown_Jahr.ReadOnly = true;
             domainUpDown_Jahr.Size = new Size(135, 23);
             domainUpDown_Jahr.TabIndex = 5;
+            domainUpDown_Jahr.SelectedItemChanged += domainUpDown_Monat_SelectedItemChanged;
             // 
             // lbl_Startzeit
             // 
@@ -279,7 +284,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { BearbeitenToolStripMenuItem, löschenToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { BearbeitenToolStripMenuItem, löschenToolStripMenuItem, jahresüberblickToolStripMenuItem, ohneEndeToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(448, 24);
@@ -287,7 +292,7 @@
             menuStrip1.Text = "menuStrip1";
             // 
             // BearbeitenToolStripMenuItem
-            //
+            // 
             BearbeitenToolStripMenuItem.Enabled = false;
             BearbeitenToolStripMenuItem.Name = "BearbeitenToolStripMenuItem";
             BearbeitenToolStripMenuItem.Size = new Size(75, 20);
@@ -296,10 +301,25 @@
             // 
             // löschenToolStripMenuItem
             // 
+            löschenToolStripMenuItem.Enabled = false;
             löschenToolStripMenuItem.Name = "löschenToolStripMenuItem";
             löschenToolStripMenuItem.Size = new Size(63, 20);
             löschenToolStripMenuItem.Text = "Löschen";
             löschenToolStripMenuItem.Click += löschenToolStripMenuItem_Click;
+            // 
+            // jahresüberblickToolStripMenuItem
+            // 
+            jahresüberblickToolStripMenuItem.Name = "jahresüberblickToolStripMenuItem";
+            jahresüberblickToolStripMenuItem.Size = new Size(100, 20);
+            jahresüberblickToolStripMenuItem.Text = "Jahresüberblick";
+            jahresüberblickToolStripMenuItem.Click += jahresüberblickToolStripMenuItem_Click;
+            // 
+            // ohneEndeToolStripMenuItem
+            // 
+            ohneEndeToolStripMenuItem.Name = "ohneEndeToolStripMenuItem";
+            ohneEndeToolStripMenuItem.Size = new Size(77, 20);
+            ohneEndeToolStripMenuItem.Text = "Ohne Ende";
+            ohneEndeToolStripMenuItem.Click += ohneEndeToolStripMenuItem_Click;
             // 
             // lbl_Datum
             // 
@@ -311,11 +331,24 @@
             lbl_Datum.TabIndex = 13;
             lbl_Datum.Text = "Datum:";
             // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Checked = true;
+            checkBox1.CheckState = CheckState.Checked;
+            checkBox1.Location = new Point(362, 31);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(52, 19);
+            checkBox1.TabIndex = 14;
+            checkBox1.Text = "Auto";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
             // Statistiken
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(448, 292);
+            Controls.Add(checkBox1);
             Controls.Add(lbl_Datum);
             Controls.Add(richTextBox1);
             Controls.Add(label3);
@@ -361,9 +394,12 @@
         private RichTextBox richTextBox1;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem BearbeitenToolStripMenuItem;
-        private DataGridViewTextBoxColumn Col_Datum;
-        private DataGridViewTextBoxColumn Col_id;
         private ToolStripMenuItem löschenToolStripMenuItem;
         private Label lbl_Datum;
+        private CheckBox checkBox1;
+        private ToolStripMenuItem jahresüberblickToolStripMenuItem;
+        private ToolStripMenuItem ohneEndeToolStripMenuItem;
+        private DataGridViewTextBoxColumn Col_Datum;
+        private DataGridViewTextBoxColumn Col_id;
     }
 }

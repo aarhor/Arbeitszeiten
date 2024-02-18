@@ -12,13 +12,13 @@
             SQLite.insert_table(heute, Startzeit);
         }
 
-        public static decimal Abmelden(DateTime dateTime, bool Außerhalb, bool Rechnerisch, string Bemerkung, bool Pause)
+        public static decimal Abmelden(DateTime dateTime, bool Außerhalb, bool Rechnerisch, string Bemerkung, bool Pause, int _id, bool Bearbeiten = false)
         {
             if (dateTime == DateTime.MinValue) { dateTime = DateTime.Now; }
 
             string heute = dateTime.ToString("yyyy-MM-dd");
 
-            DateTime Startzeit = Convert.ToDateTime(heute + " " + SQLite.select_table(heute));
+            DateTime Startzeit = Convert.ToDateTime(heute + " " + SQLite.select_table(heute, _id.ToString()));
             TimeSpan Differenz = dateTime - Startzeit;
 
             decimal Differenz_dezimal = Convert.ToDecimal(Math.Round(Differenz.TotalHours, 2));
@@ -50,10 +50,14 @@
                 Ueberzeit = Differenz_dezimal - 0;
 
             if (!Rechnerisch)
-                SQLite.update_table(heute, Ende_Gelände, Differenz_dezimal, Ueberzeit, Bemerkung);
+            {
+                bool Ergebnis = SQLite.update_table(heute, Ende_Gelände, Differenz_dezimal, Ueberzeit, Bemerkung, _id);
 
+                if (Ergebnis && Bearbeiten)
+                    MessageBox.Show("Das Bearbeiten war erfolgreich und die Daten wurden angepasst");
+            }
 
-            if (Differenz_dezimal >= 10)
+            if (Differenz_dezimal >= 10 && Bearbeiten == false)
             {
                 MessageBox.Show(new Form { TopMost = true }, "Die Arbeitszeit beträgt mehr als 10 Stunden!!\nSieh zu das du Land gewinnst und nicht mehr arbeitest!!");
             }

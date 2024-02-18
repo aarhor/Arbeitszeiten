@@ -10,19 +10,16 @@ namespace Arbeitszeiten
             InitializeComponent();
         }
 
-        string[] Monate = { "Januar", "01", "Februar", "02", "März", "03", "April", "04", "Mai", "05", "Juni", "06", "Juli", "07", "August", "08", "September", "09", "Oktober", "10", "November", "11", "Dezember", "12" };
+        private readonly string[] Monate = ["Januar", "01", "Februar", "02", "März", "03", "April", "04", "Mai", "05", "Juni", "06", "Juli", "07", "August", "08", "September", "09", "Oktober", "10", "November", "11", "Dezember", "12"];
         string id, Monatszahl, Jahr = string.Empty;
         int Arbeitstage_Monat = 0;
 
-        public void Tage_abfragen()
+        public void Tage_abfragen(string SQL_Befehl)
         {
             Arbeitstage_Monat = 0;
             dataGridView1.Rows.Clear();
-            dataGridView1.Rows.Add("Alle Tage");
+            dataGridView1.Rows.Add("Alle Tage", "0");
 
-            Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown_Monat.Text) + 1].ToString();
-            Jahr = domainUpDown_Jahr.Text;
-            string SQL_Befehl = string.Format("select Datum, _id from Zeiten where Datum like '{0}-{1}-%' group by Datum", Jahr, Monatszahl);
             List<string> list = SQLite.Auflistung_Einträge(SQL_Befehl, 2);
 
             for (int i = 0; i < list.Count(); i = i + 2)
@@ -50,7 +47,12 @@ namespace Arbeitszeiten
                 double GesamtStunden_Monat = Convert.ToDouble(SQLite.Bestimmter_wert(string.Format("select sum(Differenz) as Gesamt from Zeiten where Datum like '{0}-{1}-%'", Jahr, Monatszahl)));
                 lbl_Startzeit.Text = string.Format("Startzeit: {0}", "---");
                 lbl_Endzeit.Text = string.Format("Endzeit: {0}", "---");
-                lbl_Arbeitszeit.Text = string.Format("Differenz: {0} Stunden an {1} Arbeitstagen", Math.Round(GesamtStunden_Monat, 2), Arbeitstage_Monat);
+                string AnzahlTage_Monat = Arbeitstage_Monat.ToString();
+
+                if (Arbeitstage_Monat == 187)
+                    AnzahlTage_Monat = "GZUZ";
+
+                lbl_Arbeitszeit.Text = string.Format("Differenz: {0} Stunden an {1} Arbeitstagen", Math.Round(GesamtStunden_Monat, 2), AnzahlTage_Monat);
                 lbl_Ueberstunden.Text = string.Format("Überstunden: {0} Stunden", Math.Round(Ueberstunden_Monat, 2));
                 richTextBox1.Text = string.Empty;
             }
@@ -102,13 +104,19 @@ namespace Arbeitszeiten
 
             domainUpDown_Monat.SelectedItem = Monat;
             domainUpDown_Jahr.SelectedItem = Jahr;
-            Tage_abfragen();
+
+            Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown_Monat.Text) + 1].ToString();
+
+            Tage_abfragen(string.Format("select Datum, _id from Zeiten where Datum like '{0}-{1}-%' group by Datum", Jahr, heute.ToString("MM")));
             Graphen_zeichnen();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Tage_abfragen();
+            Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown_Monat.Text) + 1].ToString();
+            Jahr = domainUpDown_Jahr.Text;
+
+            Tage_abfragen(string.Format("select Datum, _id from Zeiten where Datum like '{0}-{1}-%' group by Datum", Jahr, Monatszahl));
             Graphen_zeichnen();
         }
 
@@ -120,9 +128,9 @@ namespace Arbeitszeiten
             lbl_Ueberstunden.Text = string.Format("Überstunden: ");
             richTextBox1.Text = string.Empty;
 
-            string Tag = string.Empty;
             if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
+                string Tag = string.Empty;
                 Tag = dataGridView1.Rows[index: dataGridView1.CurrentCell.RowIndex].Cells[0].Value.ToString();
                 if (Tag != "Alle Tage")
                 {
@@ -139,22 +147,61 @@ namespace Arbeitszeiten
                 }
             }
         }
-        
+
         private void löschenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SQLite.Nur_Befehl("delete from Zeiten where _id = " + id);
-            id = string.Empty;
-            MessageBox.Show("Der Eintrag wurde gelöscht");
-            Tage_abfragen();
+            if (SQLite.Nur_Befehl("delete from Zeiten where _id = " + id))
+            {
+                id = string.Empty;
+                MessageBox.Show("Der Eintrag wurde gelöscht");
+
+                Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown_Monat.Text) + 1].ToString();
+                Jahr = domainUpDown_Jahr.Text;
+
+                Tage_abfragen(string.Format("select Datum, _id from Zeiten where Datum like '{0}-{1}-%' group by Datum", Jahr, Monatszahl));
+            }
         }
 
         private void BearbeitenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.ID_Bearbeiten = id;
-            Properties.Settings.Default.Save();
-
-            Bearbeiten Form_Bearbeiten = new();
+            Bearbeiten Form_Bearbeiten = new(id);
             Form_Bearbeiten.ShowDialog();
+        }
+
+        private void domainUpDown_Monat_SelectedItemChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                Monatszahl = Monate[Array.IndexOf(Monate, domainUpDown_Monat.Text) + 1].ToString();
+                Jahr = domainUpDown_Jahr.Text;
+
+                Tage_abfragen(string.Format("select Datum, _id from Zeiten where Datum like '{0}-{1}-%' group by Datum", Jahr, Monatszahl));
+                Graphen_zeichnen();
+            }
+        }
+
+        private void jahresüberblickToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Clear();
+            string Jahr = domainUpDown_Jahr.Text;
+            string SQL_Befehl = string.Format("select round(sum(MehrMinder_Stunden), 2), round(sum(Differenz), 2), count(_id) as Anzahl_Tage from Zeiten where Datum like '{0}-%-%'", Jahr);
+            List<string> Zeiten = SQLite.Auflistung_Einträge(SQL_Befehl, 3);
+            string Ueberstunden = Zeiten[0];
+            string Arbeitszeit = Zeiten[1];
+            string Arbeitstage = string.Format("{0} Arbeitstagen", Zeiten[2]);
+
+            if (Arbeitstage == "1 Arbeitstagen")
+                Arbeitstage = string.Format("{0} Arbeitstag", Zeiten[2]);
+
+            lbl_Startzeit.Text = string.Format("Startzeit: ---");
+            lbl_Endzeit.Text = string.Format("Endzeit: ---");
+            lbl_Arbeitszeit.Text = string.Format("Differenz: {0} Stunden an {1}", Arbeitszeit, Arbeitstage);
+            lbl_Ueberstunden.Text = string.Format("Überstunden: {0} Stunden an {1}", Ueberstunden, Arbeitstage);
+        }
+
+        private void ohneEndeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Tage_abfragen("select Datum, _id from Zeiten where Ende isNull");
         }
     }
 }
