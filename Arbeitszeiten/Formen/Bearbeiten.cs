@@ -19,6 +19,10 @@ namespace Arbeitszeiten.Formen
 
             mskdtxtBox_Datum.Text = Convert.ToDateTime(list_Daten[0]).ToString("dd.MM.yyyy");
             mskdtxtBox_Start.Text = Convert.ToDateTime(list_Daten[1]).ToString("HH:mm:ss");
+            string Wochentag = Convert.ToDateTime(list_Daten[0]).ToString("dddd");
+
+            if (Wochentag == "Freitag")
+                chkBox_Pause.Checked = false;
 
             if (!string.IsNullOrEmpty(list_Daten[2]))
             {

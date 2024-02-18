@@ -185,6 +185,8 @@
             // chkBox_Pause
             // 
             chkBox_Pause.AutoSize = true;
+            chkBox_Pause.Checked = true;
+            chkBox_Pause.CheckState = CheckState.Checked;
             chkBox_Pause.Location = new Point(6, 22);
             chkBox_Pause.Name = "chkBox_Pause";
             chkBox_Pause.Size = new Size(57, 19);
