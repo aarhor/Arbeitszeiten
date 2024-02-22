@@ -9,7 +9,7 @@ namespace Arbeitszeiten.Formen
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Eintragen()
         {
             DateTime dateTime = DateTime.Now;
             string Tätigkeit = textBox1.Text;
@@ -21,6 +21,17 @@ namespace Arbeitszeiten.Formen
                 MessageBox.Show(new Form { TopMost = true }, "Erfolgreich eintragen");
                 Application.Exit();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Eintragen();
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                Eintragen();
         }
     }
 }

@@ -50,6 +50,7 @@
             textBox1.PlaceholderText = "Kurze Erklärung";
             textBox1.Size = new Size(222, 23);
             textBox1.TabIndex = 1;
+            textBox1.KeyDown += textBox1_KeyDown;
             // 
             // button1
             // 

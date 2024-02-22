@@ -1,6 +1,8 @@
 using Arbeitszeiten.Klassen;
 using Arbeitszeiten.Formen;
 using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Collections.Generic;
 
 namespace Arbeitszeiten
 {
@@ -18,9 +20,9 @@ namespace Arbeitszeiten
 
         public static string[] CheckCMDArgs(string[] Argumente)
         {
-            string[] allowedArguments = new string[] { "/Dienstbeginn", "/Dienstende", "/Auﬂerhalb", "/Rechnerisch", "/T‰tigkeiten" };
+            string[] allowedArguments = ["/Dienstbeginn", "/Dienstende", "/Auﬂerhalb", "/Rechnerisch", "/T‰tigkeiten"];
 
-            List<string> validArguments = new List<string>();
+            List<string> validArguments = [];
             foreach (string arg in Argumente)
             {
                 if (allowedArguments.Contains(arg))
@@ -51,40 +53,69 @@ namespace Arbeitszeiten
             {
                 string firstArgument;
                 int id;
+                bool Nach_Ende = false;
                 DateTime dateTime = DateTime.Now;
 
-                if (CommandLineArguments.Args.Length == 1)
+                if (CommandLineArguments.Args.Length == 0)
+                    Application.Run(new Form1());
+
+                if (CommandLineArguments.Args.Length >= 1)
                 {
                     firstArgument = CommandLineArguments.Args[0];
 
                     bool Zeit_abziehen = Convert.ToBoolean(Registry.GetValue("Zeit_abziehen"));
                     double abzug = 0;
-                    DateTime Startzeit = DateTime.MinValue;
-                    DateTime Endzeit = DateTime.MinValue;
 
                     if (Zeit_abziehen)
                         abzug = (Convert.ToDouble(Registry.GetValue("Zeit_abziehen_Dauer")) * 60) * (-1);
 
+                    DateTime Startzeit;
                     if (firstArgument == "/Dienstbeginn")
                     {
-                        Kommandozeile.Anmelden(Convert.ToDateTime(null), abzug);
+                        List<string> list = SQLite.Auflistung_Eintr‰ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
+                        string Datum = Convert.ToDateTime(list[1]).ToString("d");
+                        string Beginn = Convert.ToDateTime(list[2]).ToString("t");
 
-                        Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
+                        if (list.Count > 0)
+                        {
+                            string Datum_id = string.Format("ID:\t{0}\n" +
+                                                            "Datum:\t{1}\n" +
+                                                            "Beginn:\t{2}", list[0], Datum, Beginn);
 
-                        MessageBox.Show(new Form { TopMost = true }, string.Format("Der Beginn wurde erfolgreich eingetragen.\n" +
-                            "Beginn: {0}\n" +
-                            "Ende: ", Startzeit));
-                        Application.Exit();
+                            if (string.IsNullOrEmpty(list[3]))
+                            {
+                                MessageBox.Show("Der letzte Eintrag wurde noch nicht angeschlossen. ‹ber die Statistiken oder die Hauptform muss erst ein Ende eingetragen werden damit ein neuer Eintrag angelegt werden kann.\n\n" + Datum_id, "Ende fehlt", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                                Application.Run(new Form1());
+                            }
+                            else
+                            {
+                                if (CommandLineArguments.Args.Contains("/Auﬂerhalb"))
+                                    Nach_Ende = true;
+
+                                Kommandozeile.Anmelden(Convert.ToDateTime(null), abzug, Nach_Ende);
+
+                                Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
+
+                                MessageBox.Show(new Form { TopMost = true }, string.Format("Der Beginn wurde erfolgreich eingetragen.\n" +
+                                    "Datum:\t{0}\n" +
+                                    "Beginn:\t{1}\n" +
+                                    "Ende:\t", Startzeit.ToString("d"), Startzeit.ToString("T")));
+                                Application.Exit();
+                            }
+                        }
                     }
                     else if (firstArgument == "/Dienstende")
                     {
+                        if (CommandLineArguments.Args.Contains("/Auﬂerhalb"))
+                            Nach_Ende = true;
+
                         DialogResult dialogResult = MessageBox.Show(new Form { TopMost = true }, "Mˆchtest du eine Bemerkung mit angeben?", "Bemerkung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                         if (dialogResult == DialogResult.Yes)
                         {
                             Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
                             id = int.Parse(SQLite.Bestimmter_wert(string.Format("select _id from Zeiten where Datum = '{0}' and Ende ISNULL", Startzeit.ToString("yyyy-MM-dd"))));
 
-                            Bemerkung Form_Bemerkung = new Bemerkung(id);
+                            Bemerkung Form_Bemerkung = new Bemerkung(id, Nach_Ende);
                             Form_Bemerkung.ShowDialog();
                         }
                         else if (dialogResult == DialogResult.No)
@@ -92,13 +123,13 @@ namespace Arbeitszeiten
                             Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
                             id = int.Parse(SQLite.Bestimmter_wert(string.Format("select _id from Zeiten where Datum = '{0}' and Ende ISNULL", Startzeit.ToString("yyyy-MM-dd"))));
 
-                            Kommandozeile.Abmelden(Convert.ToDateTime(null), false, false, "null", true, id);
+                            Kommandozeile.Abmelden(Convert.ToDateTime(null), Nach_Ende, false, "null", true, id);
 
-                            Endzeit = Convert.ToDateTime(SQLite.Bestimmter_wert("select Ende from Zeiten where _id = " + id.ToString()));
-
+                            DateTime Endzeit = Convert.ToDateTime(SQLite.Bestimmter_wert("select Ende from Zeiten where _id = " + id.ToString()));
                             MessageBox.Show(new Form { TopMost = true }, string.Format("Das Ende wurde erfolgreich eingetragen.\n" +
-                            "Beginn: {0}\n" +
-                            "Ende: {1}", Startzeit, Endzeit));
+                                "Darum:\t{0}\n" +
+                                "Beginn:\t{1}\n" +
+                                "Ende:\t{2}", Startzeit.ToString("d"), Startzeit.ToString("T"), Endzeit.ToString("T")));
                             Application.Exit();
                         }
                         else if (dialogResult == DialogResult.Cancel)
@@ -108,24 +139,6 @@ namespace Arbeitszeiten
                     {
                         Application.Run(new T‰tigkeiten { TopMost = true });
                     }
-                }
-                else if (CommandLineArguments.Args.Length == 2)
-                {
-                    firstArgument = CommandLineArguments.Args[0];
-                    string secondArgument = CommandLineArguments.Args[1];
-                    if (firstArgument == "/Dienstende" && secondArgument == "/Auﬂerhalb")
-                    {
-                        string Startzeit_Ausserhalb = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd")).ToString();
-                        id = int.Parse(SQLite.Bestimmter_wert(string.Format("select _id from Zeiten where Datum = '{0}' and Ende ISNULL", Startzeit_Ausserhalb)));
-
-                        Kommandozeile.Abmelden(Convert.ToDateTime(null), true, false, "null", true, id);
-                        MessageBox.Show(new Form { TopMost = true }, "Das Ende wurde erfolgreich eingetragen.");
-                        Application.Exit();
-                    }
-                }
-                else
-                {
-                    Application.Run(new Form1());
                 }
             }
         }

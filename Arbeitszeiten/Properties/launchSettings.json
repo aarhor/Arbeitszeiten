@@ -1,15 +1,23 @@
 {
   "profiles": {
-    "Diensbeginn": {
-      "commandName": "Project",
-      "commandLineArgs": "/Dienstbeginn"
-    },
     "Dienstende": {
       "commandName": "Project",
       "commandLineArgs": "/Dienstende"
     },
     "Nichts": {
       "commandName": "Project"
+    },
+    "Dienstbeginn & Außerhalb": {
+      "commandName": "Project",
+      "commandLineArgs": "/Dienstbeginn /Außerhalb"
+    },
+    "Dienstbeginn": {
+      "commandName": "Project",
+      "commandLineArgs": "/Dienstbeginn"
+    },
+    "Tätigkeiten": {
+      "commandName": "Project",
+      "commandLineArgs": "/Tätigkeiten"
     }
   }
 }
