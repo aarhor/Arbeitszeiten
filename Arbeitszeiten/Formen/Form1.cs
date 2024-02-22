@@ -71,14 +71,14 @@ namespace Arbeitszeiten
             bool Zeit_abziehen = Convert.ToBoolean(Registry.GetValue("Zeit_abziehen"));
             double abzug = 0;
             List<string> list = SQLite.Auflistung_Eintr‰ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
-            string Datum = Convert.ToDateTime(list[1]).ToString("d");
-            string Beginn = Convert.ToDateTime(list[2]).ToString("t");
 
             if (Zeit_abziehen)
                 abzug = (Convert.ToDouble(Registry.GetValue("Zeit_abziehen_Dauer")) * 60) * (-1);
 
             if (list.Count > 0)
             {
+                string Datum = Convert.ToDateTime(list[1]).ToString("d");
+                string Beginn = Convert.ToDateTime(list[2]).ToString("t");
                 string Datum_id = string.Format("ID:\t{0}\n" +
                                               "Datum:\t{1}\n" +
                                               "Beginn:\t{2}", list[0], Datum, Beginn);
@@ -89,12 +89,12 @@ namespace Arbeitszeiten
                 }
                 else
                 {
-                    if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug); }
+                    if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug, chkBox_Auﬂerhalb.Checked); }
                     else
                     {
                         DateTime dateTime = DateTime.Now;
                         dateTime = dateTime.AddMinutes(Convert.ToDouble(abzug));
-                        Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug);
+                        Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug, chkBox_Auﬂerhalb.Checked);
                         mskdtxtBox_Start.Text = dateTime.ToString();
                         dateTime = dateTime.AddHours(8).AddMinutes(30);
                         lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
@@ -105,12 +105,12 @@ namespace Arbeitszeiten
             }
             else
             {
-                if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug); }
+                if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug, chkBox_Auﬂerhalb.Checked); }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
                     dateTime = dateTime.AddMinutes(Convert.ToDouble(abzug));
-                    Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug);
+                    Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug, chkBox_Auﬂerhalb.Checked);
                     mskdtxtBox_Start.Text = dateTime.ToString();
                     dateTime = dateTime.AddHours(8).AddMinutes(30);
                     lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
@@ -123,7 +123,9 @@ namespace Arbeitszeiten
         private void button2_Click(object sender, EventArgs e)
         {
             Berechnen();
-            btn_Ende.Enabled = false;
+
+            if (!chkBox_Rechnerisch.Checked)
+                btn_Ende.Enabled = false;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -165,27 +167,44 @@ namespace Arbeitszeiten
         private void Form1_Load(object sender, EventArgs e)
         {
             DateTime dateTime = DateTime.Now;
+            List<string> list = SQLite.Auflistung_Eintr‰ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
             string Wochentag = dateTime.ToString("dddd");
 
-            if (Wochentag == "Freitag")
-                chkBox_Pause.Checked = false;
-            else
-                chkBox_Pause.Checked = true;
-
-            DateTime startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
-
-            if (startzeit.ToString() != DateTime.MinValue.ToString())
+            if (list.Count > 0 && !string.IsNullOrEmpty(list[0]) && string.IsNullOrEmpty(list[3]))
             {
+
+                if (Wochentag == "Freitag")
+                    chkBox_Pause.Checked = false;
+                else
+                    chkBox_Pause.Checked = true;
+
+                DateTime startzeit = SQLite.startzeit_heute(Convert.ToDateTime(list[1]).ToString("yyyy-MM-dd"));
+                list.Clear();
+                list = SQLite.Auflistung_Eintr‰ge("select _id, Metadaten from Zeiten where Datum = '" + startzeit.ToString("yyyy-MM-dd") + "' and Ende ISNULL", 2);
                 mskdtxtBox_Start.Text = startzeit.ToString();
-                _id = int.Parse(SQLite.Bestimmter_wert("select _id from Zeiten where Datum = '" + startzeit.ToString("yyyy-MM-dd") + "' and Ende ISNULL"));
+
+                _id = int.Parse(list[0]);
+                List<string> Metadaten = Klassen.Metadaten.Auslesen(list[1], false, "Ausserhalb");
 
                 if (Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag")
                     startzeit = startzeit.AddHours(8).AddMinutes(30);
                 else if (Wochentag == "Freitag")
                     startzeit = startzeit.AddHours(5);
 
+                chkBox_Auﬂerhalb.Checked = Convert.ToBoolean(Metadaten[1]);
                 lbl_Endzeit.Text = string.Format("Ende:    {0}", startzeit.ToString());
                 btn_Ende.Enabled = true;
+                btn_Start.Enabled = false;
+            }
+            else
+            {
+                if (Wochentag == "Samstag" || Wochentag == "Sonntag")
+                {
+                    chkBox_Auﬂerhalb.Checked = true;
+                    chkBox_Pause.Checked = false;
+                }
+                else if ((Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag") && (dateTime.Hour >= 15 || dateTime.Hour <= 6))
+                    chkBox_Auﬂerhalb.Checked = true;
             }
         }
 

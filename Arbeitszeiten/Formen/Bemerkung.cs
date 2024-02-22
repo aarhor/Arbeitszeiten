@@ -4,13 +4,15 @@ namespace Arbeitszeiten.Formen
 {
     public partial class Bemerkung : Form
     {
-        public Bemerkung(int _id)
+        public Bemerkung(int _id, bool Ausserhalb)
         {
             InitializeComponent();
             id = _id;
+            Außerhalb = Ausserhalb;
         }
 
         int id;
+        bool Außerhalb = false;
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -21,7 +23,7 @@ namespace Arbeitszeiten.Formen
             if (string.IsNullOrEmpty(Bemerkung))
                 Bemerkung = "null";
 
-            Kommandozeile.Abmelden(Convert.ToDateTime(null), false, false, Bemerkung, true, id);
+            Kommandozeile.Abmelden(Convert.ToDateTime(null), Außerhalb, false, Bemerkung, true, id);
 
             string Endzeit = SQLite.Bestimmter_wert("select Ende from Zeiten where _id = " + id.ToString());
 

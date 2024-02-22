@@ -56,18 +56,20 @@ namespace Arbeitszeiten
                 bool Nach_Ende = false;
                 DateTime dateTime = DateTime.Now;
 
+                if (CommandLineArguments.Args.Length == 0)
+                    Application.Run(new Form1());
+
                 if (CommandLineArguments.Args.Length >= 1)
                 {
                     firstArgument = CommandLineArguments.Args[0];
 
                     bool Zeit_abziehen = Convert.ToBoolean(Registry.GetValue("Zeit_abziehen"));
                     double abzug = 0;
-                    DateTime Startzeit = DateTime.MinValue;
-                    DateTime Endzeit = DateTime.MinValue;
 
                     if (Zeit_abziehen)
                         abzug = (Convert.ToDouble(Registry.GetValue("Zeit_abziehen_Dauer")) * 60) * (-1);
 
+                    DateTime Startzeit;
                     if (firstArgument == "/Dienstbeginn")
                     {
                         List<string> list = SQLite.Auflistung_Einträge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
@@ -82,7 +84,8 @@ namespace Arbeitszeiten
 
                             if (string.IsNullOrEmpty(list[3]))
                             {
-                                MessageBox.Show("Der letzte Eintrag wurde noch nicht angeschlossen. Über die Statistiken muss erst ein Ende eingetragen werden damit ein neuer Eintrag angelegt werden kann.\n\n" + Datum_id, "Ende fehlt", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                                MessageBox.Show("Der letzte Eintrag wurde noch nicht angeschlossen. Über die Statistiken oder die Hauptform muss erst ein Ende eingetragen werden damit ein neuer Eintrag angelegt werden kann.\n\n" + Datum_id, "Ende fehlt", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                                Application.Run(new Form1());
                             }
                             else
                             {
@@ -122,8 +125,7 @@ namespace Arbeitszeiten
 
                             Kommandozeile.Abmelden(Convert.ToDateTime(null), Nach_Ende, false, "null", true, id);
 
-                            Endzeit = Convert.ToDateTime(SQLite.Bestimmter_wert("select Ende from Zeiten where _id = " + id.ToString()));
-
+                            DateTime Endzeit = Convert.ToDateTime(SQLite.Bestimmter_wert("select Ende from Zeiten where _id = " + id.ToString()));
                             MessageBox.Show(new Form { TopMost = true }, string.Format("Das Ende wurde erfolgreich eingetragen.\n" +
                                 "Darum:\t{0}\n" +
                                 "Beginn:\t{1}\n" +
@@ -137,10 +139,6 @@ namespace Arbeitszeiten
                     {
                         Application.Run(new Tätigkeiten { TopMost = true });
                     }
-                }
-                else
-                {
-                    Application.Run(new Form1());
                 }
             }
         }

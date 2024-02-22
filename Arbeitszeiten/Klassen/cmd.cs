@@ -2,14 +2,14 @@
 {
     internal class Kommandozeile
     {
-        public static void Anmelden(DateTime dateTime, double abzug_minuten)
+        public static void Anmelden(DateTime dateTime, double abzug_minuten, bool Ausserhalb)
         {
             if (dateTime == DateTime.MinValue) { dateTime = DateTime.Now.AddMinutes(abzug_minuten); }
 
             string heute = dateTime.ToString("yyyy-MM-dd");
             string Startzeit = dateTime.ToString("HH:mm:ss");
 
-            SQLite.insert_table(heute, Startzeit);
+            SQLite.insert_table(heute, Startzeit, Ausserhalb);
         }
 
         public static decimal Abmelden(DateTime dateTime, bool Außerhalb, bool Rechnerisch, string Bemerkung, bool Pause, int _id, bool Bearbeiten = false)

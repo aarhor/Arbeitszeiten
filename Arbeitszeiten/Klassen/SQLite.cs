@@ -28,8 +28,10 @@ namespace Arbeitszeiten.Klassen
             connection.Close();
         }
 
-        public static void insert_table(string Datum, string Start)
+        public static void insert_table(string Datum, string Start, bool Nach_Ende)
         {
+            string Metadaten = "[ { \"Ausserhalb\": " + Nach_Ende.ToString().ToLower() + " } ]";
+
             using SQLiteConnection connection = new(Connectionstring());
             connection.Open();
             using (var transaction = connection.BeginTransaction())
@@ -38,9 +40,10 @@ namespace Arbeitszeiten.Klassen
                 {
                     using (SQLiteCommand command = new(connection))
                     {
-                        command.CommandText = "INSERT INTO Zeiten (Datum, Start) VALUES (@Datum, @Start)";
+                        command.CommandText = "INSERT INTO Zeiten (Datum, Start, Metadaten) VALUES (@Datum, @Start, @Metadaten)";
                         command.Parameters.AddWithValue("@Datum", Datum);
                         command.Parameters.AddWithValue("@Start", Start);
+                        command.Parameters.AddWithValue("@Metadaten", Metadaten);
                         command.ExecuteNonQuery();
                     }
 
