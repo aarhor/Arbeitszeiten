@@ -58,6 +58,7 @@
             txtBox_Bemerkung.Name = "txtBox_Bemerkung";
             txtBox_Bemerkung.Size = new Size(180, 23);
             txtBox_Bemerkung.TabIndex = 1;
+            txtBox_Bemerkung.KeyUp += txtBox_Bemerkung_KeyUp;
             // 
             // Bemerkung
             // 

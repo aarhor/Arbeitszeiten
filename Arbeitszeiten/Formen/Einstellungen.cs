@@ -67,7 +67,7 @@ namespace Arbeitszeiten
             decimal abzug = Math.Round(Convert.ToDecimal(txtBox_Minuten.Text) / 60, 2);
 
             Registry.SetValue("Zeit_abziehen_Dauer", abzug.ToString());
-            MessageBox.Show(new Form { TopMost = true }, "Der WErt wurde eingetragen.");
+            MessageBox.Show(new Form { TopMost = true }, "Der Wert wurde eingetragen.");
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
