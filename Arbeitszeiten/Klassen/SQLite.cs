@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.SQLite;
+using Microsoft.Data.Sqlite;
 
 namespace Arbeitszeiten.Klassen
 {
@@ -11,6 +12,17 @@ namespace Arbeitszeiten.Klassen
             {
                 DataSource = Registry.GetValue("Dateipfad"),
                 Version = 3
+            };
+
+            return conString.ConnectionString;
+        }
+
+        static string Connectionstring_Microsoft()
+        {
+            SqliteConnectionStringBuilder conString = new()
+            {
+                DataSource = Registry.GetValue("Dateipfad"),
+                Password = "Temp1234"
             };
 
             return conString.ConnectionString;
