@@ -178,7 +178,7 @@ namespace Arbeitszeiten
                 else
                     chkBox_Pause.Checked = true;
 
-                DateTime startzeit = SQLite.startzeit_heute(Convert.ToDateTime(list[1]).ToString("yyyy-MM-dd"));
+                DateTime startzeit = SQLite.Startzeit_heute(Convert.ToDateTime(list[1]).ToString("yyyy-MM-dd"));
                 list.Clear();
                 list = SQLite.Auflistung_Einträge("select _id, Metadaten from Zeiten where Datum = '" + startzeit.ToString("yyyy-MM-dd") + "' and Ende ISNULL", 2);
                 mskdtxtBox_Start.Text = startzeit.ToString();
