@@ -130,7 +130,7 @@ namespace Arbeitszeiten
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Einstellungen Form_Einstellungen = new Einstellungen();
+            Einstellungen Form_Einstellungen = new();
             Form_Einstellungen.ShowDialog();
         }
 
@@ -152,7 +152,7 @@ namespace Arbeitszeiten
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Statistiken Form_statistiken = new Statistiken();
+            Statistiken Form_statistiken = new();
             Form_statistiken.ShowDialog();
         }
 
@@ -218,7 +218,7 @@ namespace Arbeitszeiten
 
         private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Tätigkeiten Form_Taetigkeiten = new Tätigkeiten();
+            Tätigkeiten Form_Taetigkeiten = new();
             Form_Taetigkeiten.ShowDialog();
         }
     }

@@ -22,7 +22,7 @@ namespace Arbeitszeiten.Klassen
             string Metadaten = "[ { \"Ausserhalb\": " + Nach_Ende.ToString().ToLower() + " } ]";
             string SQL_Befehl = string.Format("INSERT INTO Zeiten (Datum, Start, Metadaten) VALUES ('{0}', '{1}', '{2}')", Datum, Start, Metadaten);
 
-            using (SqliteConnection connection = new SqliteConnection(Connectionstring_Microsoft()))
+            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
             {
                 connection.Open();
                 try
@@ -138,7 +138,7 @@ namespace Arbeitszeiten.Klassen
         {
             string? Rückgabe = string.Empty;
 
-            using (SqliteConnection connection = new SqliteConnection(Connectionstring_Microsoft()))
+            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
             {
                 connection.Open();
                 try
@@ -173,7 +173,7 @@ namespace Arbeitszeiten.Klassen
         /// <returns>Keine Art von Rückgabe.</returns>
         public static bool Nur_Befehl(string SQL_Befehl)
         {
-            using (SqliteConnection connection = new SqliteConnection(Connectionstring_Microsoft()))
+            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
             {
                 connection.Open();
                 try
@@ -205,7 +205,7 @@ namespace Arbeitszeiten.Klassen
         {
             List<string> list = new();
 
-            using (SqliteConnection connection = new SqliteConnection(Connectionstring_Microsoft()))
+            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
             {
                 connection.Open();
                 try
