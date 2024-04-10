@@ -48,7 +48,7 @@ namespace Arbeitszeiten
 
             bool vorhanden = Registry.RegistryKeyExists(@"software\" + Application.CompanyName + @"\" + Application.ProductName);
             if (!vorhanden)
-                Application.Run(new Einstellungen());
+                Application.Run(new Einstellungen(!vorhanden));
             else
             {
                 string firstArgument;

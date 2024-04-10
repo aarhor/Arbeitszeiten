@@ -1,20 +1,43 @@
 ﻿using System.Data;
-using System.Data.SQLite;
 using Microsoft.Data.Sqlite;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Arbeitszeiten.Klassen
 {
     internal class SQLite
     {
-        static string Connectionstring_Microsoft()
+        static string Connectionstring()
         {
+            string DB_Pwd = Registry.GetValue("DB_Pwd");
             SqliteConnectionStringBuilder conString = new()
             {
                 DataSource = Registry.GetValue("Dateipfad"),
-                Password = "Temp1234"
+                Password = Crypto_137.Text_Decrypt(DB_Pwd, string.Empty)
             };
 
             return conString.ConnectionString;
+        }
+
+        public static void Neues_DB_Passwort(string Neues_Passwort)
+        {
+            using (SqliteConnection connection = new(Connectionstring()))
+            {
+                connection.Open();
+
+                var command = connection.CreateCommand();
+                command.CommandText = "SELECT quote($newPassword);";
+                command.Parameters.AddWithValue("$newPassword", Neues_Passwort);
+                var quotedNewPassword = (string)command.ExecuteScalar();
+
+                command.CommandText = "PRAGMA rekey = " + quotedNewPassword;
+                command.Parameters.Clear();
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public static void Erstes_DB_Passwort(string Passwort)
+        {
+
         }
 
         public static void Insert_table(string Datum, string Start, bool Nach_Ende)
@@ -22,7 +45,7 @@ namespace Arbeitszeiten.Klassen
             string Metadaten = "[ { \"Ausserhalb\": " + Nach_Ende.ToString().ToLower() + " } ]";
             string SQL_Befehl = string.Format("INSERT INTO Zeiten (Datum, Start, Metadaten) VALUES ('{0}', '{1}', '{2}')", Datum, Start, Metadaten);
 
-            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
+            using (SqliteConnection connection = new(Connectionstring()))
             {
                 connection.Open();
                 try
@@ -45,7 +68,7 @@ namespace Arbeitszeiten.Klassen
         public static bool Insert_table_Taetigkeit(string Datum, string Uhrzeit, string Tätigkeit)
         {
             string SQL_Befehl = string.Format("INSERT INTO Taetigkeiten (Datum, Uhrzeit, Tätigkeit) VALUES ('{0}','{1}','{2}')", Datum, Uhrzeit, Tätigkeit);
-            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
+            using (SqliteConnection connection = new(Connectionstring()))
             {
                 connection.Open();
                 try
@@ -74,7 +97,7 @@ namespace Arbeitszeiten.Klassen
 
             string SQL_Befehl = string.Format("UPDATE Zeiten SET Ende = '{0}', Differenz = {1}, MehrMinder_Stunden = {2}, Bemerkung = {3} where _id = {4}", Ende, Differenz.ToString().Replace(",", "."), MehrMinder_Stunden.ToString().Replace(",", "."), Bemerkung, _id);
 
-            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
+            using (SqliteConnection connection = new(Connectionstring()))
             {
                 connection.Open();
                 try
@@ -116,7 +139,7 @@ namespace Arbeitszeiten.Klassen
 
             string SQL_Befehl = "";
 
-            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
+            using (SqliteConnection connection = new(Connectionstring()))
             {
                 connection.Open();
                 using (SqliteCommand command = new(SQL_Befehl, connection))
@@ -138,7 +161,7 @@ namespace Arbeitszeiten.Klassen
         {
             string? Rückgabe = string.Empty;
 
-            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
+            using (SqliteConnection connection = new(Connectionstring()))
             {
                 connection.Open();
                 try
@@ -173,7 +196,7 @@ namespace Arbeitszeiten.Klassen
         /// <returns>Keine Art von Rückgabe.</returns>
         public static bool Nur_Befehl(string SQL_Befehl)
         {
-            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
+            using (SqliteConnection connection = new(Connectionstring()))
             {
                 connection.Open();
                 try
@@ -205,7 +228,7 @@ namespace Arbeitszeiten.Klassen
         {
             List<string> list = new();
 
-            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
+            using (SqliteConnection connection = new(Connectionstring()))
             {
                 connection.Open();
                 try
