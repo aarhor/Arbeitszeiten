@@ -16,7 +16,8 @@ namespace Arbeitszeiten
             Registry.SetValue("Dateipfad", txtBox_Pfad.Text);
             if (!File.Exists(txtBox_Pfad.Text))
             {
-                SQLite.create_table();
+                string SQL_Befehl = Properties.Resources.Erstellen;
+                SQLite.Nur_Befehl(SQL_Befehl);
 
                 if (File.Exists(txtBox_Pfad.Text))
                     MessageBox.Show(new Form { TopMost = true }, "Der Dateipfad wurde erfolgreich in der Registry gespeichert und die Datei wurde erstellt.\nBitte einmal das Programm neustarten.");

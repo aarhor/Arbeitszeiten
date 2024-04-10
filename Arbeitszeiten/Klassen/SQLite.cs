@@ -1,141 +1,106 @@
 ﻿using System.Data;
 using System.Data.SQLite;
+using Microsoft.Data.Sqlite;
 
 namespace Arbeitszeiten.Klassen
 {
     internal class SQLite
     {
-        static string Connectionstring()
+        static string Connectionstring_Microsoft()
         {
-            SQLiteConnectionStringBuilder conString = new()
+            SqliteConnectionStringBuilder conString = new()
             {
                 DataSource = Registry.GetValue("Dateipfad"),
-                Version = 3
+                Password = "Temp1234"
             };
 
             return conString.ConnectionString;
         }
 
-        public static void create_table()
-        {
-            using SQLiteConnection connection = new(Connectionstring());
-            connection.Open();
-            using (SQLiteCommand command = new(connection))
-            {
-                command.CommandText = Properties.Resources.Erstellen;
-                command.ExecuteNonQuery();
-            }
-            connection.Close();
-        }
-
-        public static void insert_table(string Datum, string Start, bool Nach_Ende)
+        public static void Insert_table(string Datum, string Start, bool Nach_Ende)
         {
             string Metadaten = "[ { \"Ausserhalb\": " + Nach_Ende.ToString().ToLower() + " } ]";
+            string SQL_Befehl = string.Format("INSERT INTO Zeiten (Datum, Start, Metadaten) VALUES ('{0}', '{1}', '{2}')", Datum, Start, Metadaten);
 
-            using SQLiteConnection connection = new(Connectionstring());
-            connection.Open();
-            using (var transaction = connection.BeginTransaction())
+            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
             {
+                connection.Open();
                 try
                 {
-                    using (SQLiteCommand command = new(connection))
+                    using (SqliteCommand command = new(SQL_Befehl, connection))
                     {
-                        command.CommandText = "INSERT INTO Zeiten (Datum, Start, Metadaten) VALUES (@Datum, @Start, @Metadaten)";
-                        command.Parameters.AddWithValue("@Datum", Datum);
-                        command.Parameters.AddWithValue("@Start", Start);
-                        command.Parameters.AddWithValue("@Metadaten", Metadaten);
+                        command.CommandText = SQL_Befehl;
                         command.ExecuteNonQuery();
                     }
-
-                    transaction.Commit();
+                    connection.Close();
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    MessageBox.Show(new Form { TopMost = true }, e.Message);
-                    transaction.Rollback();
+                    MessageBox.Show(new Form { TopMost = true }, ex.Message);
+                    connection.Close();
                 }
             }
-            connection.Close();
         }
 
-        public static bool insert_table_Taetigkeit(string Datum, string Uhrzeit, string Tätigkeit)
+        public static bool Insert_table_Taetigkeit(string Datum, string Uhrzeit, string Tätigkeit)
         {
-            using SQLiteConnection connection = new(Connectionstring());
-            connection.Open();
-            using (var transaction = connection.BeginTransaction())
+            string SQL_Befehl = string.Format("INSERT INTO Taetigkeiten (Datum, Uhrzeit, Tätigkeit) VALUES ('{0}','{1}','{2}')", Datum, Uhrzeit, Tätigkeit);
+            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
             {
+                connection.Open();
                 try
                 {
-                    using (SQLiteCommand command = new(connection))
+                    using (SqliteCommand command = new(SQL_Befehl, connection))
                     {
-                        command.CommandText = "INSERT INTO Taetigkeiten (Datum, Uhrzeit, Tätigkeit) VALUES (@Datum, @Uhrzeit, @Tätigkeit)";
-                        command.Parameters.AddWithValue("@Datum", Datum);
-                        command.Parameters.AddWithValue("@Uhrzeit", Uhrzeit);
-                        command.Parameters.AddWithValue("@Tätigkeit", Tätigkeit);
+                        command.CommandText = SQL_Befehl;
                         command.ExecuteNonQuery();
                     }
-
-                    transaction.Commit();
+                    return true;
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show(new Form { TopMost = true }, e.Message);
-                    transaction.Rollback();
                     return false;
                 }
             }
-            connection.Close();
-            return true;
         }
 
-        public static bool update_table(string Heute, string Ende, decimal Differenz, decimal MehrMinder_Stunden, string? Bemerkung, int _id)
+        public static bool Update_table(string Heute, string Ende, decimal Differenz, decimal MehrMinder_Stunden, string? Bemerkung, int _id)
         {
-            using SQLiteConnection connection = new(Connectionstring());
-            connection.Open();
-            using (var transaction = connection.BeginTransaction())
+            if (Bemerkung == "null")
+                Bemerkung = "null";
+            else
+                Bemerkung = string.Format("'{0}'", Bemerkung);
+
+            string SQL_Befehl = string.Format("UPDATE Zeiten SET Ende = '{0}', Differenz = {1}, MehrMinder_Stunden = {2}, Bemerkung = {3} where _id = {4}", Ende, Differenz.ToString().Replace(",", "."), MehrMinder_Stunden.ToString().Replace(",", "."), Bemerkung, _id);
+
+            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
             {
+                connection.Open();
                 try
                 {
-                    using (SQLiteCommand command = new(connection))
+                    using (SqliteCommand command = new(SQL_Befehl, connection))
                     {
-                        if (Bemerkung == "null")
-                            Bemerkung = null;
-
-                        command.CommandText = string.Format("UPDATE Zeiten SET Ende = @Ende, Differenz = @Differenz, MehrMinder_Stunden = @MehrMinder_Stunden, Bemerkung = @Bemerkung where _id = {0}", _id);
-                        command.Parameters.AddWithValue("@Ende", Ende);
-                        command.Parameters.AddWithValue("@Differenz", Differenz);
-                        command.Parameters.AddWithValue("@MehrMinder_Stunden", MehrMinder_Stunden);
-                        command.Parameters.AddWithValue("@Bemerkung", Bemerkung);
+                        command.CommandText = SQL_Befehl;
                         command.ExecuteNonQuery();
                     }
-
-                    transaction.Commit();
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show(new Form { TopMost = true }, e.Message);
-                    transaction.Rollback();
                     return false;
                 }
+                return true;
             }
-            connection.Close();
-            return true;
         }
 
-        public static string select_table(string Heute, string id)
+        public static string Select_table(string id)
         {
             DateTime dateTime;
-            string Uhrzeit;
+            string Uhrzeit, SQL_Befehl = "SELECT Start from Zeiten where _id = " + id;
 
-            using SQLiteConnection connection = new(Connectionstring());
-            connection.Open();
-            using (SQLiteCommand command = new(connection))
-            {
-                command.CommandText = "SELECT Start from Zeiten where _id = " + id;
-                dateTime = Convert.ToDateTime(command.ExecuteScalar());
-                Uhrzeit = dateTime.TimeOfDay.ToString();
-            }
-            connection.Close();
+            dateTime = Convert.ToDateTime(Bestimmter_wert(SQL_Befehl));
+            Uhrzeit = dateTime.TimeOfDay.ToString();
 
             return Uhrzeit;
         }
@@ -145,16 +110,20 @@ namespace Arbeitszeiten.Klassen
         /// </summary>
         /// <param name="heute">Den Heutigen Tag bereits als passendes DateTime formatiert (yyyy-MM-dd)</param>
         /// <returns></returns>
-        public static DateTime startzeit_heute(string heute)
+        public static DateTime Startzeit_heute(string heute)
         {
             DateTime startzeit;
 
-            using SQLiteConnection connection = new(Connectionstring());
-            connection.Open();
-            using (SQLiteCommand command = new(connection))
+            string SQL_Befehl = "";
+
+            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
             {
-                command.CommandText = "select Start from Zeiten where Datum = '" + heute + "' and Ende ISNULL";
-                startzeit = Convert.ToDateTime(command.ExecuteScalar());
+                connection.Open();
+                using (SqliteCommand command = new(SQL_Befehl, connection))
+                {
+                    command.CommandText = "select Start from Zeiten where Datum = '" + heute + "' and Ende ISNULL";
+                    startzeit = Convert.ToDateTime(command.ExecuteScalar());
+                }
             }
 
             return startzeit;
@@ -167,39 +136,32 @@ namespace Arbeitszeiten.Klassen
         /// <returns>Gibt den gewünschten Wert als String zurück.</returns>
         public static string Bestimmter_wert(string SQL_Befehl)
         {
-            string Rückgabe = string.Empty;
+            string? Rückgabe = string.Empty;
 
-            using (SQLiteConnection connection = new SQLiteConnection(Connectionstring()))
+            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
             {
                 connection.Open();
-
-                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                try
                 {
-
-                    try
+                    using (SqliteCommand command = new(SQL_Befehl, connection))
                     {
-                        using (SQLiteCommand command = new(connection))
+                        command.CommandText = SQL_Befehl;
+                        command.ExecuteNonQuery();
+
+                        using (SqliteDataReader reader = command.ExecuteReader())
                         {
-                            command.CommandText = SQL_Befehl;
-                            command.ExecuteNonQuery();
-
-                            using (IDataReader reader = command.ExecuteReader())
-                            {
-                                if (reader.Read() != false)
-                                    Rückgabe = reader[0].ToString();
-                            }
+                            if (reader.Read() != false)
+                                Rückgabe = reader[0].ToString();
                         }
-                        transaction.Commit();
-                        connection.Close();
-                        return Rückgabe;
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(new Form { TopMost = true }, ex.Message.ToString());
-                        transaction.Rollback();
-                        connection.Close();
-                        return string.Empty;
-                    }
+                    connection.Close();
+                    return Rückgabe;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(new Form { TopMost = true }, ex.Message.ToString());
+                    connection.Close();
+                    return string.Empty;
                 }
             }
         }
@@ -211,30 +173,24 @@ namespace Arbeitszeiten.Klassen
         /// <returns>Keine Art von Rückgabe.</returns>
         public static bool Nur_Befehl(string SQL_Befehl)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(Connectionstring()))
+            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
             {
                 connection.Open();
-
-                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                try
                 {
-                    try
+                    using (SqliteCommand command = new(SQL_Befehl, connection))
                     {
-                        using (SQLiteCommand command = new(connection))
-                        {
-                            command.CommandText = SQL_Befehl;
-                            command.ExecuteNonQuery();
-                        }
-                        transaction.Commit();
-                        connection.Close();
-                        return true;
+                        command.CommandText = SQL_Befehl;
+                        command.ExecuteNonQuery();
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message.ToString());
-                        transaction.Rollback();
-                        connection.Close();
-                        return false;
-                    }
+                    connection.Close();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                    connection.Close();
+                    return false;
                 }
             }
         }
@@ -249,48 +205,41 @@ namespace Arbeitszeiten.Klassen
         {
             List<string> list = new();
 
-            using (SQLiteConnection connection = new SQLiteConnection(Connectionstring()))
+            using (SqliteConnection connection = new(Connectionstring_Microsoft()))
             {
                 connection.Open();
-
-                using (SQLiteTransaction transaction = connection.BeginTransaction())
+                try
                 {
-
-                    try
+                    using (SqliteCommand command = new(SQL_Befehl, connection))
                     {
-                        using (SQLiteCommand command = new(connection))
-                        {
-                            command.CommandText = SQL_Befehl;
-                            command.ExecuteNonQuery();
+                        command.CommandText = SQL_Befehl;
+                        command.ExecuteNonQuery();
 
-                            using (IDataReader reader = command.ExecuteReader())
+                        using (IDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read() != false)
                             {
-                                while (reader.Read() != false)
+                                int i = 0;
+                                while (i < Anzahl_spalten)
                                 {
-                                    int i = 0;
-                                    while (i < Anzahl_spalten)
-                                    {
-                                        list.Add(reader[i].ToString());
-                                        i++;
-                                    }
+                                    list.Add(reader[i].ToString());
+                                    i++;
                                 }
                             }
                         }
-                        transaction.Commit();
-                        connection.Close();
-
-                        return list;
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(new Form { TopMost = true }, ex.Message.ToString());
-                        transaction.Rollback();
-                        connection.Close();
+                    connection.Close();
 
-                        list.Clear();
-                        list.Add("# Leer #");
-                        return list;
-                    }
+                    return list;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(new Form { TopMost = true }, ex.Message.ToString());
+                    connection.Close();
+
+                    list.Clear();
+                    list.Add("# Leer #");
+                    return list;
                 }
             }
         }

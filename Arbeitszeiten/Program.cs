@@ -99,7 +99,7 @@ namespace Arbeitszeiten
 
                                 Kommandozeile.Anmelden(Convert.ToDateTime(null), abzug, Nach_Ende);
 
-                                Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
+                                Startzeit = SQLite.Startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
 
                                 MessageBox.Show(new Form { TopMost = true }, string.Format("Der Beginn wurde erfolgreich eingetragen.\n" +
                                     "Datum:\t{0}\n" +
@@ -126,7 +126,7 @@ namespace Arbeitszeiten
                         }
                         else if (dialogResult == DialogResult.No)
                         {
-                            Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
+                            Startzeit = SQLite.Startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
 
                             Kommandozeile.Abmelden(Convert.ToDateTime(null), Nach_Ende, false, "null", true, id);
 

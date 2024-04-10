@@ -18,7 +18,7 @@ namespace Arbeitszeiten.Formen
         {
             string Bemerkung = txtBox_Bemerkung.Text;
             DateTime dateTime = DateTime.Now;
-            DateTime Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
+            DateTime Startzeit = SQLite.Startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
 
             if (string.IsNullOrEmpty(Bemerkung))
                 Bemerkung = "null";
