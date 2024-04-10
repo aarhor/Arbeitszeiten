@@ -88,7 +88,7 @@ namespace Arbeitszeiten.Klassen
             }
         }
 
-        public static bool Update_table(string Heute, string Ende, decimal Differenz, decimal MehrMinder_Stunden, string? Bemerkung, int _id)
+        public static bool Update_table(string Ende, decimal Differenz, decimal MehrMinder_Stunden, string? Bemerkung, int _id)
         {
             if (Bemerkung == "null")
                 Bemerkung = "null";

@@ -79,13 +79,11 @@ namespace Arbeitszeiten
             {
                 string Datum = Convert.ToDateTime(list[1]).ToString("d");
                 string Beginn = Convert.ToDateTime(list[2]).ToString("t");
-                string Datum_id = string.Format("ID:\t{0}\n" +
-                                              "Datum:\t{1}\n" +
-                                              "Beginn:\t{2}", list[0], Datum, Beginn);
+                string Datum_id = Diverses.Datum_Start_Ende(list[0], Datum, Beginn, "");
 
                 if (string.IsNullOrEmpty(list[3]))
                 {
-                    MessageBox.Show("Der letzte Eintrag wurde noch nicht angeschlossen. ‹ber die Statistiken muss erst ein Ende eingetragen werden damit ein neuer Eintrag angelegt werden kann.\n\n" + Datum_id, "Ende fehlt", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show("Der letzte Eintrag wurde noch nicht angeschlossen. ‹ber die Statistiken muss erst ein Ende eingetragen werden damit ein neuer Eintrag angelegt werden kann.\n" + Datum_id, "Ende fehlt", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
                 else
                 {
@@ -101,6 +99,7 @@ namespace Arbeitszeiten
                     }
 
                     btn_Ende.Enabled = true;
+                    btn_Start.Enabled = false;
                 }
             }
             else
@@ -117,15 +116,26 @@ namespace Arbeitszeiten
                 }
 
                 btn_Ende.Enabled = true;
+                btn_Start.Enabled = false;
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Berechnen();
+            if (_id == 0)
+            {
+                MessageBox.Show("Es ist ein Fehler aufgetreten. Das Programm muss einmal neugestartet werden", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                Berechnen();
 
-            if (!chkBox_Rechnerisch.Checked)
-                btn_Ende.Enabled = false;
+                if (!chkBox_Rechnerisch.Checked)
+                {
+                    btn_Ende.Enabled = false;
+                    btn_Start.Enabled = true;
+                }
+            }
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -186,13 +196,15 @@ namespace Arbeitszeiten
                 _id = int.Parse(list[0]);
                 List<string> Metadaten = Klassen.Metadaten.Auslesen(list[1], false, "Ausserhalb");
 
+                DateTime ende_Gelaende = DateTime.Now;
                 if (Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag")
-                    startzeit = startzeit.AddHours(8).AddMinutes(30);
+                    ende_Gelaende = startzeit.AddHours(8).AddMinutes(30);
                 else if (Wochentag == "Freitag")
-                    startzeit = startzeit.AddHours(5);
+                    ende_Gelaende = startzeit.AddHours(5);
 
                 chkBox_Auﬂerhalb.Checked = Convert.ToBoolean(Metadaten[1]);
-                lbl_Endzeit.Text = string.Format("Ende:    {0}", startzeit.ToString());
+                lbl_Endzeit.Text = string.Format("Ende:    {0}", ende_Gelaende.ToString());
+
                 btn_Ende.Enabled = true;
                 btn_Start.Enabled = false;
             }

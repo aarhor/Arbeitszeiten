@@ -80,9 +80,7 @@ namespace Arbeitszeiten
 
                         if (list.Count > 0)
                         {
-                            string Datum_id = string.Format("ID:\t{0}\n" +
-                                                            "Datum:\t{1}\n" +
-                                                            "Beginn:\t{2}", list[0], Datum, Beginn);
+                            string Datum_id = Diverses.Datum_Start_Ende(list[0], Datum, Beginn, "- Nicht vorhanden -");
 
                             if (string.IsNullOrEmpty(list[3]))
                             {
@@ -100,11 +98,11 @@ namespace Arbeitszeiten
                                 Kommandozeile.Anmelden(Convert.ToDateTime(null), abzug, Nach_Ende);
 
                                 Startzeit = SQLite.Startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
+                                string id_Start = SQLite.Bestimmter_wert("select _id from Zeiten order by _id DESC LIMIT 1");
+                                string Daten = Diverses.Datum_Start_Ende(id_Start, Startzeit.ToString("d"), Startzeit.ToString("t"), "");
 
                                 MessageBox.Show(new Form { TopMost = true }, string.Format("Der Beginn wurde erfolgreich eingetragen.\n" +
-                                    "Datum:\t{0}\n" +
-                                    "Beginn:\t{1}\n" +
-                                    "Ende:\t", Startzeit.ToString("d"), Startzeit.ToString("T")));
+                                    Daten));
                                 Application.Exit();
                             }
                         }
@@ -131,14 +129,14 @@ namespace Arbeitszeiten
                             Kommandozeile.Abmelden(Convert.ToDateTime(null), Nach_Ende, false, "null", true, id);
 
                             DateTime Endzeit = Convert.ToDateTime(SQLite.Bestimmter_wert("select Ende from Zeiten where _id = " + id.ToString()));
+                            string Daten = Diverses.Datum_Start_Ende(id.ToString(), Startzeit.ToString("d"), Startzeit.ToString("t"), Endzeit.ToString("t"));
+
                             MessageBox.Show(new Form { TopMost = true }, string.Format("Das Ende wurde erfolgreich eingetragen.\n" +
-                                "Datum:\t{0}\n" +
-                                "Beginn:\t{1}\n" +
-                                "Ende:\t{2}", Startzeit.ToString("d"), Startzeit.ToString("T"), Endzeit.ToString("T")));
+                                Daten));
                             Application.Exit();
                         }
                         else if (dialogResult == DialogResult.Cancel)
-                            MessageBox.Show("Es wurden keine Änderungen durchgeführt");
+                            MessageBox.Show(new Form { TopMost = true }, "Es wurden keine Änderungen durchgeführt");
                     }
                     else if (firstArgument == "/Tätigkeiten")
                     {

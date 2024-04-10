@@ -27,6 +27,9 @@
             decimal Ueberzeit = 0;
             decimal Pausenzeit = 0;
 
+            if (((Differenz_dezimal > 0 && Differenz_dezimal <= (2 / 60)) || (Differenz_dezimal < 0 && Differenz_dezimal >= (2 / 60))) && !Außerhalb)
+                Differenz_dezimal = 0;  // 2 Minuten drüber und drunter wird noch als 0 gewertet
+
             if (!Außerhalb)
             {
                 if (Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag")
@@ -51,7 +54,7 @@
 
             if (!Rechnerisch)
             {
-                bool Ergebnis = SQLite.Update_table(heute, Ende_Gelände, Differenz_dezimal, Ueberzeit, Bemerkung, _id);
+                bool Ergebnis = SQLite.Update_table(Ende_Gelände, Differenz_dezimal, Ueberzeit, Bemerkung, _id);
 
                 if (Ergebnis && Bearbeiten)
                     MessageBox.Show("Das Bearbeiten war erfolgreich und die Daten wurden angepasst");
