@@ -61,10 +61,62 @@ namespace Arbeitszeiten.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die CREATE TABLE Taetigkeiten (_id INTEGER PRIMARY KEY AUTOINCREMENT, Datum date, Uhrzeit datetime, Tätigkeit TEXT);
-        ///CREATE TABLE Zeiten (_id INTEGER PRIMARY KEY AUTOINCREMENT, Datum DATE, Start DATETIME, Ende DATETIME, Differenz DOUBLE, MehrMinder_Stunden DOUBLE, Bemerkung TEXT default NULL);
-        ///CREATE VIEW &apos;view_geordnet&apos; AS select * from &quot;Zeiten&quot; order by Datum, Start;
-        ///CREATE VIEW &apos;view_überstunden&apos; AS select round(sum(MehrMinder_Stunden), 2) as Überstunden from &quot;Zeiten&quot;; ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;!DOCTYPE html&gt;
+        ///&lt;html lang=&quot;de-de&quot;&gt;
+        ///
+        ///&lt;head&gt;
+        ///    &lt;title&gt;Änderungen Rechnungsverwalter&lt;/title&gt;
+        ///    &lt;meta name=&quot;author&quot; content=&quot;aarhor&quot; charset=&quot;UTF-8&quot;&gt;
+        ///    &lt;style type=&quot;text/css&quot;&gt;
+        ///        html {
+        ///            scroll-behavior: smooth;
+        ///        }
+        ///
+        ///        body {
+        ///            font: small verdana, arial, sans-serif;
+        ///            color: #000000;
+        ///        }
+        ///
+        ///        div.bluehead {
+        ///            text-align: center;
+        ///            color: #bdc1c6;
+        ///            background-color: #0000aa;
+        ///            padding: 5 [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string Aenderungen {
+            get {
+                return ResourceManager.GetString("Aenderungen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die CREATE TABLE Taetigkeiten (
+        ///    _id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ///    Datum date,
+        ///    Uhrzeit datetime,
+        ///    Tätigkeit TEXT
+        ///);
+        ///
+        ///CREATE TABLE &quot;Zeiten&quot; (
+        ///    &quot;_id&quot; INTEGER,
+        ///    &quot;Datum&quot; DATE,
+        ///    &quot;Start&quot; DATETIME,
+        ///    &quot;Ende&quot; DATETIME,
+        ///    &quot;Differenz&quot; DOUBLE,
+        ///    &quot;MehrMinder_Stunden&quot; DOUBLE,
+        ///    &quot;Bemerkung&quot; TEXT DEFAULT NULL,
+        ///    &quot;Metadaten&quot; TEXT DEFAULT NULL,
+        ///    PRIMARY KEY(&quot;_id&quot; AUTOINCREMENT)
+        ///);
+        ///
+        ///CREATE VIEW &apos;view_geordnet&apos; AS
+        ///select
+        ///    *
+        ///from
+        ///    &quot;Zeiten&quot;
+        ///order by
+        ///    Datum,
+        /// [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string Erstellen {
             get {

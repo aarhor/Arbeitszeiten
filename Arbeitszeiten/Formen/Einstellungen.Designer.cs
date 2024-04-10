@@ -40,6 +40,7 @@
             txtBox_Passwort = new TextBox();
             label2 = new Label();
             lnklbl_DBpwd_anzeigen = new LinkLabel();
+            lnklbl_Aenderungen = new LinkLabel();
             SuspendLayout();
             // 
             // btn_Neustart
@@ -147,11 +148,23 @@
             lnklbl_DBpwd_anzeigen.Text = "Anzeigen";
             lnklbl_DBpwd_anzeigen.LinkClicked += lnklbl_DBpwd_anzeigen_LinkClicked;
             // 
+            // lnklbl_Aenderungen
+            // 
+            lnklbl_Aenderungen.AutoSize = true;
+            lnklbl_Aenderungen.Location = new Point(12, 123);
+            lnklbl_Aenderungen.Name = "lnklbl_Aenderungen";
+            lnklbl_Aenderungen.Size = new Size(73, 15);
+            lnklbl_Aenderungen.TabIndex = 14;
+            lnklbl_Aenderungen.TabStop = true;
+            lnklbl_Aenderungen.Text = "Änderungen";
+            lnklbl_Aenderungen.LinkClicked += lnklbl_Aenderungen_LinkClicked;
+            // 
             // Einstellungen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(283, 147);
+            Controls.Add(lnklbl_Aenderungen);
             Controls.Add(lnklbl_DBpwd_anzeigen);
             Controls.Add(txtBox_Passwort);
             Controls.Add(label2);
@@ -184,5 +197,6 @@
         private TextBox txtBox_Passwort;
         private Label label2;
         private LinkLabel lnklbl_DBpwd_anzeigen;
+        private LinkLabel lnklbl_Aenderungen;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Arbeitszeiten.Klassen;
+﻿using Arbeitszeiten.Formen;
+using Arbeitszeiten.Klassen;
 
 namespace Arbeitszeiten
 {
@@ -139,6 +140,12 @@ namespace Arbeitszeiten
                 txtBox_Passwort.PasswordChar = '\0';
                 lnklbl_DBpwd_anzeigen.Text = "Ausblenden";
             }
+        }
+
+        private void lnklbl_Aenderungen_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Changelog Form_Changelog = new();
+            Form_Changelog.Show();
         }
     }
 }
