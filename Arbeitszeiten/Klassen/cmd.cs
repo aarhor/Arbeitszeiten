@@ -9,7 +9,7 @@
             string heute = dateTime.ToString("yyyy-MM-dd");
             string Startzeit = dateTime.ToString("HH:mm:ss");
 
-            SQLite.Insert_table(heute, Startzeit, Ausserhalb);
+            SQLite.insert_table(heute, Startzeit, Ausserhalb);
         }
 
         public static decimal Abmelden(DateTime dateTime, bool Außerhalb, bool Rechnerisch, string Bemerkung, bool Pause, int _id, bool Bearbeiten = false)
@@ -18,7 +18,7 @@
 
             string heute = dateTime.ToString("yyyy-MM-dd");
 
-            DateTime Startzeit = Convert.ToDateTime(heute + " " + SQLite.Select_table(_id.ToString()));
+            DateTime Startzeit = Convert.ToDateTime(heute + " " + SQLite.select_table(heute, _id.ToString()));
             TimeSpan Differenz = dateTime - Startzeit;
 
             decimal Differenz_dezimal = Convert.ToDecimal(Math.Round(Differenz.TotalHours, 2));
@@ -51,7 +51,7 @@
 
             if (!Rechnerisch)
             {
-                bool Ergebnis = SQLite.Update_table(heute, Ende_Gelände, Differenz_dezimal, Ueberzeit, Bemerkung, _id);
+                bool Ergebnis = SQLite.update_table(heute, Ende_Gelände, Differenz_dezimal, Ueberzeit, Bemerkung, _id);
 
                 if (Ergebnis && Bearbeiten)
                     MessageBox.Show("Das Bearbeiten war erfolgreich und die Daten wurden angepasst");

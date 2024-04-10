@@ -130,7 +130,7 @@ namespace Arbeitszeiten
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Einstellungen Form_Einstellungen = new();
+            Einstellungen Form_Einstellungen = new Einstellungen();
             Form_Einstellungen.ShowDialog();
         }
 
@@ -152,7 +152,7 @@ namespace Arbeitszeiten
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Statistiken Form_statistiken = new();
+            Statistiken Form_statistiken = new Statistiken();
             Form_statistiken.ShowDialog();
         }
 
@@ -178,7 +178,7 @@ namespace Arbeitszeiten
                 else
                     chkBox_Pause.Checked = true;
 
-                DateTime startzeit = SQLite.Startzeit_heute(Convert.ToDateTime(list[1]).ToString("yyyy-MM-dd"));
+                DateTime startzeit = SQLite.startzeit_heute(Convert.ToDateTime(list[1]).ToString("yyyy-MM-dd"));
                 list.Clear();
                 list = SQLite.Auflistung_Einträge("select _id, Metadaten from Zeiten where Datum = '" + startzeit.ToString("yyyy-MM-dd") + "' and Ende ISNULL", 2);
                 mskdtxtBox_Start.Text = startzeit.ToString();
@@ -218,7 +218,7 @@ namespace Arbeitszeiten
 
         private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Tätigkeiten Form_Taetigkeiten = new();
+            Tätigkeiten Form_Taetigkeiten = new Tätigkeiten();
             Form_Taetigkeiten.ShowDialog();
         }
     }

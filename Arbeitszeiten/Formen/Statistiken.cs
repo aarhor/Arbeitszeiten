@@ -89,7 +89,7 @@ namespace Arbeitszeiten
                     else
                         richTextBox1.Text = "## Es gibt noch keine Endzeit für diesen Tag ##";
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     richTextBox1.Text = "## Für diesen Tag gibt es noch keine Endzeit ##";
                 }
