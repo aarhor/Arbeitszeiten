@@ -38,7 +38,7 @@
             chkBox_Manuell = new CheckBox();
             linkLabel2 = new LinkLabel();
             groupBox1 = new GroupBox();
-            checkBox1 = new CheckBox();
+            chkBox_Hallo_Tschuess = new CheckBox();
             chkBox_Pause = new CheckBox();
             chkBox_Rechnerisch = new CheckBox();
             chkBox_Außerhalb = new CheckBox();
@@ -137,7 +137,7 @@
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(checkBox1);
+            groupBox1.Controls.Add(chkBox_Hallo_Tschuess);
             groupBox1.Controls.Add(chkBox_Pause);
             groupBox1.Controls.Add(chkBox_Rechnerisch);
             groupBox1.Controls.Add(chkBox_Außerhalb);
@@ -149,16 +149,16 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Optionen";
             // 
-            // checkBox1
+            // chkBox_Hallo_Tschuess
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(6, 122);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(105, 19);
-            checkBox1.TabIndex = 14;
-            checkBox1.Text = "Hallo / Tschüss";
-            checkBox1.UseVisualStyleBackColor = true;
-            checkBox1.Visible = false;
+            chkBox_Hallo_Tschuess.AutoSize = true;
+            chkBox_Hallo_Tschuess.Enabled = false;
+            chkBox_Hallo_Tschuess.Location = new Point(6, 122);
+            chkBox_Hallo_Tschuess.Name = "chkBox_Hallo_Tschuess";
+            chkBox_Hallo_Tschuess.Size = new Size(105, 19);
+            chkBox_Hallo_Tschuess.TabIndex = 14;
+            chkBox_Hallo_Tschuess.Text = "Hallo / Tschüss";
+            chkBox_Hallo_Tschuess.UseVisualStyleBackColor = true;
             // 
             // chkBox_Pause
             // 
@@ -324,7 +324,7 @@
         private Label lbl_Endzeit;
         private LinkLabel linkLabel3;
         private Label lbl_Absolut;
-        public CheckBox checkBox1;
+        public CheckBox chkBox_Hallo_Tschuess;
         private MaskedTextBox mskdtxtBox_Start;
         private MaskedTextBox mskdtxtBox_Ende;
     }

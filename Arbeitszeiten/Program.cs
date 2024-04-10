@@ -20,7 +20,7 @@ namespace Arbeitszeiten
 
         public static string[] CheckCMDArgs(string[] Argumente)
         {
-            string[] allowedArguments = ["/Dienstbeginn", "/Dienstende", "/Auﬂerhalb", "/Rechnerisch", "/T‰tigkeiten"];
+            string[] allowedArguments = ["/Dienstbeginn", "/Dienstende", "/Rechnerisch", "/T‰tigkeiten"];
 
             List<string> validArguments = [];
             foreach (string arg in Argumente)
@@ -48,14 +48,15 @@ namespace Arbeitszeiten
 
             bool vorhanden = Registry.RegistryKeyExists(@"software\" + Application.CompanyName + @"\" + Application.ProductName);
             if (!vorhanden)
-                Application.Run(new Einstellungen());
+                Application.Run(new Einstellungen(!vorhanden));
             else
             {
                 string firstArgument;
                 int id;
                 bool Nach_Ende = false;
                 DateTime dateTime = DateTime.Now;
-
+                List<string> list = [];
+                List<string> Metadaten = [];
                 if (CommandLineArguments.Args.Length == 0)
                     Application.Run(new Form1());
 
@@ -72,7 +73,8 @@ namespace Arbeitszeiten
                     DateTime Startzeit;
                     if (firstArgument == "/Dienstbeginn")
                     {
-                        List<string> list = SQLite.Auflistung_Eintr‰ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
+                        list.Clear();
+                        list = SQLite.Auflistung_Eintr‰ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
                         string Datum = Convert.ToDateTime(list[1]).ToString("d");
                         string Beginn = Convert.ToDateTime(list[2]).ToString("t");
 
@@ -89,12 +91,15 @@ namespace Arbeitszeiten
                             }
                             else
                             {
-                                if (CommandLineArguments.Args.Contains("/Auﬂerhalb"))
+                                string Wochentag = dateTime.ToString("dddd");
+                                if (Wochentag == "Samstag" || Wochentag == "Sonntag")
+                                    Nach_Ende = true;
+                                else if ((Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag") && (dateTime.Hour >= 15 || dateTime.Hour <= 6))
                                     Nach_Ende = true;
 
                                 Kommandozeile.Anmelden(Convert.ToDateTime(null), abzug, Nach_Ende);
 
-                                Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
+                                Startzeit = SQLite.Startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
 
                                 MessageBox.Show(new Form { TopMost = true }, string.Format("Der Beginn wurde erfolgreich eingetragen.\n" +
                                     "Datum:\t{0}\n" +
@@ -106,28 +111,28 @@ namespace Arbeitszeiten
                     }
                     else if (firstArgument == "/Dienstende")
                     {
-                        if (CommandLineArguments.Args.Contains("/Auﬂerhalb"))
-                            Nach_Ende = true;
+                        list.Clear();
+                        list = SQLite.Auflistung_Eintr‰ge("select _id, Datum, Start, Ende, Metadaten from Zeiten order by _id DESC LIMIT 1", 5);
+                        Metadaten = Klassen.Metadaten.Auslesen(list[4], false, "Ausserhalb");
+
+                        Nach_Ende = Convert.ToBoolean(Metadaten[1]);
+                        id = int.Parse(list[0]);
 
                         DialogResult dialogResult = MessageBox.Show(new Form { TopMost = true }, "Mˆchtest du eine Bemerkung mit angeben?", "Bemerkung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                         if (dialogResult == DialogResult.Yes)
                         {
-                            Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
-                            id = int.Parse(SQLite.Bestimmter_wert(string.Format("select _id from Zeiten where Datum = '{0}' and Ende ISNULL", Startzeit.ToString("yyyy-MM-dd"))));
-
                             Bemerkung Form_Bemerkung = new Bemerkung(id, Nach_Ende);
                             Form_Bemerkung.ShowDialog();
                         }
                         else if (dialogResult == DialogResult.No)
                         {
-                            Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
-                            id = int.Parse(SQLite.Bestimmter_wert(string.Format("select _id from Zeiten where Datum = '{0}' and Ende ISNULL", Startzeit.ToString("yyyy-MM-dd"))));
+                            Startzeit = SQLite.Startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
 
                             Kommandozeile.Abmelden(Convert.ToDateTime(null), Nach_Ende, false, "null", true, id);
 
                             DateTime Endzeit = Convert.ToDateTime(SQLite.Bestimmter_wert("select Ende from Zeiten where _id = " + id.ToString()));
                             MessageBox.Show(new Form { TopMost = true }, string.Format("Das Ende wurde erfolgreich eingetragen.\n" +
-                                "Darum:\t{0}\n" +
+                                "Datum:\t{0}\n" +
                                 "Beginn:\t{1}\n" +
                                 "Ende:\t{2}", Startzeit.ToString("d"), Startzeit.ToString("T"), Endzeit.ToString("T")));
                             Application.Exit();

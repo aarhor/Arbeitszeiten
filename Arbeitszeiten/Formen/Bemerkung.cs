@@ -14,11 +14,11 @@ namespace Arbeitszeiten.Formen
         int id;
         bool Außerhalb = false;
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Eintragen()
         {
             string Bemerkung = txtBox_Bemerkung.Text;
             DateTime dateTime = DateTime.Now;
-            string Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd")).ToString();
+            DateTime Startzeit = SQLite.Startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
 
             if (string.IsNullOrEmpty(Bemerkung))
                 Bemerkung = "null";
@@ -28,9 +28,21 @@ namespace Arbeitszeiten.Formen
             string Endzeit = SQLite.Bestimmter_wert("select Ende from Zeiten where _id = " + id.ToString());
 
             MessageBox.Show(new Form { TopMost = true }, string.Format("Das Ende wurde erfolgreich eingetragen.\n" +
-            "Beginn: {0}\n" +
-            "Ende: {1}", Startzeit, Endzeit));
+                    "Datum:\t{0}\n" +
+                    "Beginn:\t{1}\n" +
+                    "Ende:\t{2}", Startzeit.ToString("d"), Startzeit.ToString("T"), dateTime.ToString("T")));
             Application.Exit();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Eintragen();
+        }
+
+        private void txtBox_Bemerkung_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                Eintragen();
         }
     }
 }
