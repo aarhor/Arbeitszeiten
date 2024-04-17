@@ -22,7 +22,7 @@ namespace Arbeitszeiten
             if (txtBox_Bemerkung.TextLength >= 1)
                 Bemerkung = txtBox_Bemerkung.Text;
 
-            if (chkBox_Auﬂerhalb.Checked)
+            if (chkBox_Au√üerhalb.Checked)
             {
                 if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), Rechnerisch, Bemerkung, Pause, _id); }
                 else
@@ -58,7 +58,7 @@ namespace Arbeitszeiten
 
             if (Differenz_dezimal >= 10)
             {
-                MessageBox.Show(new Form { TopMost = true }, "Die Arbeitszeit betr‰gt ¸ber 10 Stunden!! Sieh zu das du Land gewinnst und nicht mehr arbeitest!!");
+                MessageBox.Show(new Form { TopMost = true }, "Die Arbeitszeit betr√§gt √ºber 10 Stunden!! Sieh zu das du Land gewinnst und nicht mehr arbeitest!!");
             }
 
             if (Differenz_dezimal > 0) { lbl_Differenz.Text = string.Format("Differenz:    {0} Mehrstunden", Differenz_dezimal); }
@@ -70,10 +70,10 @@ namespace Arbeitszeiten
         {
             bool Zeit_abziehen = Convert.ToBoolean(Registry.GetValue("Zeit_abziehen"));
             double abzug = 0;
-            List<string> list = SQLite.Auflistung_Eintr‰ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
+            List<string> list = SQLite.Auflistung_Eintr√§ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
             List<string> Optionen = [
                         "Ausserhalb",
-                        chkBox_Auﬂerhalb.Checked.ToString(),
+                        chkBox_Au√üerhalb.Checked.ToString(),
                         "Bool",
                         "Workshop",
                         chkBox_Workshop.Checked.ToString(),
@@ -91,7 +91,7 @@ namespace Arbeitszeiten
 
                 if (string.IsNullOrEmpty(list[3]))
                 {
-                    MessageBox.Show("Der letzte Eintrag wurde noch nicht angeschlossen. ‹ber die Statistiken muss erst ein Ende eingetragen werden damit ein neuer Eintrag angelegt werden kann.\n" + Datum_id, "Ende fehlt", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show("Der letzte Eintrag wurde noch nicht angeschlossen. √úber die Statistiken muss erst ein Ende eingetragen werden damit ein neuer Eintrag angelegt werden kann.\n" + Datum_id, "Ende fehlt", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
                 else
                 {
@@ -162,7 +162,7 @@ namespace Arbeitszeiten
                 mskdtxtBox_Ende.ReadOnly = true;
             }
         }
-
+        
         private void chkBox_Rechnerisch_CheckedChanged(object sender, EventArgs e)
         {
             if (chkBox_Rechnerisch.Checked)
@@ -174,7 +174,7 @@ namespace Arbeitszeiten
         private void Form1_Load(object sender, EventArgs e)
         {
             DateTime dateTime = DateTime.Now;
-            List<string> list = SQLite.Auflistung_Eintr‰ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
+            List<string> list = SQLite.Auflistung_Eintr√§ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
             string Wochentag = dateTime.ToString("dddd");
 
             if (list.Count > 0 && !string.IsNullOrEmpty(list[0]) && string.IsNullOrEmpty(list[3]))
@@ -185,9 +185,9 @@ namespace Arbeitszeiten
                 else
                     chkBox_Pause.Checked = true;
 
-                DateTime startzeit = SQLite.Startzeit_heute(Convert.ToDateTime(list[1]).ToString("yyyy-MM-dd"));
+                DateTime startzeit = SQLite.startzeit_heute(Convert.ToDateTime(list[1]).ToString("yyyy-MM-dd"));
                 list.Clear();
-                list = SQLite.Auflistung_Eintr‰ge("select _id, Metadaten from Zeiten where Datum = '" + startzeit.ToString("yyyy-MM-dd") + "' and Ende ISNULL", 2);
+                list = SQLite.Auflistung_Eintr√§ge("select _id, Metadaten from Zeiten where Datum = '" + startzeit.ToString("yyyy-MM-dd") + "' and Ende ISNULL", 2);
                 mskdtxtBox_Start.Text = startzeit.ToString();
 
                 _id = int.Parse(list[0]);
@@ -199,7 +199,7 @@ namespace Arbeitszeiten
                 else if (Wochentag == "Freitag")
                     ende_Gelaende = startzeit.AddHours(5);
 
-                chkBox_Auﬂerhalb.Checked = Convert.ToBoolean(Metadaten[1]);
+                chkBox_Au√üerhalb.Checked = Convert.ToBoolean(Metadaten[1]);
                 chkBox_Workshop.Checked = Convert.ToBoolean(Metadaten[3]);
                 chkBox_Workshop.Enabled = false;
 
@@ -215,11 +215,11 @@ namespace Arbeitszeiten
             {
                 if (Wochentag == "Samstag" || Wochentag == "Sonntag")
                 {
-                    chkBox_Auﬂerhalb.Checked = true;
+                    chkBox_Au√üerhalb.Checked = true;
                     chkBox_Pause.Checked = false;
                 }
                 else if ((Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag") && (dateTime.Hour >= 15 || dateTime.Hour <= 6))
-                    chkBox_Auﬂerhalb.Checked = true;
+                    chkBox_Au√üerhalb.Checked = true;
             }
         }
 
@@ -233,7 +233,7 @@ namespace Arbeitszeiten
 
         private void toolStripStatusLabel1_Click(object sender, EventArgs e)
         {
-            T‰tigkeiten Form_Taetigkeiten = new();
+            T√§tigkeiten Form_Taetigkeiten = new T√§tigkeiten();
             Form_Taetigkeiten.ShowDialog();
         }
 

@@ -22,6 +22,7 @@
             bool Außerhalb_neu = Convert.ToBoolean(Klassen.Metadaten.Auslesen(Metadaten, false, "Ausserhalb")[1]);
             bool Workshop = Convert.ToBoolean(Klassen.Metadaten.Auslesen(Metadaten, false, "Workshop")[1]);
 
+
             DateTime Startzeit = Convert.ToDateTime(heute + " " + SQLite.Select_table(_id.ToString()));
             TimeSpan Start_Ende_Differenz = dateTime - Startzeit;
 

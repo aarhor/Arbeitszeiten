@@ -56,97 +56,90 @@
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(12, 15);
-            label1.Name = "label1";
-            label1.Size = new Size(77, 15);
-            label1.TabIndex = 1;
-            label1.Text = "Dateipfad (?):";
-            label1.Click += label1_Click;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(61, 30);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Dateipfad:\r\n(?)";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // txtBox_Pfad
             // 
-            txtBox_Pfad.Location = new Point(97, 12);
-            txtBox_Pfad.Name = "txtBox_Pfad";
-            txtBox_Pfad.Size = new Size(177, 23);
-            txtBox_Pfad.TabIndex = 1;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(12, 92);
-            label3.Name = "label3";
-            label3.Size = new Size(152, 15);
-            label3.TabIndex = 6;
-            label3.Text = "Zeit die abgezogen wird (?):";
-            label3.Click += label3_Click;
-            // 
-            // txtBox_Minuten
-            // 
-            txtBox_Minuten.Location = new Point(170, 89);
-            txtBox_Minuten.Name = "txtBox_Minuten";
-            txtBox_Minuten.ReadOnly = true;
-            txtBox_Minuten.Size = new Size(46, 23);
-            txtBox_Minuten.TabIndex = 4;
-            // 
-            // checkBox1
-            // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(12, 70);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(96, 19);
-            checkBox1.TabIndex = 3;
-            checkBox1.Text = "Zeit abziehen";
-            checkBox1.UseVisualStyleBackColor = true;
-            checkBox1.Click += checkBox1_Click;
-            // 
-            // button1
-            // 
-            button1.Enabled = false;
-            button1.Location = new Point(199, 118);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 5;
-            button1.Text = "Speichern";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(222, 92);
-            label4.Name = "label4";
-            label4.Size = new Size(52, 15);
-            label4.TabIndex = 11;
-            label4.Text = "Minuten";
-            // 
-            // txtBox_Passwort
-            // 
-            txtBox_Passwort.Location = new Point(97, 41);
-            txtBox_Passwort.Name = "txtBox_Passwort";
-            txtBox_Passwort.PasswordChar = '*';
-            txtBox_Passwort.Size = new Size(177, 23);
-            txtBox_Passwort.TabIndex = 2;
+            this.txtBox_Pfad.Location = new System.Drawing.Point(79, 12);
+            this.txtBox_Pfad.Name = "txtBox_Pfad";
+            this.txtBox_Pfad.Size = new System.Drawing.Size(190, 23);
+            this.txtBox_Pfad.TabIndex = 2;
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(12, 44);
-            label2.Name = "label2";
-            label2.Size = new Size(79, 15);
-            label2.TabIndex = 12;
-            label2.Text = "DB Kennwort:";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 74);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(110, 15);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Sicherung erstellen:";
             // 
-            // lnklbl_DBpwd_anzeigen
+            // label3
             // 
-            lnklbl_DBpwd_anzeigen.AutoSize = true;
-            lnklbl_DBpwd_anzeigen.Location = new Point(204, 67);
-            lnklbl_DBpwd_anzeigen.Name = "lnklbl_DBpwd_anzeigen";
-            lnklbl_DBpwd_anzeigen.Size = new Size(56, 15);
-            lnklbl_DBpwd_anzeigen.TabIndex = 13;
-            lnklbl_DBpwd_anzeigen.TabStop = true;
-            lnklbl_DBpwd_anzeigen.Text = "Anzeigen";
-            lnklbl_DBpwd_anzeigen.LinkClicked += lnklbl_DBpwd_anzeigen_LinkClicked;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 118);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(152, 15);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Zeit die abgezogen wird (?):";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // txtBox_Minuten
+            // 
+            this.txtBox_Minuten.Location = new System.Drawing.Point(170, 115);
+            this.txtBox_Minuten.Name = "txtBox_Minuten";
+            this.txtBox_Minuten.ReadOnly = true;
+            this.txtBox_Minuten.Size = new System.Drawing.Size(46, 23);
+            this.txtBox_Minuten.TabIndex = 7;
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(119, 74);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(46, 15);
+            this.linkLabel1.TabIndex = 9;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Sichern";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(12, 96);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(96, 19);
+            this.checkBox1.TabIndex = 10;
+            this.checkBox1.Text = "Zeit abziehen";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.Click += new System.EventHandler(this.checkBox1_Click);
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(170, 146);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "Speichern";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(222, 123);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(52, 15);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Minuten";
             // 
             // lnklbl_Aenderungen
             // 
@@ -160,7 +153,7 @@
             lnklbl_Aenderungen.LinkClicked += lnklbl_Aenderungen_LinkClicked;
             // 
             // Einstellungen
-            // 
+            //
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(283, 147);
@@ -186,11 +179,13 @@
 
         #endregion
 
-        private Button btn_Neustart;
+        private Button btn_Speichern;
         private Label label1;
         private TextBox txtBox_Pfad;
+        private Label label2;
         private Label label3;
         private TextBox txtBox_Minuten;
+        private LinkLabel linkLabel1;
         private CheckBox checkBox1;
         private Button button1;
         private Label label4;

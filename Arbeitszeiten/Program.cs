@@ -21,7 +21,7 @@ namespace Arbeitszeiten
 
         public static string[] CheckCMDArgs(string[] Argumente)
         {
-            string[] allowedArguments = ["/Dienstbeginn", "/Dienstende", "/Rechnerisch", "/T‰tigkeiten", "/Auﬂerhalb", "/Workshop"];
+            string[] allowedArguments = ["/Dienstbeginn", "/Dienstende", "/Rechnerisch", "/T√§tigkeiten", "/Au√üerhalb", "/Workshop"];
 
             List<string> validArguments = [];
             foreach (string arg in Argumente)
@@ -49,15 +49,14 @@ namespace Arbeitszeiten
 
             bool vorhanden = Registry.RegistryKeyExists(@"software\" + Application.CompanyName + @"\" + Application.ProductName);
             if (!vorhanden)
-                Application.Run(new Einstellungen(!vorhanden));
+                Application.Run(new Einstellungen());
             else
             {
                 string firstArgument;
                 int id;
                 bool Nach_Ende = false;
                 DateTime dateTime = DateTime.Now;
-                List<string> list = [];
-                List<string> Metadaten = [];
+
                 if (CommandLineArguments.Args.Length == 0)
                     Application.Run(new Form1());
 
@@ -74,16 +73,16 @@ namespace Arbeitszeiten
                     DateTime Startzeit;
                     if (firstArgument == "/Dienstbeginn")
                     {
-                        if (CommandLineArguments.Args.Contains("/Auﬂerhalb") && CommandLineArguments.Args.Contains("/Workshop"))
+                        if (CommandLineArguments.Args.Contains("/Au√üerhalb") && CommandLineArguments.Args.Contains("/Workshop"))
                         {
-                            MessageBox.Show(new Form { TopMost = true }, string.Format("Es wurden die beiden Schalter \"/Auﬂerhalb\" und \"/Workshop\" angegeben.\n" +
-                                "Diese schlieﬂen sich beide jedoch aus. Einer der beiden muss entfernt werden."));
+                            MessageBox.Show(new Form { TopMost = true }, string.Format("Es wurden die beiden Schalter \"/Au√üerhalb\" und \"/Workshop\" angegeben.\n" +
+                                "Diese schlie√üen sich beide jedoch aus. Einer der beiden muss entfernt werden."));
                             Application.Run(new Form1());
                         }
                         else
                         {
                             list.Clear();
-                            list = SQLite.Auflistung_Eintr‰ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
+                            list = SQLite.Auflistung_Eintr√§ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
                             string Datum = Convert.ToDateTime(list[1]).ToString("d");
                             string Beginn = Convert.ToDateTime(list[2]).ToString("t");
 
@@ -92,7 +91,7 @@ namespace Arbeitszeiten
                                 string Datum_id = Diverses.Datum_Start_Ende(list[0], Datum, Beginn, "- Nicht vorhanden -");
                                 List<string> Optionen = [
                                     "Ausserhalb",
-                                    CommandLineArguments.Args.Contains("/Auﬂerhalb").ToString(),
+                                    CommandLineArguments.Args.Contains("/Au√üerhalb").ToString(),
                                     "Bool",
                                     "Workshop",
                                     CommandLineArguments.Args.Contains("/Workshop").ToString(),
@@ -101,7 +100,7 @@ namespace Arbeitszeiten
 
                                 if (string.IsNullOrEmpty(list[3]))
                                 {
-                                    MessageBox.Show("Der letzte Eintrag wurde noch nicht angeschlossen. ‹ber die Statistiken oder die Hauptform muss erst ein Ende eingetragen werden damit ein neuer Eintrag angelegt werden kann.\n\n" + Datum_id, "Ende fehlt", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                                    MessageBox.Show("Der letzte Eintrag wurde noch nicht angeschlossen. √úber die Statistiken oder die Hauptform muss erst ein Ende eingetragen werden damit ein neuer Eintrag angelegt werden kann.\n\n" + Datum_id, "Ende fehlt", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                                     Application.Run(new Form1());
                                 }
                                 else
@@ -127,22 +126,22 @@ namespace Arbeitszeiten
                     }
                     else if (firstArgument == "/Dienstende")
                     {
-                        list.Clear();
-                        list = SQLite.Auflistung_Eintr‰ge("select _id, Datum, Start, Ende, Metadaten from Zeiten order by _id DESC LIMIT 1", 5);
-                        Metadaten = Klassen.Metadaten.Auslesen(list[4], false, "Ausserhalb");
+                        if (CommandLineArguments.Args.Contains("/Au√üerhalb"))
+                            Nach_Ende = true;
 
-                        Nach_Ende = Convert.ToBoolean(Metadaten[1]);
-                        id = int.Parse(list[0]);
-
-                        DialogResult dialogResult = MessageBox.Show(new Form { TopMost = true }, "Mˆchtest du eine Bemerkung mit angeben?", "Bemerkung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                        DialogResult dialogResult = MessageBox.Show(new Form { TopMost = true }, "M√∂chtest du eine Bemerkung mit angeben?", "Bemerkung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                         if (dialogResult == DialogResult.Yes)
                         {
+                            Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
+                            id = int.Parse(SQLite.Bestimmter_wert(string.Format("select _id from Zeiten where Datum = '{0}' and Ende ISNULL", Startzeit.ToString("yyyy-MM-dd"))));
+
                             Bemerkung Form_Bemerkung = new Bemerkung(id, Nach_Ende);
                             Form_Bemerkung.ShowDialog();
                         }
                         else if (dialogResult == DialogResult.No)
                         {
-                            Startzeit = SQLite.Startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
+                            Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
+                            id = int.Parse(SQLite.Bestimmter_wert(string.Format("select _id from Zeiten where Datum = '{0}' and Ende ISNULL", Startzeit.ToString("yyyy-MM-dd"))));
 
                             Kommandozeile.Abmelden(Convert.ToDateTime(null), false, "null", true, id);
 
@@ -154,11 +153,11 @@ namespace Arbeitszeiten
                             Application.Exit();
                         }
                         else if (dialogResult == DialogResult.Cancel)
-                            MessageBox.Show(new Form { TopMost = true }, "Es wurden keine ƒnderungen durchgef¸hrt");
+                            MessageBox.Show(new Form { TopMost = true }, "Es wurden keine √Ñnderungen durchgef√ºhrt");
                     }
-                    else if (firstArgument == "/T‰tigkeiten")
+                    else if (firstArgument == "/T√§tigkeiten")
                     {
-                        Application.Run(new T‰tigkeiten { TopMost = true });
+                        Application.Run(new T√§tigkeiten { TopMost = true });
                     }
                 }
             }

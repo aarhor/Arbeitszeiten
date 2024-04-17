@@ -332,7 +332,7 @@
         public CheckBox chkBox_Pause;
         private Label lbl_Endzeit;
         private Label lbl_Absolut;
-        public CheckBox chkBox_Hallo_Tschuess;
+        public CheckBox checkBox1;
         private MaskedTextBox mskdtxtBox_Start;
         private MaskedTextBox mskdtxtBox_Ende;
         private CheckBox chkBox_Workshop;
