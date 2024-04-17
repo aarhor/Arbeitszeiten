@@ -138,12 +138,6 @@ namespace Arbeitszeiten
             }
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Einstellungen Form_Einstellungen = new();
-            Form_Einstellungen.ShowDialog();
-        }
-
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (chkBox_Manuell.Checked)
@@ -158,12 +152,6 @@ namespace Arbeitszeiten
 
                 mskdtxtBox_Ende.ReadOnly = true;
             }
-        }
-
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Statistiken Form_statistiken = new();
-            Form_statistiken.ShowDialog();
         }
 
         private void chkBox_Rechnerisch_CheckedChanged(object sender, EventArgs e)
@@ -228,10 +216,22 @@ namespace Arbeitszeiten
                 Pause = false;
         }
 
-        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
         {
             Tätigkeiten Form_Taetigkeiten = new();
             Form_Taetigkeiten.ShowDialog();
+        }
+
+        private void toolStripStatusLabel2_Click(object sender, EventArgs e)
+        {
+            Statistiken Form_statistiken = new();
+            Form_statistiken.ShowDialog();
+        }
+
+        private void toolStripStatusLabel3_Click(object sender, EventArgs e)
+        {
+            Einstellungen Form_Einstellungen = new();
+            Form_Einstellungen.ShowDialog();
         }
     }
 }
