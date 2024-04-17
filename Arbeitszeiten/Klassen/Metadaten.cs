@@ -9,6 +9,51 @@ namespace Arbeitszeiten.Klassen
     internal class Metadaten
     {
         /// <summary>
+        /// Erstellt einen JSON string mit den gewünschten Metadaten / Tags
+        /// </summary>
+        /// <param name="Daten">Die Auflistung der Daten die übergeben werden. [Name] [Inhalt] [Datentyp(Text, Zahl, Bool)]</param>
+        /// <returns>Gibt einen fertigen JSON mit den angegebenen Metadaten zurück.</returns>
+        public static string Generator(List<string> Daten)
+        {
+            string Datentyp, Inhalt;
+            string Rückgabe = "[\n" +
+                       "{\n";
+
+            if (Daten.Count > 0)
+            {
+                Inhalt = "";
+                for (int i = 0; i < Daten.Count; i += 3)
+                {
+                    Datentyp = Daten[i + 2];
+
+                    switch (Datentyp)
+                    {
+                        case "Text":
+                            Inhalt = string.Format("\"{0}\"", Daten[i + 1]);
+                            break;
+                        case "Zahl":
+                            Inhalt = string.Format("{0}", Daten[i + 1]);
+                            break;
+                        case "Bool":
+                            Inhalt = string.Format("{0}", Daten[i + 1].ToLower());
+                            break;
+                        default:
+                            MessageBox.Show(new Form { TopMost = true }, string.Format("Es wurde kein Datentyp für {0} angegeben!", Daten[i + 1]));
+                            break;
+                    }
+                    Rückgabe += string.Format("\"{0}\": {1},\n", Daten[i], Inhalt);
+                }
+                Rückgabe = Rückgabe.Remove(Rückgabe.Length - 2, 2);
+
+                Rückgabe += "\n}\n]";
+            }
+            else
+                Rückgabe += "}\n]";
+
+            return Rückgabe.Replace("\n", " ");
+        }
+
+        /// <summary>
         /// Gibt alle oder ein gewünschten Werte als List zurück.
         /// </summary>
         /// <param name="Metadaten">Die auszulesenden Metadaten.</param>

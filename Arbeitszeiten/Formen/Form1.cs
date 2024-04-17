@@ -24,11 +24,11 @@ namespace Arbeitszeiten
 
             if (chkBox_Auﬂerhalb.Checked)
             {
-                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), true, Rechnerisch, Bemerkung, Pause, _id); }
+                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), Rechnerisch, Bemerkung, Pause, _id); }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
-                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), true, Rechnerisch, Bemerkung, Pause, _id);
+                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), Rechnerisch, Bemerkung, Pause, _id);
 
                     mskdtxtBox_Ende.Text = dateTime.ToString();
                 }
@@ -39,7 +39,7 @@ namespace Arbeitszeiten
                 {
                     try
                     {
-                        Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), false, Rechnerisch, Bemerkung, Pause, _id);
+                        Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), Rechnerisch, Bemerkung, Pause, _id);
                     }
                     catch (FormatException ex)
                     {
@@ -50,7 +50,7 @@ namespace Arbeitszeiten
                 else
                 {
                     DateTime dateTime = DateTime.Now;
-                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), false, Rechnerisch, Bemerkung, Pause, _id);
+                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), Rechnerisch, Bemerkung, Pause, _id);
 
                     mskdtxtBox_Ende.Text = dateTime.ToString();
                 }
@@ -71,6 +71,14 @@ namespace Arbeitszeiten
             bool Zeit_abziehen = Convert.ToBoolean(Registry.GetValue("Zeit_abziehen"));
             double abzug = 0;
             List<string> list = SQLite.Auflistung_Eintr‰ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
+            List<string> Optionen = [
+                        "Ausserhalb",
+                        chkBox_Auﬂerhalb.Checked.ToString(),
+                        "Bool",
+                        "Workshop",
+                        chkBox_Workshop.Checked.ToString(),
+                        "Bool"
+            ];
 
             if (Zeit_abziehen)
                 abzug = (Convert.ToDouble(Registry.GetValue("Zeit_abziehen_Dauer")) * 60) * (-1);
@@ -87,12 +95,12 @@ namespace Arbeitszeiten
                 }
                 else
                 {
-                    if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug, chkBox_Auﬂerhalb.Checked); }
+                    if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug, Optionen); }
                     else
                     {
                         DateTime dateTime = DateTime.Now;
                         dateTime = dateTime.AddMinutes(Convert.ToDouble(abzug));
-                        Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug, chkBox_Auﬂerhalb.Checked);
+                        Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug, Optionen);
                         mskdtxtBox_Start.Text = dateTime.ToString();
                         dateTime = dateTime.AddHours(8).AddMinutes(30);
                         lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
@@ -104,12 +112,12 @@ namespace Arbeitszeiten
             }
             else
             {
-                if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug, chkBox_Auﬂerhalb.Checked); }
+                if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug, Optionen); }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
                     dateTime = dateTime.AddMinutes(Convert.ToDouble(abzug));
-                    Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug, chkBox_Auﬂerhalb.Checked);
+                    Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug, Optionen);
                     mskdtxtBox_Start.Text = dateTime.ToString();
                     dateTime = dateTime.AddHours(8).AddMinutes(30);
                     lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
@@ -124,7 +132,7 @@ namespace Arbeitszeiten
         {
             if (_id == 0)
             {
-                MessageBox.Show("Es ist ein Fehler aufgetreten. Das Programm muss einmal neugestartet werden", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Es ist ein Fehler aufgetreten. Das Programm muss einmal neugestartet werden.", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -134,6 +142,7 @@ namespace Arbeitszeiten
                 {
                     btn_Ende.Enabled = false;
                     btn_Start.Enabled = true;
+                    chkBox_Workshop.Enabled = true;
                 }
             }
         }
@@ -182,7 +191,7 @@ namespace Arbeitszeiten
                 mskdtxtBox_Start.Text = startzeit.ToString();
 
                 _id = int.Parse(list[0]);
-                List<string> Metadaten = Klassen.Metadaten.Auslesen(list[1], false, "Ausserhalb");
+                List<string> Metadaten = Klassen.Metadaten.Auslesen(list[1]);
 
                 DateTime ende_Gelaende = DateTime.Now;
                 if (Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag")
@@ -191,6 +200,12 @@ namespace Arbeitszeiten
                     ende_Gelaende = startzeit.AddHours(5);
 
                 chkBox_Auﬂerhalb.Checked = Convert.ToBoolean(Metadaten[1]);
+                chkBox_Workshop.Checked = Convert.ToBoolean(Metadaten[3]);
+                chkBox_Workshop.Enabled = false;
+
+                if (chkBox_Workshop.Checked)
+                    txtBox_Bemerkung.Text = "Thema: ";
+
                 lbl_Endzeit.Text = string.Format("Ende:    {0}", ende_Gelaende.ToString());
 
                 btn_Ende.Enabled = true;

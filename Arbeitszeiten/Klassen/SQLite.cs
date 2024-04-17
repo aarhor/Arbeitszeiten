@@ -35,14 +35,9 @@ namespace Arbeitszeiten.Klassen
             }
         }
 
-        public static void Erstes_DB_Passwort(string Passwort)
+        public static void Insert_table(string Datum, string Start, List<string> Optionen)
         {
-
-        }
-
-        public static void Insert_table(string Datum, string Start, bool Nach_Ende)
-        {
-            string Metadaten = "[ { \"Ausserhalb\": " + Nach_Ende.ToString().ToLower() + " } ]";
+            string Metadaten = Klassen.Metadaten.Generator(Optionen);
             string SQL_Befehl = string.Format("INSERT INTO Zeiten (Datum, Start, Metadaten) VALUES ('{0}', '{1}', '{2}')", Datum, Start, Metadaten);
 
             using (SqliteConnection connection = new(Connectionstring()))
