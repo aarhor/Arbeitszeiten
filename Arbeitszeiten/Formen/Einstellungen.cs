@@ -1,4 +1,5 @@
-﻿using Arbeitszeiten.Klassen;
+﻿using Arbeitszeiten.Formen;
+using Arbeitszeiten.Klassen;
 
 namespace Arbeitszeiten
 {
@@ -106,6 +107,38 @@ namespace Arbeitszeiten
 
                 MessageBox.Show(new Form { TopMost = true }, "Es wird keine Zeit von der Startzeit abgezogen.");
             }
+        }
+
+        private void btn_Neustart_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtBox_Pfad.Text) || string.IsNullOrEmpty(txtBox_Passwort.Text))
+            {
+                MessageBox.Show(new Form { TopMost = true }, "Es wurde kein Pfad oder Datenbank Passwort angegeben. Bitte trage die leeren Felder nach!");
+            }
+            else
+            {
+                Application.Restart();
+            }
+        }
+
+        private void lnklbl_DBpwd_anzeigen_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (lnklbl_DBpwd_anzeigen.Text == "Ausblenden")
+            {
+                txtBox_Passwort.PasswordChar = '*';
+                lnklbl_DBpwd_anzeigen.Text = "Anzeigen";
+            }
+            else if (lnklbl_DBpwd_anzeigen.Text == "Anzeigen")
+            {
+                txtBox_Passwort.PasswordChar = '\0';
+                lnklbl_DBpwd_anzeigen.Text = "Ausblenden";
+            }
+        }
+
+        private void lnklbl_Aenderungen_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Changelog Form_Changelog = new();
+            Form_Changelog.Show();
         }
     }
 }

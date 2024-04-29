@@ -29,27 +29,30 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Einstellungen));
-            this.btn_Speichern = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtBox_Pfad = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtBox_Minuten = new System.Windows.Forms.TextBox();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            btn_Neustart = new Button();
+            label1 = new Label();
+            txtBox_Pfad = new TextBox();
+            label3 = new Label();
+            txtBox_Minuten = new TextBox();
+            checkBox1 = new CheckBox();
+            button1 = new Button();
+            label4 = new Label();
+            txtBox_Passwort = new TextBox();
+            label2 = new Label();
+            lnklbl_DBpwd_anzeigen = new LinkLabel();
+            lnklbl_Aenderungen = new LinkLabel();
+            SuspendLayout();
             // 
-            // btn_Speichern
+            // btn_Neustart
             // 
-            this.btn_Speichern.Location = new System.Drawing.Point(194, 41);
-            this.btn_Speichern.Name = "btn_Speichern";
-            this.btn_Speichern.Size = new System.Drawing.Size(75, 23);
-            this.btn_Speichern.TabIndex = 0;
-            this.btn_Speichern.Text = "Erstellen";
-            this.btn_Speichern.UseVisualStyleBackColor = true;
-            this.btn_Speichern.Click += new System.EventHandler(this.btn_Speichern_Click);
+            btn_Neustart.Enabled = false;
+            btn_Neustart.Location = new Point(118, 118);
+            btn_Neustart.Name = "btn_Neustart";
+            btn_Neustart.Size = new Size(75, 23);
+            btn_Neustart.TabIndex = 6;
+            btn_Neustart.Text = "Neustarten";
+            btn_Neustart.UseVisualStyleBackColor = true;
+            btn_Neustart.Click += btn_Neustart_Click;
             // 
             // label1
             // 
@@ -138,30 +141,40 @@
             this.label4.TabIndex = 11;
             this.label4.Text = "Minuten";
             // 
-            // Einstellungen
+            // lnklbl_Aenderungen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(281, 181);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.linkLabel1);
-            this.Controls.Add(this.txtBox_Minuten);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.txtBox_Pfad);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.btn_Speichern);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(297, 220);
-            this.MinimumSize = new System.Drawing.Size(297, 220);
-            this.Name = "Einstellungen";
-            this.Text = "Einstellungen";
-            this.Load += new System.EventHandler(this.Einstellungen_Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            lnklbl_Aenderungen.AutoSize = true;
+            lnklbl_Aenderungen.Location = new Point(12, 123);
+            lnklbl_Aenderungen.Name = "lnklbl_Aenderungen";
+            lnklbl_Aenderungen.Size = new Size(73, 15);
+            lnklbl_Aenderungen.TabIndex = 14;
+            lnklbl_Aenderungen.TabStop = true;
+            lnklbl_Aenderungen.Text = "Änderungen";
+            lnklbl_Aenderungen.LinkClicked += lnklbl_Aenderungen_LinkClicked;
+            // 
+            // Einstellungen
+            //
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(283, 147);
+            Controls.Add(lnklbl_Aenderungen);
+            Controls.Add(lnklbl_DBpwd_anzeigen);
+            Controls.Add(txtBox_Passwort);
+            Controls.Add(label2);
+            Controls.Add(label4);
+            Controls.Add(checkBox1);
+            Controls.Add(txtBox_Minuten);
+            Controls.Add(label3);
+            Controls.Add(button1);
+            Controls.Add(txtBox_Pfad);
+            Controls.Add(label1);
+            Controls.Add(btn_Neustart);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Name = "Einstellungen";
+            Text = "Einstellungen";
+            Load += Einstellungen_Load;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -176,5 +189,9 @@
         private CheckBox checkBox1;
         private Button button1;
         private Label label4;
+        private TextBox txtBox_Passwort;
+        private Label label2;
+        private LinkLabel lnklbl_DBpwd_anzeigen;
+        private LinkLabel lnklbl_Aenderungen;
     }
 }

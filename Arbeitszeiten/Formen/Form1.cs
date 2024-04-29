@@ -22,13 +22,13 @@ namespace Arbeitszeiten
             if (txtBox_Bemerkung.TextLength >= 1)
                 Bemerkung = txtBox_Bemerkung.Text;
 
-            if (chkBox_Auﬂerhalb.Checked)
+            if (chkBox_Au√üerhalb.Checked)
             {
-                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), true, Rechnerisch, Bemerkung, Pause, _id); }
+                if (chkBox_Manuell.Checked) { Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), Rechnerisch, Bemerkung, Pause, _id); }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
-                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), true, Rechnerisch, Bemerkung, Pause, _id);
+                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), Rechnerisch, Bemerkung, Pause, _id);
 
                     mskdtxtBox_Ende.Text = dateTime.ToString();
                 }
@@ -39,7 +39,7 @@ namespace Arbeitszeiten
                 {
                     try
                     {
-                        Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), false, Rechnerisch, Bemerkung, Pause, _id);
+                        Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(mskdtxtBox_Ende.Text), Rechnerisch, Bemerkung, Pause, _id);
                     }
                     catch (FormatException ex)
                     {
@@ -50,7 +50,7 @@ namespace Arbeitszeiten
                 else
                 {
                     DateTime dateTime = DateTime.Now;
-                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), false, Rechnerisch, Bemerkung, Pause, _id);
+                    Differenz_dezimal = Kommandozeile.Abmelden(Convert.ToDateTime(DateTime.MinValue), Rechnerisch, Bemerkung, Pause, _id);
 
                     mskdtxtBox_Ende.Text = dateTime.ToString();
                 }
@@ -58,7 +58,7 @@ namespace Arbeitszeiten
 
             if (Differenz_dezimal >= 10)
             {
-                MessageBox.Show(new Form { TopMost = true }, "Die Arbeitszeit betr‰gt ¸ber 10 Stunden!! Sieh zu das du Land gewinnst und nicht mehr arbeitest!!");
+                MessageBox.Show(new Form { TopMost = true }, "Die Arbeitszeit betr√§gt √ºber 10 Stunden!! Sieh zu das du Land gewinnst und nicht mehr arbeitest!!");
             }
 
             if (Differenz_dezimal > 0) { lbl_Differenz.Text = string.Format("Differenz:    {0} Mehrstunden", Differenz_dezimal); }
@@ -70,7 +70,15 @@ namespace Arbeitszeiten
         {
             bool Zeit_abziehen = Convert.ToBoolean(Registry.GetValue("Zeit_abziehen"));
             double abzug = 0;
-            List<string> list = SQLite.Auflistung_Eintr‰ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
+            List<string> list = SQLite.Auflistung_Eintr√§ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
+            List<string> Optionen = [
+                        "Ausserhalb",
+                        chkBox_Au√üerhalb.Checked.ToString(),
+                        "Bool",
+                        "Workshop",
+                        chkBox_Workshop.Checked.ToString(),
+                        "Bool"
+            ];
 
             if (Zeit_abziehen)
                 abzug = (Convert.ToDouble(Registry.GetValue("Zeit_abziehen_Dauer")) * 60) * (-1);
@@ -79,59 +87,64 @@ namespace Arbeitszeiten
             {
                 string Datum = Convert.ToDateTime(list[1]).ToString("d");
                 string Beginn = Convert.ToDateTime(list[2]).ToString("t");
-                string Datum_id = string.Format("ID:\t{0}\n" +
-                                              "Datum:\t{1}\n" +
-                                              "Beginn:\t{2}", list[0], Datum, Beginn);
+                string Datum_id = Diverses.Datum_Start_Ende(list[0], Datum, Beginn, "");
 
                 if (string.IsNullOrEmpty(list[3]))
                 {
-                    MessageBox.Show("Der letzte Eintrag wurde noch nicht angeschlossen. ‹ber die Statistiken muss erst ein Ende eingetragen werden damit ein neuer Eintrag angelegt werden kann.\n\n" + Datum_id, "Ende fehlt", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show("Der letzte Eintrag wurde noch nicht angeschlossen. √úber die Statistiken muss erst ein Ende eingetragen werden damit ein neuer Eintrag angelegt werden kann.\n" + Datum_id, "Ende fehlt", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
                 else
                 {
-                    if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug, chkBox_Auﬂerhalb.Checked); }
+                    if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug, Optionen); }
                     else
                     {
                         DateTime dateTime = DateTime.Now;
                         dateTime = dateTime.AddMinutes(Convert.ToDouble(abzug));
-                        Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug, chkBox_Auﬂerhalb.Checked);
+                        Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug, Optionen);
                         mskdtxtBox_Start.Text = dateTime.ToString();
                         dateTime = dateTime.AddHours(8).AddMinutes(30);
                         lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
                     }
 
                     btn_Ende.Enabled = true;
+                    btn_Start.Enabled = false;
                 }
             }
             else
             {
-                if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug, chkBox_Auﬂerhalb.Checked); }
+                if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug, Optionen); }
                 else
                 {
                     DateTime dateTime = DateTime.Now;
                     dateTime = dateTime.AddMinutes(Convert.ToDouble(abzug));
-                    Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug, chkBox_Auﬂerhalb.Checked);
+                    Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug, Optionen);
                     mskdtxtBox_Start.Text = dateTime.ToString();
                     dateTime = dateTime.AddHours(8).AddMinutes(30);
                     lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
                 }
 
                 btn_Ende.Enabled = true;
+                btn_Start.Enabled = false;
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Berechnen();
+            if (_id == 0)
+            {
+                MessageBox.Show("Es ist ein Fehler aufgetreten. Das Programm muss einmal neugestartet werden.", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                Berechnen();
 
-            if (!chkBox_Rechnerisch.Checked)
-                btn_Ende.Enabled = false;
-        }
-
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Einstellungen Form_Einstellungen = new Einstellungen();
-            Form_Einstellungen.ShowDialog();
+                if (!chkBox_Rechnerisch.Checked)
+                {
+                    btn_Ende.Enabled = false;
+                    btn_Start.Enabled = true;
+                    chkBox_Workshop.Enabled = true;
+                }
+            }
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -149,13 +162,7 @@ namespace Arbeitszeiten
                 mskdtxtBox_Ende.ReadOnly = true;
             }
         }
-
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Statistiken Form_statistiken = new Statistiken();
-            Form_statistiken.ShowDialog();
-        }
-
+        
         private void chkBox_Rechnerisch_CheckedChanged(object sender, EventArgs e)
         {
             if (chkBox_Rechnerisch.Checked)
@@ -167,7 +174,7 @@ namespace Arbeitszeiten
         private void Form1_Load(object sender, EventArgs e)
         {
             DateTime dateTime = DateTime.Now;
-            List<string> list = SQLite.Auflistung_Eintr‰ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
+            List<string> list = SQLite.Auflistung_Eintr√§ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
             string Wochentag = dateTime.ToString("dddd");
 
             if (list.Count > 0 && !string.IsNullOrEmpty(list[0]) && string.IsNullOrEmpty(list[3]))
@@ -180,19 +187,27 @@ namespace Arbeitszeiten
 
                 DateTime startzeit = SQLite.startzeit_heute(Convert.ToDateTime(list[1]).ToString("yyyy-MM-dd"));
                 list.Clear();
-                list = SQLite.Auflistung_Eintr‰ge("select _id, Metadaten from Zeiten where Datum = '" + startzeit.ToString("yyyy-MM-dd") + "' and Ende ISNULL", 2);
+                list = SQLite.Auflistung_Eintr√§ge("select _id, Metadaten from Zeiten where Datum = '" + startzeit.ToString("yyyy-MM-dd") + "' and Ende ISNULL", 2);
                 mskdtxtBox_Start.Text = startzeit.ToString();
 
                 _id = int.Parse(list[0]);
-                List<string> Metadaten = Klassen.Metadaten.Auslesen(list[1], false, "Ausserhalb");
+                List<string> Metadaten = Klassen.Metadaten.Auslesen(list[1]);
 
+                DateTime ende_Gelaende = DateTime.Now;
                 if (Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag")
-                    startzeit = startzeit.AddHours(8).AddMinutes(30);
+                    ende_Gelaende = startzeit.AddHours(8).AddMinutes(30);
                 else if (Wochentag == "Freitag")
-                    startzeit = startzeit.AddHours(5);
+                    ende_Gelaende = startzeit.AddHours(5);
 
-                chkBox_Auﬂerhalb.Checked = Convert.ToBoolean(Metadaten[1]);
-                lbl_Endzeit.Text = string.Format("Ende:    {0}", startzeit.ToString());
+                chkBox_Au√üerhalb.Checked = Convert.ToBoolean(Metadaten[1]);
+                chkBox_Workshop.Checked = Convert.ToBoolean(Metadaten[3]);
+                chkBox_Workshop.Enabled = false;
+
+                if (chkBox_Workshop.Checked)
+                    txtBox_Bemerkung.Text = "Thema: ";
+
+                lbl_Endzeit.Text = string.Format("Ende:    {0}", ende_Gelaende.ToString());
+
                 btn_Ende.Enabled = true;
                 btn_Start.Enabled = false;
             }
@@ -200,11 +215,11 @@ namespace Arbeitszeiten
             {
                 if (Wochentag == "Samstag" || Wochentag == "Sonntag")
                 {
-                    chkBox_Auﬂerhalb.Checked = true;
+                    chkBox_Au√üerhalb.Checked = true;
                     chkBox_Pause.Checked = false;
                 }
                 else if ((Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag") && (dateTime.Hour >= 15 || dateTime.Hour <= 6))
-                    chkBox_Auﬂerhalb.Checked = true;
+                    chkBox_Au√üerhalb.Checked = true;
             }
         }
 
@@ -216,10 +231,22 @@ namespace Arbeitszeiten
                 Pause = false;
         }
 
-        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
         {
-            T‰tigkeiten Form_Taetigkeiten = new T‰tigkeiten();
+            T√§tigkeiten Form_Taetigkeiten = new T√§tigkeiten();
             Form_Taetigkeiten.ShowDialog();
+        }
+
+        private void toolStripStatusLabel2_Click(object sender, EventArgs e)
+        {
+            Statistiken Form_statistiken = new();
+            Form_statistiken.ShowDialog();
+        }
+
+        private void toolStripStatusLabel3_Click(object sender, EventArgs e)
+        {
+            Einstellungen Form_Einstellungen = new();
+            Form_Einstellungen.ShowDialog();
         }
     }
 }

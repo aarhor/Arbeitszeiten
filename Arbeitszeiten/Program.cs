@@ -3,6 +3,7 @@ using Arbeitszeiten.Formen;
 using System;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Arbeitszeiten
 {
@@ -20,7 +21,7 @@ namespace Arbeitszeiten
 
         public static string[] CheckCMDArgs(string[] Argumente)
         {
-            string[] allowedArguments = ["/Dienstbeginn", "/Dienstende", "/Auﬂerhalb", "/Rechnerisch", "/T‰tigkeiten"];
+            string[] allowedArguments = ["/Dienstbeginn", "/Dienstende", "/Rechnerisch", "/T√§tigkeiten", "/Au√üerhalb", "/Workshop"];
 
             List<string> validArguments = [];
             foreach (string arg in Argumente)
@@ -72,44 +73,63 @@ namespace Arbeitszeiten
                     DateTime Startzeit;
                     if (firstArgument == "/Dienstbeginn")
                     {
-                        List<string> list = SQLite.Auflistung_Eintr‰ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
-                        string Datum = Convert.ToDateTime(list[1]).ToString("d");
-                        string Beginn = Convert.ToDateTime(list[2]).ToString("t");
-
-                        if (list.Count > 0)
+                        if (CommandLineArguments.Args.Contains("/Au√üerhalb") && CommandLineArguments.Args.Contains("/Workshop"))
                         {
-                            string Datum_id = string.Format("ID:\t{0}\n" +
-                                                            "Datum:\t{1}\n" +
-                                                            "Beginn:\t{2}", list[0], Datum, Beginn);
+                            MessageBox.Show(new Form { TopMost = true }, string.Format("Es wurden die beiden Schalter \"/Au√üerhalb\" und \"/Workshop\" angegeben.\n" +
+                                "Diese schlie√üen sich beide jedoch aus. Einer der beiden muss entfernt werden."));
+                            Application.Run(new Form1());
+                        }
+                        else
+                        {
+                            list.Clear();
+                            list = SQLite.Auflistung_Eintr√§ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
+                            string Datum = Convert.ToDateTime(list[1]).ToString("d");
+                            string Beginn = Convert.ToDateTime(list[2]).ToString("t");
 
-                            if (string.IsNullOrEmpty(list[3]))
+                            if (list.Count > 0)
                             {
-                                MessageBox.Show("Der letzte Eintrag wurde noch nicht angeschlossen. ‹ber die Statistiken oder die Hauptform muss erst ein Ende eingetragen werden damit ein neuer Eintrag angelegt werden kann.\n\n" + Datum_id, "Ende fehlt", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                                Application.Run(new Form1());
-                            }
-                            else
-                            {
-                                if (CommandLineArguments.Args.Contains("/Auﬂerhalb"))
-                                    Nach_Ende = true;
+                                string Datum_id = Diverses.Datum_Start_Ende(list[0], Datum, Beginn, "- Nicht vorhanden -");
+                                List<string> Optionen = [
+                                    "Ausserhalb",
+                                    CommandLineArguments.Args.Contains("/Au√üerhalb").ToString(),
+                                    "Bool",
+                                    "Workshop",
+                                    CommandLineArguments.Args.Contains("/Workshop").ToString(),
+                                    "Bool"
+                                ];
 
-                                Kommandozeile.Anmelden(Convert.ToDateTime(null), abzug, Nach_Ende);
+                                if (string.IsNullOrEmpty(list[3]))
+                                {
+                                    MessageBox.Show("Der letzte Eintrag wurde noch nicht angeschlossen. √úber die Statistiken oder die Hauptform muss erst ein Ende eingetragen werden damit ein neuer Eintrag angelegt werden kann.\n\n" + Datum_id, "Ende fehlt", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                                    Application.Run(new Form1());
+                                }
+                                else
+                                {
+                                    string Wochentag = dateTime.ToString("dddd");
+                                    if (Wochentag == "Samstag" || Wochentag == "Sonntag")
+                                        Nach_Ende = true;
+                                    else if ((Wochentag == "Montag" || Wochentag == "Dienstag" || Wochentag == "Mittwoch" || Wochentag == "Donnerstag") && (dateTime.Hour >= 15 || dateTime.Hour <= 6))
+                                        Nach_Ende = true;
 
-                                Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
+                                    Kommandozeile.Anmelden(Convert.ToDateTime(null), abzug, Optionen);
 
-                                MessageBox.Show(new Form { TopMost = true }, string.Format("Der Beginn wurde erfolgreich eingetragen.\n" +
-                                    "Datum:\t{0}\n" +
-                                    "Beginn:\t{1}\n" +
-                                    "Ende:\t", Startzeit.ToString("d"), Startzeit.ToString("T")));
-                                Application.Exit();
+                                    Startzeit = SQLite.Startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
+                                    string id_Start = SQLite.Bestimmter_wert("select _id from Zeiten order by _id DESC LIMIT 1");
+                                    string Daten = Diverses.Datum_Start_Ende(id_Start, Startzeit.ToString("d"), Startzeit.ToString("t"), "");
+
+                                    MessageBox.Show(new Form { TopMost = true }, string.Format("Der Beginn wurde erfolgreich eingetragen.\n" +
+                                        Daten));
+                                    Application.Exit();
+                                }
                             }
                         }
                     }
                     else if (firstArgument == "/Dienstende")
                     {
-                        if (CommandLineArguments.Args.Contains("/Auﬂerhalb"))
+                        if (CommandLineArguments.Args.Contains("/Au√üerhalb"))
                             Nach_Ende = true;
 
-                        DialogResult dialogResult = MessageBox.Show(new Form { TopMost = true }, "Mˆchtest du eine Bemerkung mit angeben?", "Bemerkung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                        DialogResult dialogResult = MessageBox.Show(new Form { TopMost = true }, "M√∂chtest du eine Bemerkung mit angeben?", "Bemerkung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                         if (dialogResult == DialogResult.Yes)
                         {
                             Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
@@ -123,21 +143,21 @@ namespace Arbeitszeiten
                             Startzeit = SQLite.startzeit_heute(dateTime.ToString("yyyy-MM-dd"));
                             id = int.Parse(SQLite.Bestimmter_wert(string.Format("select _id from Zeiten where Datum = '{0}' and Ende ISNULL", Startzeit.ToString("yyyy-MM-dd"))));
 
-                            Kommandozeile.Abmelden(Convert.ToDateTime(null), Nach_Ende, false, "null", true, id);
+                            Kommandozeile.Abmelden(Convert.ToDateTime(null), false, "null", true, id);
 
                             DateTime Endzeit = Convert.ToDateTime(SQLite.Bestimmter_wert("select Ende from Zeiten where _id = " + id.ToString()));
+                            string Daten = Diverses.Datum_Start_Ende(id.ToString(), Startzeit.ToString("d"), Startzeit.ToString("t"), Endzeit.ToString("t"));
+
                             MessageBox.Show(new Form { TopMost = true }, string.Format("Das Ende wurde erfolgreich eingetragen.\n" +
-                                "Darum:\t{0}\n" +
-                                "Beginn:\t{1}\n" +
-                                "Ende:\t{2}", Startzeit.ToString("d"), Startzeit.ToString("T"), Endzeit.ToString("T")));
+                                Daten));
                             Application.Exit();
                         }
                         else if (dialogResult == DialogResult.Cancel)
-                            MessageBox.Show("Es wurden keine ƒnderungen durchgef¸hrt");
+                            MessageBox.Show(new Form { TopMost = true }, "Es wurden keine √Ñnderungen durchgef√ºhrt");
                     }
-                    else if (firstArgument == "/T‰tigkeiten")
+                    else if (firstArgument == "/T√§tigkeiten")
                     {
-                        Application.Run(new T‰tigkeiten { TopMost = true });
+                        Application.Run(new T√§tigkeiten { TopMost = true });
                     }
                 }
             }

@@ -65,10 +65,9 @@ namespace Arbeitszeiten.Formen
             if (Endzeit != "null")    //Ende wurde bearbeitet
             {
                 bool Pause = chkBox_Pause.Checked;
-                bool Ausserhalb = chkBox_Ausserhalb.Checked;
                 string Datum_Endzeit = string.Format("{0} {1}", dateTime.ToString("dd.MM.yyyy"), mskdtxtBox_Ende.Text);
 
-                Kommandozeile.Abmelden(Convert.ToDateTime(Datum_Endzeit), Ausserhalb, false, Bemerkung, Pause, id, true);
+                Kommandozeile.Abmelden(Convert.ToDateTime(Datum_Endzeit), false, Bemerkung, Pause, id, true);
             }
             else
             {

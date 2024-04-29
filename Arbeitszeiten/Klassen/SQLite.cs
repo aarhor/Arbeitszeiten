@@ -28,9 +28,10 @@ namespace Arbeitszeiten.Klassen
             connection.Close();
         }
 
-        public static void insert_table(string Datum, string Start, bool Nach_Ende)
+        public static void Insert_table(string Datum, string Start, List<string> Optionen)
         {
-            string Metadaten = "[ { \"Ausserhalb\": " + Nach_Ende.ToString().ToLower() + " } ]";
+            string Metadaten = Klassen.Metadaten.Generator(Optionen);
+            string SQL_Befehl = string.Format("INSERT INTO Zeiten (Datum, Start, Metadaten) VALUES ('{0}', '{1}', '{2}')", Datum, Start, Metadaten);
 
             using SQLiteConnection connection = new(Connectionstring());
             connection.Open();
@@ -88,7 +89,7 @@ namespace Arbeitszeiten.Klassen
             return true;
         }
 
-        public static bool update_table(string Heute, string Ende, decimal Differenz, decimal MehrMinder_Stunden, string? Bemerkung, int _id)
+        public static bool Update_table(string Ende, decimal Differenz, decimal MehrMinder_Stunden, string? Bemerkung, int _id)
         {
             using SQLiteConnection connection = new(Connectionstring());
             connection.Open();

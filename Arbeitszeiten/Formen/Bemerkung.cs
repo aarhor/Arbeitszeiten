@@ -23,7 +23,7 @@ namespace Arbeitszeiten.Formen
             if (string.IsNullOrEmpty(Bemerkung))
                 Bemerkung = "null";
 
-            Kommandozeile.Abmelden(Convert.ToDateTime(null), Außerhalb, false, Bemerkung, true, id);
+            Kommandozeile.Abmelden(Convert.ToDateTime(null), false, Bemerkung, true, id);
 
             string Endzeit = SQLite.Bestimmter_wert("select Ende from Zeiten where _id = " + id.ToString());
 
