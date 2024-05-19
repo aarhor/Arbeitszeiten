@@ -1,5 +1,6 @@
 using Arbeitszeiten.Formen;
 using Arbeitszeiten.Klassen;
+using System;
 
 namespace Arbeitszeiten
 {
@@ -68,8 +69,8 @@ namespace Arbeitszeiten
 
         private void button1_Click(object sender, EventArgs e)
         {
-            bool Zeit_abziehen = Convert.ToBoolean(Registry.GetValue("Zeit_abziehen"));
-            double abzug = 0;
+            double abzug = (0.09 * 60) * (-1);
+            DateTime dateTime = DateTime.Now;
             List<string> list = SQLite.Auflistung_Eintr‰ge("select _id, Datum, Start, Ende from Zeiten order by _id DESC LIMIT 1", 4);
             List<string> Optionen = [
                         "Ausserhalb",
@@ -79,9 +80,6 @@ namespace Arbeitszeiten
                         chkBox_Workshop.Checked.ToString(),
                         "Bool"
             ];
-
-            if (Zeit_abziehen)
-                abzug = (Convert.ToDouble(Registry.GetValue("Zeit_abziehen_Dauer")) * 60) * (-1);
 
             if (list.Count > 0)
             {
@@ -98,12 +96,9 @@ namespace Arbeitszeiten
                     if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug, Optionen); }
                     else
                     {
-                        DateTime dateTime = DateTime.Now;
                         dateTime = dateTime.AddMinutes(Convert.ToDouble(abzug));
                         Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug, Optionen);
                         mskdtxtBox_Start.Text = dateTime.ToString();
-                        dateTime = dateTime.AddHours(8).AddMinutes(30);
-                        lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
                     }
 
                     btn_Ende.Enabled = true;
@@ -115,17 +110,21 @@ namespace Arbeitszeiten
                 if (chkBox_Manuell.Checked) { Kommandozeile.Anmelden(Convert.ToDateTime(mskdtxtBox_Start.Text), abzug, Optionen); }
                 else
                 {
-                    DateTime dateTime = DateTime.Now;
                     dateTime = dateTime.AddMinutes(Convert.ToDouble(abzug));
                     Kommandozeile.Anmelden(Convert.ToDateTime(DateTime.MinValue), abzug, Optionen);
                     mskdtxtBox_Start.Text = dateTime.ToString();
-                    dateTime = dateTime.AddHours(8).AddMinutes(30);
-                    lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
                 }
 
                 btn_Ende.Enabled = true;
                 btn_Start.Enabled = false;
             }
+
+            if (!chkBox_Auﬂerhalb.Checked)
+            {
+                dateTime = dateTime.AddHours(8).AddMinutes(30);
+            }
+
+            lbl_Endzeit.Text = string.Format("Ende:    {0}", dateTime.ToString());
         }
 
         private void button2_Click(object sender, EventArgs e)

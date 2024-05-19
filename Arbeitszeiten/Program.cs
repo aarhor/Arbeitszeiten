@@ -58,6 +58,7 @@ namespace Arbeitszeiten
                 DateTime dateTime = DateTime.Now;
                 List<string> list = [];
                 List<string> Metadaten = [];
+
                 if (CommandLineArguments.Args.Length == 0)
                     Application.Run(new Form1());
 
@@ -65,11 +66,7 @@ namespace Arbeitszeiten
                 {
                     firstArgument = CommandLineArguments.Args[0];
 
-                    bool Zeit_abziehen = Convert.ToBoolean(Registry.GetValue("Zeit_abziehen"));
-                    double abzug = 0;
-
-                    if (Zeit_abziehen)
-                        abzug = (Convert.ToDouble(Registry.GetValue("Zeit_abziehen_Dauer")) * 60) * (-1);
+                    double abzug = (0.09 * 60) * (-1);
 
                     DateTime Startzeit;
                     if (firstArgument == "/Dienstbeginn")
