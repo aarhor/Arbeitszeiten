@@ -17,6 +17,12 @@ CREATE TABLE "Zeiten" (
     PRIMARY KEY("_id" AUTOINCREMENT)
 );
 
+CREATE TABLE "Einstellungen" (
+    "_id" INTEGER NOT NULL,
+    "Einstellung" INTEGER,
+    PRIMARY KEY("_id" AUTOINCREMENT)
+);
+
 CREATE VIEW 'view_geordnet' AS
 select
     *
