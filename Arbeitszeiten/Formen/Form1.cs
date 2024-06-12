@@ -1,5 +1,6 @@
 using Arbeitszeiten.Formen;
 using Arbeitszeiten.Klassen;
+using Microsoft.VisualBasic;
 using System;
 
 namespace Arbeitszeiten
@@ -246,6 +247,14 @@ namespace Arbeitszeiten
         {
             Einstellungen Form_Einstellungen = new();
             Form_Einstellungen.ShowDialog();
+        }
+
+        private void chkBox_Nachholen_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkBox_Nachholen.Checked)
+                dateTimePicker1.Enabled = true;
+            else
+                dateTimePicker1.Enabled = false;
         }
     }
 }

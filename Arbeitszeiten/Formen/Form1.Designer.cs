@@ -36,8 +36,9 @@
             lbl_Differenz = new Label();
             chkBox_Manuell = new CheckBox();
             groupBox1 = new GroupBox();
+            dateTimePicker1 = new DateTimePicker();
+            chkBox_Nachholen = new CheckBox();
             chkBox_Workshop = new CheckBox();
-            chkBox_Hallo_Tschuess = new CheckBox();
             chkBox_Pause = new CheckBox();
             chkBox_Rechnerisch = new CheckBox();
             chkBox_Außerhalb = new CheckBox();
@@ -118,18 +119,39 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(dateTimePicker1);
+            groupBox1.Controls.Add(chkBox_Nachholen);
             groupBox1.Controls.Add(chkBox_Workshop);
-            groupBox1.Controls.Add(chkBox_Hallo_Tschuess);
             groupBox1.Controls.Add(chkBox_Pause);
             groupBox1.Controls.Add(chkBox_Rechnerisch);
             groupBox1.Controls.Add(chkBox_Außerhalb);
             groupBox1.Controls.Add(chkBox_Manuell);
             groupBox1.Location = new Point(278, 17);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(184, 177);
+            groupBox1.Size = new Size(197, 177);
             groupBox1.TabIndex = 12;
             groupBox1.TabStop = false;
             groupBox1.Text = "Optionen";
+            // 
+            // dateTimePicker1
+            // 
+            dateTimePicker1.Enabled = false;
+            dateTimePicker1.Format = DateTimePickerFormat.Short;
+            dateTimePicker1.Location = new Point(99, 145);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(92, 23);
+            dateTimePicker1.TabIndex = 18;
+            // 
+            // chkBox_Nachholen
+            // 
+            chkBox_Nachholen.AutoSize = true;
+            chkBox_Nachholen.Location = new Point(6, 147);
+            chkBox_Nachholen.Name = "chkBox_Nachholen";
+            chkBox_Nachholen.Size = new Size(87, 19);
+            chkBox_Nachholen.TabIndex = 17;
+            chkBox_Nachholen.Text = "Nachholen:";
+            chkBox_Nachholen.UseVisualStyleBackColor = true;
+            chkBox_Nachholen.CheckedChanged += chkBox_Nachholen_CheckedChanged;
             // 
             // chkBox_Workshop
             // 
@@ -140,17 +162,6 @@
             chkBox_Workshop.TabIndex = 16;
             chkBox_Workshop.Text = "Workshop, Schulung...";
             chkBox_Workshop.UseVisualStyleBackColor = true;
-            // 
-            // chkBox_Hallo_Tschuess
-            // 
-            chkBox_Hallo_Tschuess.AutoSize = true;
-            chkBox_Hallo_Tschuess.Enabled = false;
-            chkBox_Hallo_Tschuess.Location = new Point(6, 147);
-            chkBox_Hallo_Tschuess.Name = "chkBox_Hallo_Tschuess";
-            chkBox_Hallo_Tschuess.Size = new Size(105, 19);
-            chkBox_Hallo_Tschuess.TabIndex = 14;
-            chkBox_Hallo_Tschuess.Text = "Hallo / Tschüss";
-            chkBox_Hallo_Tschuess.UseVisualStyleBackColor = true;
             // 
             // chkBox_Pause
             // 
@@ -257,7 +268,7 @@
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1, toolStripStatusLabel2, toolStripStatusLabel3 });
             statusStrip1.Location = new Point(0, 197);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(474, 22);
+            statusStrip1.Size = new Size(487, 22);
             statusStrip1.TabIndex = 21;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -286,7 +297,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(474, 219);
+            ClientSize = new Size(487, 219);
             Controls.Add(statusStrip1);
             Controls.Add(mskdtxtBox_Ende);
             Controls.Add(mskdtxtBox_Start);
@@ -332,7 +343,6 @@
         public CheckBox chkBox_Pause;
         private Label lbl_Endzeit;
         private Label lbl_Absolut;
-        public CheckBox chkBox_Hallo_Tschuess;
         private MaskedTextBox mskdtxtBox_Start;
         private MaskedTextBox mskdtxtBox_Ende;
         private CheckBox chkBox_Workshop;
@@ -340,5 +350,7 @@
         private ToolStripStatusLabel toolStripStatusLabel1;
         private ToolStripStatusLabel toolStripStatusLabel2;
         private ToolStripStatusLabel toolStripStatusLabel3;
+        private CheckBox chkBox_Nachholen;
+        private DateTimePicker dateTimePicker1;
     }
 }
