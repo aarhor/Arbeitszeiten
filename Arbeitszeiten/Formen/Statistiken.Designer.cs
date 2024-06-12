@@ -46,10 +46,12 @@
             menuStrip1 = new MenuStrip();
             BearbeitenToolStripMenuItem = new ToolStripMenuItem();
             löschenToolStripMenuItem = new ToolStripMenuItem();
-            jahresüberblickToolStripMenuItem = new ToolStripMenuItem();
             ohneEndeToolStripMenuItem = new ToolStripMenuItem();
             lbl_Datum = new Label();
             checkBox1 = new CheckBox();
+            zeitraumToolStripMenuItem = new ToolStripMenuItem();
+            aktuellesJahrToolStripMenuItem = new ToolStripMenuItem();
+            gesamteZeitToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -284,7 +286,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { BearbeitenToolStripMenuItem, löschenToolStripMenuItem, jahresüberblickToolStripMenuItem, ohneEndeToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { BearbeitenToolStripMenuItem, löschenToolStripMenuItem, zeitraumToolStripMenuItem, ohneEndeToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(448, 24);
@@ -306,13 +308,6 @@
             löschenToolStripMenuItem.Size = new Size(63, 20);
             löschenToolStripMenuItem.Text = "Löschen";
             löschenToolStripMenuItem.Click += löschenToolStripMenuItem_Click;
-            // 
-            // jahresüberblickToolStripMenuItem
-            // 
-            jahresüberblickToolStripMenuItem.Name = "jahresüberblickToolStripMenuItem";
-            jahresüberblickToolStripMenuItem.Size = new Size(100, 20);
-            jahresüberblickToolStripMenuItem.Text = "Jahresüberblick";
-            jahresüberblickToolStripMenuItem.Click += jahresüberblickToolStripMenuItem_Click;
             // 
             // ohneEndeToolStripMenuItem
             // 
@@ -342,6 +337,27 @@
             checkBox1.TabIndex = 14;
             checkBox1.Text = "Auto";
             checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // zeitraumToolStripMenuItem
+            // 
+            zeitraumToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aktuellesJahrToolStripMenuItem, gesamteZeitToolStripMenuItem });
+            zeitraumToolStripMenuItem.Name = "zeitraumToolStripMenuItem";
+            zeitraumToolStripMenuItem.Size = new Size(67, 20);
+            zeitraumToolStripMenuItem.Text = "Zeitraum";
+            // 
+            // aktuellesJahrToolStripMenuItem
+            // 
+            aktuellesJahrToolStripMenuItem.Name = "aktuellesJahrToolStripMenuItem";
+            aktuellesJahrToolStripMenuItem.Size = new Size(180, 22);
+            aktuellesJahrToolStripMenuItem.Text = "Aktuelles Jahr";
+            aktuellesJahrToolStripMenuItem.Click += jahresüberblickToolStripMenuItem_Click;
+            // 
+            // gesamteZeitToolStripMenuItem
+            // 
+            gesamteZeitToolStripMenuItem.Name = "gesamteZeitToolStripMenuItem";
+            gesamteZeitToolStripMenuItem.Size = new Size(180, 22);
+            gesamteZeitToolStripMenuItem.Text = "Gesamte Zeit";
+            gesamteZeitToolStripMenuItem.Click += gesamteZeitToolStripMenuItem_Click;
             // 
             // Statistiken
             // 
@@ -397,9 +413,11 @@
         private ToolStripMenuItem löschenToolStripMenuItem;
         private Label lbl_Datum;
         private CheckBox checkBox1;
-        private ToolStripMenuItem jahresüberblickToolStripMenuItem;
         private ToolStripMenuItem ohneEndeToolStripMenuItem;
         private DataGridViewTextBoxColumn Col_Datum;
         private DataGridViewTextBoxColumn Col_id;
+        private ToolStripMenuItem zeitraumToolStripMenuItem;
+        private ToolStripMenuItem aktuellesJahrToolStripMenuItem;
+        private ToolStripMenuItem gesamteZeitToolStripMenuItem;
     }
 }
