@@ -64,7 +64,18 @@ namespace Arbeitszeiten
             }
 
             if (Differenz_dezimal > 0) { lbl_Differenz.Text = string.Format("Differenz:    {0} Mehrstunden", Differenz_dezimal); }
-            else if (Differenz_dezimal < 0) { lbl_Differenz.Text = string.Format("Differenz:    {0} Minderstunden", Differenz_dezimal); }
+            else if (Differenz_dezimal < 0)
+            {
+                lbl_Differenz.Text = string.Format("Differenz:    {0} Minderstunden", Differenz_dezimal);
+
+                if (chkBox_Nachholen.Checked)
+                {
+                    DateTime Datum_zum_Nachholen = Convert.ToDateTime(dateTimePicker1.Value);
+                    string Datum_Nachholen = Datum_zum_Nachholen.ToString("yyyy-MM-dd");
+
+                    SQLite.Nur_Befehl(string.Format("insert into Nachholen (Dauer, Wann) values ({0}, '{1}')", Differenz_dezimal.ToString().Replace(",", ".").Replace("-", ""), Datum_Nachholen));
+                }
+            }
             else if (Differenz_dezimal == 0) { lbl_Differenz.Text = "Differenz:     Punktlandung!"; }
         }
 
