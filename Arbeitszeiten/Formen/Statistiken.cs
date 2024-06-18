@@ -1,5 +1,6 @@
 ﻿using Arbeitszeiten.Formen;
 using Arbeitszeiten.Klassen;
+using System.Runtime.CompilerServices;
 
 namespace Arbeitszeiten
 {
@@ -96,6 +97,32 @@ namespace Arbeitszeiten
             }
         }
 
+        private void Zeitraum(bool Gesamtes_Jahr)
+        {
+            string SQL_Befehl = "select round(sum(MehrMinder_Stunden), 2), round(sum(Differenz), 2), count(_id) as Anzahl_Tage from Zeiten";
+
+            if (Gesamtes_Jahr)
+            {
+                string Jahr = domainUpDown_Jahr.Text;
+                SQL_Befehl += string.Format(" where Datum like '{0}-%-%'", Jahr);
+            }
+
+            dataGridView1.Rows.Clear();
+            List<string> Zeiten = SQLite.Auflistung_Einträge(SQL_Befehl, 3);
+            string Ueberstunden = Zeiten[0];
+            string Arbeitszeit = Zeiten[1];
+            string Arbeitstage = string.Format("{0} Arbeitstagen", Zeiten[2]);
+
+            if (Arbeitstage == "1 Arbeitstagen")
+                Arbeitstage = string.Format("{0} Arbeitstag", Zeiten[2]);
+
+            lbl_Datum.Text = string.Format("Datum: ---");
+            lbl_Startzeit.Text = string.Format("Startzeit: ---");
+            lbl_Endzeit.Text = string.Format("Endzeit: ---");
+            lbl_Arbeitszeit.Text = string.Format("Differenz: {0} Stunden an {1}", Arbeitszeit, Arbeitstage);
+            lbl_Ueberstunden.Text = string.Format("Überstunden: {0} Stunden an {1}", Ueberstunden, Arbeitstage);
+        }
+
         private void Statistiken_Load(object sender, EventArgs e)
         {
             DateTime heute = DateTime.Now;
@@ -178,30 +205,23 @@ namespace Arbeitszeiten
                 Tage_abfragen(string.Format("select Datum, _id from Zeiten where Datum like '{0}-{1}-%' group by Datum", Jahr, Monatszahl));
                 Graphen_zeichnen();
             }
+
+            aktuellesJahrToolStripMenuItem.Text = string.Format("Aktuelles Jahr ({0})", domainUpDown_Jahr.Text);
         }
 
         private void jahresüberblickToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dataGridView1.Rows.Clear();
-            string Jahr = domainUpDown_Jahr.Text;
-            string SQL_Befehl = string.Format("select round(sum(MehrMinder_Stunden), 2), round(sum(Differenz), 2), count(_id) as Anzahl_Tage from Zeiten where Datum like '{0}-%-%'", Jahr);
-            List<string> Zeiten = SQLite.Auflistung_Einträge(SQL_Befehl, 3);
-            string Ueberstunden = Zeiten[0];
-            string Arbeitszeit = Zeiten[1];
-            string Arbeitstage = string.Format("{0} Arbeitstagen", Zeiten[2]);
-
-            if (Arbeitstage == "1 Arbeitstagen")
-                Arbeitstage = string.Format("{0} Arbeitstag", Zeiten[2]);
-
-            lbl_Startzeit.Text = string.Format("Startzeit: ---");
-            lbl_Endzeit.Text = string.Format("Endzeit: ---");
-            lbl_Arbeitszeit.Text = string.Format("Differenz: {0} Stunden an {1}", Arbeitszeit, Arbeitstage);
-            lbl_Ueberstunden.Text = string.Format("Überstunden: {0} Stunden an {1}", Ueberstunden, Arbeitstage);
+            Zeitraum(true);
         }
 
         private void ohneEndeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Tage_abfragen("select Datum, _id from Zeiten where Ende isNull");
+        }
+
+        private void gesamteZeitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Zeitraum(false);
         }
     }
 }
