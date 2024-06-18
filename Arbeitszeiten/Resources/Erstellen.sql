@@ -1,4 +1,17 @@
-﻿CREATE TABLE Taetigkeiten (
+﻿CREATE TABLE "Einstellungen" (
+    "_id" INTEGER NOT NULL,
+    "Einstellung" INTEGER,
+    PRIMARY KEY("_id" AUTOINCREMENT)
+);
+
+CREATE TABLE "Nachholen" (
+    "_id" INTEGER NOT NULL,
+    "Dauer" DECIMAL NOT NULL,
+    "Wann" DATE NOT NULL,
+    PRIMARY KEY("_id" AUTOINCREMENT)
+);
+
+CREATE TABLE Taetigkeiten (
     _id INTEGER PRIMARY KEY AUTOINCREMENT,
     Datum date,
     Uhrzeit datetime,
@@ -14,12 +27,6 @@ CREATE TABLE "Zeiten" (
     "MehrMinder_Stunden" DOUBLE,
     "Bemerkung" TEXT DEFAULT NULL,
     "Metadaten" TEXT DEFAULT NULL,
-    PRIMARY KEY("_id" AUTOINCREMENT)
-);
-
-CREATE TABLE "Einstellungen" (
-    "_id" INTEGER NOT NULL,
-    "Einstellung" INTEGER,
     PRIMARY KEY("_id" AUTOINCREMENT)
 );
 
