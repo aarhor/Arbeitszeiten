@@ -97,7 +97,7 @@ namespace Arbeitszeiten
             }
         }
 
-        private void Zeitraum(bool Gesamtes_Jahr)
+        private void Zeitraum(bool Gesamtes_Jahr = false, bool Aktuelle_Woche = false)
         {
             string SQL_Befehl = "select round(sum(MehrMinder_Stunden), 2), round(sum(Differenz), 2), count(_id) as Anzahl_Tage from Zeiten";
 
@@ -105,6 +105,15 @@ namespace Arbeitszeiten
             {
                 string Jahr = domainUpDown_Jahr.Text;
                 SQL_Befehl += string.Format(" where Datum like '{0}-%-%'", Jahr);
+            }
+
+            if (Aktuelle_Woche)
+            {
+                DateTime dateTime = DateTime.Now;
+                string ErsterWochentag = Klassen.Zeiten.GetFirstDayOfWeek(dateTime).ToString("yyyy-MM-dd");
+                string LetzterWochentag = Klassen.Zeiten.GetFirstDayOfWeek(dateTime).ToString("yyyy-MM-dd");
+
+                SQL_Befehl += string.Format(" where Datum BETWEEN '{0}' and '{1}'", ErsterWochentag, LetzterWochentag);
             }
 
             dataGridView1.Rows.Clear();
@@ -221,7 +230,12 @@ namespace Arbeitszeiten
 
         private void gesamteZeitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Zeitraum(false);
+            Zeitraum();
+        }
+
+        private void aktuelleWocheToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Zeitraum(Aktuelle_Woche: true);
         }
     }
 }

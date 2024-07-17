@@ -46,12 +46,13 @@
             menuStrip1 = new MenuStrip();
             BearbeitenToolStripMenuItem = new ToolStripMenuItem();
             löschenToolStripMenuItem = new ToolStripMenuItem();
-            ohneEndeToolStripMenuItem = new ToolStripMenuItem();
-            lbl_Datum = new Label();
-            checkBox1 = new CheckBox();
             zeitraumToolStripMenuItem = new ToolStripMenuItem();
             aktuellesJahrToolStripMenuItem = new ToolStripMenuItem();
             gesamteZeitToolStripMenuItem = new ToolStripMenuItem();
+            ohneEndeToolStripMenuItem = new ToolStripMenuItem();
+            lbl_Datum = new Label();
+            checkBox1 = new CheckBox();
+            aktuelleWocheToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -309,6 +310,27 @@
             löschenToolStripMenuItem.Text = "Löschen";
             löschenToolStripMenuItem.Click += löschenToolStripMenuItem_Click;
             // 
+            // zeitraumToolStripMenuItem
+            // 
+            zeitraumToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aktuelleWocheToolStripMenuItem, aktuellesJahrToolStripMenuItem, gesamteZeitToolStripMenuItem });
+            zeitraumToolStripMenuItem.Name = "zeitraumToolStripMenuItem";
+            zeitraumToolStripMenuItem.Size = new Size(67, 20);
+            zeitraumToolStripMenuItem.Text = "Zeitraum";
+            // 
+            // aktuellesJahrToolStripMenuItem
+            // 
+            aktuellesJahrToolStripMenuItem.Name = "aktuellesJahrToolStripMenuItem";
+            aktuellesJahrToolStripMenuItem.Size = new Size(180, 22);
+            aktuellesJahrToolStripMenuItem.Text = "Aktuelles Jahr";
+            aktuellesJahrToolStripMenuItem.Click += jahresüberblickToolStripMenuItem_Click;
+            // 
+            // gesamteZeitToolStripMenuItem
+            // 
+            gesamteZeitToolStripMenuItem.Name = "gesamteZeitToolStripMenuItem";
+            gesamteZeitToolStripMenuItem.Size = new Size(180, 22);
+            gesamteZeitToolStripMenuItem.Text = "Gesamte Zeit";
+            gesamteZeitToolStripMenuItem.Click += gesamteZeitToolStripMenuItem_Click;
+            // 
             // ohneEndeToolStripMenuItem
             // 
             ohneEndeToolStripMenuItem.Name = "ohneEndeToolStripMenuItem";
@@ -338,26 +360,12 @@
             checkBox1.Text = "Auto";
             checkBox1.UseVisualStyleBackColor = true;
             // 
-            // zeitraumToolStripMenuItem
+            // aktuelleWocheToolStripMenuItem
             // 
-            zeitraumToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aktuellesJahrToolStripMenuItem, gesamteZeitToolStripMenuItem });
-            zeitraumToolStripMenuItem.Name = "zeitraumToolStripMenuItem";
-            zeitraumToolStripMenuItem.Size = new Size(67, 20);
-            zeitraumToolStripMenuItem.Text = "Zeitraum";
-            // 
-            // aktuellesJahrToolStripMenuItem
-            // 
-            aktuellesJahrToolStripMenuItem.Name = "aktuellesJahrToolStripMenuItem";
-            aktuellesJahrToolStripMenuItem.Size = new Size(180, 22);
-            aktuellesJahrToolStripMenuItem.Text = "Aktuelles Jahr";
-            aktuellesJahrToolStripMenuItem.Click += jahresüberblickToolStripMenuItem_Click;
-            // 
-            // gesamteZeitToolStripMenuItem
-            // 
-            gesamteZeitToolStripMenuItem.Name = "gesamteZeitToolStripMenuItem";
-            gesamteZeitToolStripMenuItem.Size = new Size(180, 22);
-            gesamteZeitToolStripMenuItem.Text = "Gesamte Zeit";
-            gesamteZeitToolStripMenuItem.Click += gesamteZeitToolStripMenuItem_Click;
+            aktuelleWocheToolStripMenuItem.Name = "aktuelleWocheToolStripMenuItem";
+            aktuelleWocheToolStripMenuItem.Size = new Size(180, 22);
+            aktuelleWocheToolStripMenuItem.Text = "Aktuelle Woche";
+            aktuelleWocheToolStripMenuItem.Click += aktuelleWocheToolStripMenuItem_Click;
             // 
             // Statistiken
             // 
@@ -419,5 +427,6 @@
         private ToolStripMenuItem zeitraumToolStripMenuItem;
         private ToolStripMenuItem aktuellesJahrToolStripMenuItem;
         private ToolStripMenuItem gesamteZeitToolStripMenuItem;
+        private ToolStripMenuItem aktuelleWocheToolStripMenuItem;
     }
 }
