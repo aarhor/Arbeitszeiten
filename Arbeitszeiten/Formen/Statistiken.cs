@@ -111,7 +111,7 @@ namespace Arbeitszeiten
             {
                 DateTime dateTime = DateTime.Now;
                 string ErsterWochentag = Klassen.Zeiten.GetFirstDayOfWeek(dateTime).ToString("yyyy-MM-dd");
-                string LetzterWochentag = Klassen.Zeiten.GetFirstDayOfWeek(dateTime).ToString("yyyy-MM-dd");
+                string LetzterWochentag = Klassen.Zeiten.GetLastDayOfWeek(dateTime).ToString("yyyy-MM-dd");
 
                 SQL_Befehl += string.Format(" where Datum BETWEEN '{0}' and '{1}'", ErsterWochentag, LetzterWochentag);
             }
